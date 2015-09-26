@@ -1,5 +1,5 @@
 #Gregorian
-A micro library for handling dates.
+"A micro library for converting and displaying dates"
 
 _reform |riˈfôrm|  
 verb [ with obj. ]  
