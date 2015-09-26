@@ -1,0 +1,45 @@
+{
+  "name": "gregorian",
+  "version": "1.0.0",
+  "description": "A micro library for converting and displaying dates",
+  "main": "gregorian.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://www.github.com/patrickfatrick/dateify"
+  },
+  "keywords": [
+    "javascript",
+    "dates"
+  ],
+  "author": "Patrick Fricano <patrick.fricano@icloud.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-jest": "*",
+    "babelify": "^6.3.0",
+    "browserify": "^11.2.0",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^5.2.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp-uglify": "^1.4.1",
+    "gulp-util": "^3.0.6",
+    "jest-cli": "^0.5.8",
+    "require-dir": "^0.3.0",
+    "vinyl-buffer": "^1.0.0"
+  },
+  "jest": {
+    "scriptPreprocessor": "./node_modules/babel-jest",
+    "testFileExtensions": [
+      "es6",
+      "js"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "es6"
+    ]
+  }
+}
