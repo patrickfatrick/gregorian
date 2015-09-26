@@ -1,9 +1,9 @@
 #Gregorian
 "A micro library for converting and displaying dates"
 
-_reform |riˈfôrm|  
-verb [ with obj. ]  
-1 make changes in (something, typically a social, political, or economic institution or practice) in order to improve it: an opportunity to reform and restructure an antiquated schooling model._
+>reform |riˈfôrm|  
+>verb [ with obj. ]  
+>1 make changes in (something, typically a social, political, or economic institution or practice) in order to improve it: an opportunity to reform and restructure an antiquated schooling model._
 
 ##What does it do?
 Gregorian is a wrapper for the native Javascript `Date` object that allows you to customize how to display and write dates pretty minutely.
@@ -18,7 +18,7 @@ You can take the same date object and express it like:
 - `'Mon, April 11'`
 - `'1988-04-11T00:00:00.000Z' // ISO string`
 - `'Mon, 11 Apr 1988 00:00:00 GMT' // UTC string`
-- `576720000000 //UNIX time`
+- `576720000000 // UNIX time`
 - and more!
 
 ##What doesn't it do?
@@ -74,4 +74,4 @@ The following are components you can use to construct a format string like `'mmm
 ## What's with the name?
 ![Pope Gregory XIII](./images/gregory.jpg)
 
-Gregorian is named after the calendar introduced in 1582 by under Pope Gregory XIII's papacy, the calendar we currently use today. It was a reform of the Julian calendar to account to make the year 0.002% shorter and also slightly changed the leap year schedule to omit 3 leap days every 400 years.
+Gregorian is named after the calendar introduced in 1582 by under Pope Gregory XIII's papacy, the calendar we currently use today. It was a reform of the Julian calendar to make the year 0.002% shorter and also slightly changed the leap year schedule to omit 3 leap days every 400 years.
