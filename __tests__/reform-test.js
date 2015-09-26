@@ -8,6 +8,7 @@ describe('reformDate', function () {
    expect(reform('04/11/1988 00:00 UTC').d.toISOString()).toBe('1988-04-11T00:00:00.000Z');
 	 expect(reform(new Date('04/11/1988 00:00 UTC')).d.toISOString()).toBe('1988-04-11T00:00:00.000Z');
 	 expect(Date.parse(reform('September 25, 2015 00:00 UTC').d)).toBe(1443139200000);
+	 expect(Date.parse(reform(1443139200000).d)).toBe(1443139200000);
 	 expect(function(){reform('next Tuesday')}).toThrow(new TypeError('This is not a valid date'));
  });
 });

@@ -22,9 +22,12 @@ You can take the same date object and express it like:
 - and more!
 
 ##What doesn't it do?
-This does not manipulate dates. Meaning you can't use it to add or substract time to an existing date object, for now anyway. You can add milliseconds manually to any parsed date object as you normally would.
-This also does not accept native language input. For instance `gregorian.reform('next Tuesday')` will return a TypeError.
+This does not accept native language input. For instance `gregorian.reform('next Tuesday')` will return a TypeError.
 It accepts anything Javascript natively accepts when creating a date object. `gregorian.reform('April 11, 1988 00:00 UTC')` is valid as is `gregorian.reform('04/11/1988')`.
+
+This does not deal with localization. The library is currently in English.
+
+Currently this does not convert to a 24-hour clock. This will be implemented soon, however.
 
 ##Install
 - `npm install gregorian --save`
@@ -67,6 +70,22 @@ The following are components you can use to construct a format string like `'mmm
 - `'mll' // milliseconds 000-999`
 - `'ml' // milliseconds with no leading zeros 0-999`
 - `'zz' // timezone offset UTC -6:00`
+
+###Adding and subtracting
+You can add amounts to a gregorian object like `gregorian.reform('2015-10-31').add(1, 'd')` or `gregorian.reform('2015-10-31').subtract(1, 'm')`.
+
+This will return a new gregorian object that can then be formatted into a string as usual `gregorian.reform('2015-10-31').subtract(1, 'm').to('iso')`
+
+Accepted increments you can use for adding and subtracts are
+
+- `ms` // 1 millisecond
+- `s` // 1 second (1000 milliseconds)
+- `min` // 1 minute (60000 milliseconds)
+- `h` // 1 hour (3600000 milliseconds)
+- `d` // 1 day (86400000 milliseconds)
+- `w` // 1 week (604800000 milliseconds)
+- `m` // 1 month (2628000000 milliseconds)
+- `y` // 1 year (31536000000 milliseconds)
 
 ##Why not use MomentJS?
 [Moment](http://momentjs.com/) is awesome and I personally use it in a lot of projects. This is not intended to replace Moment by any means, it's simply intended to provide a more focused set of features at a fraction of the weight. Moment's unminified .js file is 104KB while Gregorian's is 16KB. If you need the date manipulation or the other many awesome features found in Moment, you're better off using that of course!

@@ -5,7 +5,7 @@
  * @returns {String} UTC string with or without time
  */
 
-function reformUTC(date, format) {
+function reformUTC (date, format) {
 	format = format || null;
 	var utc = date.toUTCString();
 	if (format === 'short') {

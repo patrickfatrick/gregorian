@@ -29,7 +29,7 @@ var gregorian = {
 
 module.exports = gregorian;
 
-},{"./modules/reform":26}],2:[function(require,module,exports){
+},{"./modules/reform":28}],2:[function(require,module,exports){
 /**
  * Take a date object and output the capitalized 12-hour clock period (AM/PM)
  * @param   {Date}   date a date object
@@ -110,6 +110,41 @@ function reformMMM(date) {
 module.exports = reformMMM;
 
 },{}],7:[function(require,module,exports){
+'use strict';
+
+var reformTo = require('./reform-to');
+
+/**
+ * Adds specified increments to a gregorian object
+ * @param   {Number} n         a number to multiply the increment by
+ * @param   {String} increment an increment to add
+ * @returns {Object} a new gregorian object
+ */
+function add(n, increment) {
+	var current = Date.parse(this.d);
+	var increments = {
+		ms: 1,
+		s: 1000,
+		min: 60000,
+		h: 3600000,
+		d: 86400000,
+		w: 604800000,
+		m: 2628000000,
+		y: 31536000000
+	};
+	var sum = current + n * increments[increment];
+	var date = new Date(sum);
+	return {
+		d: date,
+		input: this.input,
+		to: reformTo,
+		add: add
+	};
+}
+
+module.exports = add;
+
+},{"./reform-to":20}],8:[function(require,module,exports){
 /**
  * Take a date object and output the uncapitalized 12-hour clock period (AM/PM)
  * @param   {Date}   date a date object
@@ -125,7 +160,7 @@ function reformAp(date) {
 
 module.exports = reformAp;
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 /**
  * Convert the object passed to a date and test its validity
  * @param {Object} 	obj any object
@@ -146,7 +181,7 @@ function reformDate(obj) {
 
 module.exports = reformDate;
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 /**
  * Take a date object and output the date of the month with no leading zeros (1-31)
  * @param {Date} 	a date object
@@ -161,7 +196,7 @@ function reformDd(date) {
 
 module.exports = reformDd;
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 /**
  * Take a date object and output the two-digit date of the month (01-31)
  * @param {Date} 	a date object
@@ -176,7 +211,7 @@ function reformDdd(date) {
 
 module.exports = reformDdd;
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 /**
  * Take a date object and outpit the hour with no leading zeros (1-12)
  * @param   {Date}   date a date object
@@ -194,7 +229,7 @@ function reformHh(date) {
 
 module.exports = reformHh;
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 /**
  * Take a date object and output the two-digit hour (01-12)
  * @param   {Date}   date a date object
@@ -213,7 +248,7 @@ function reformHhh(date) {
 
 module.exports = reformHhh;
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 /**
  * Converts a date object to an ISO string
  * @param   {Date}   date   a date object
@@ -231,7 +266,7 @@ function reformISO(date, format) {
 
 module.exports = reformISO;
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 /**
  * Take a date object and output the milliseconds with no leading zeros (0-999)
  * @param   {Date} date a date object
@@ -246,7 +281,7 @@ function reformMl(date) {
 
 module.exports = reformMl;
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 /**
  * Take a date object and and output the three-digit milliseconds (000-999)
  * @param   {Date}   date a date object
@@ -272,7 +307,7 @@ function reformMll(date) {
 
 module.exports = reformMll;
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 /**
  * Take a date object and output the numeric month (1-12)
  * @param {Date} 	a date object
@@ -287,7 +322,7 @@ function reformMm(date) {
 
 module.exports = reformMm;
 
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 /**
  * Take a date object and output the two-digit month (01-12)
  * @param {Date} 	a date object
@@ -302,10 +337,44 @@ function reformMmm(date) {
 
 module.exports = reformMmm;
 
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 'use strict';
 
-var reformDate = require('./reform-date');
+var reformTo = require('./reform-to');
+
+/**
+ * Subtracts specified increments to a gregorian object
+ * @param   {Number} n         a number to multiply the increment by
+ * @param   {String} increment an increment to subtract
+ * @returns {Object} a new gregorian object
+ */
+function subtract(n, increment) {
+	var current = Date.parse(this.d);
+	var increments = {
+		ms: 1,
+		s: 1000,
+		min: 60000,
+		h: 3600000,
+		d: 86400000,
+		w: 604800000,
+		m: 2628000000,
+		y: 31536000000
+	};
+	var sum = current - n * increments[increment];
+	var date = new Date(sum);
+	return {
+		d: date,
+		input: this.input,
+		to: reformTo,
+		subtract: subtract
+	};
+}
+
+module.exports = subtract;
+
+},{"./reform-to":20}],20:[function(require,module,exports){
+'use strict';
+
 var reformTo = {};
 reformTo.AP = require('./reform-_ap_');
 reformTo.ap = require('./reform-ap');
@@ -404,7 +473,7 @@ function to(format) {
 
 module.exports = to;
 
-},{"./reform-_ap_":2,"./reform-_dd_":3,"./reform-_ddd_":4,"./reform-_mm_":5,"./reform-_mmm_":6,"./reform-ap":7,"./reform-date":8,"./reform-dd":9,"./reform-ddd":10,"./reform-hh":11,"./reform-hhh":12,"./reform-iso":13,"./reform-ml":14,"./reform-mll":15,"./reform-mm":16,"./reform-mmm":17,"./reform-tt":19,"./reform-ttt":20,"./reform-unix":21,"./reform-utc":22,"./reform-yy":23,"./reform-yyyy":24,"./reform-zz":25}],19:[function(require,module,exports){
+},{"./reform-_ap_":2,"./reform-_dd_":3,"./reform-_ddd_":4,"./reform-_mm_":5,"./reform-_mmm_":6,"./reform-ap":8,"./reform-dd":10,"./reform-ddd":11,"./reform-hh":12,"./reform-hhh":13,"./reform-iso":14,"./reform-ml":15,"./reform-mll":16,"./reform-mm":17,"./reform-mmm":18,"./reform-tt":21,"./reform-ttt":22,"./reform-unix":23,"./reform-utc":24,"./reform-yy":25,"./reform-yyyy":26,"./reform-zz":27}],21:[function(require,module,exports){
 /**
  * Take a date object and output the minutes with no leading zeros
  * @param   {Date} date a date object
@@ -419,7 +488,7 @@ function reformTt(date) {
 
 module.exports = reformTt;
 
-},{}],20:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 /**
  * Take a date object and output the two-digit minutes
  * @param   {Date}   date a date object
@@ -434,7 +503,7 @@ function reformTtt(date) {
 
 module.exports = reformTtt;
 
-},{}],21:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 /**
  * Converts a date object to UNIX time (milliseconds from January 1, 1970)
  * @param   {Date}   date a date object
@@ -449,7 +518,7 @@ function reformUnix(date) {
 
 module.exports = reformUnix;
 
-},{}],22:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 /**
  * Converts a date object to a UTC string
  * @param   {Date}   date a date object
@@ -477,7 +546,7 @@ function reformUTC(date, format) {
 
 module.exports = reformUTC;
 
-},{}],23:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 /**
  * Take a date object and output the two-digit year
  * @param {Date} 	a date object
@@ -491,7 +560,7 @@ function reformYy(date) {
 
 module.exports = reformYy;
 
-},{}],24:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 /**
  * Take a date object and output the four-digit year
  * @param {Date} 	a date object
@@ -505,7 +574,7 @@ function reformYyyy(date) {
 
 module.exports = reformYyyy;
 
-},{}],25:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 /**
  * Take a date object and output the timezone offset (UTC +- 01:00, etc.)
  * @param   {Date}   date a date object
@@ -520,29 +589,33 @@ function reformZz(date) {
 
 module.exports = reformZz;
 
-},{}],26:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 'use strict';
 
 var reformDate = require('./reform-date');
 var reformTo = require('./reform-to');
+var reformAdd = require('./reform-add');
+var reformSubtract = require('./reform-subtract');
 
 /**
  * Take a string or date object and convert it into a gregorian object
  * @param   {Object} obj A string or date object that can be parsed into a date
  * @returns {Object} Gregorian object
  */
-var reform = function reform(obj) {
+function reform(obj) {
 	var date = reformDate(obj);
 	return {
 		d: date,
 		input: obj,
-		to: reformTo
+		to: reformTo,
+		add: reformAdd,
+		subtract: reformSubtract
 	};
-};
+}
 
 module.exports = reform;
 
-},{"./reform-date":8,"./reform-to":18}]},{},[1])(1)
+},{"./reform-add":7,"./reform-date":9,"./reform-subtract":19,"./reform-to":20}]},{},[1])(1)
 });
 
 
