@@ -1,4 +1,5 @@
-var reformTo = require('./reform-to');
+var to = require('./reform-to');
+var add = require('./reform-add');
 
 /**
  * Subtracts specified increments to a gregorian object
@@ -6,7 +7,7 @@ var reformTo = require('./reform-to');
  * @param   {String} increment an increment to subtract
  * @returns {Object} a new gregorian object
  */
-function subtract (n, increment) {
+function subtract(n, increment) {
 	var current = Date.parse(this.d);
 	var increments = {
 		ms: 1,
@@ -15,15 +16,30 @@ function subtract (n, increment) {
 		h: 3600000,
 		d: 86400000,
 		w: 604800000,
-		m: 2628000000,
 		y: 31536000000
 	}
 	var sum = current - (n * increments[increment]);
 	var date = new Date(sum);
+	/**
+	 * Handle month so that you always wind up on the same day of the month
+	 */
+	if (increment === 'm') {
+		var newMonth = (this.d.getMonth() - n) + 1;
+		var newYear = this.d.getFullYear();
+		if (newMonth < 0) {
+			newYear = this.d.getFullYear() - 1;
+			newMonth = newMonth + 12;
+		}
+		newMonth = newMonth.toString();
+		newMonth = (newMonth.length < 2) ? '0' + newMonth : newMonth;
+		date = new Date(newYear + '-' + newMonth + '-' + this.d.toISOString().substring(8));
+	}
+		
 	return {
 		d: date,
 		input: this.input,
-		to: reformTo,
+		to: to,
+		add: add,
 		subtract: subtract
 	}
 }

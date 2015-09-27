@@ -1,5 +1,7 @@
 #Gregorian
-"A micro library for converting and displaying dates"
+"A micro library for converting and displaying dates".
+
+----- CURRENTLY A WORK IN PROGRESS AND NOT RECOMMENDED FOR USE JUST YET. -----
 
 >reform |riˈfôrm|  
 >verb [ with obj. ]  
@@ -78,14 +80,17 @@ This will return a new gregorian object that can then be formatted into a string
 
 Accepted increments you can use for adding and subtracts are
 
-- `ms` // 1 millisecond
-- `s` // 1 second (1000 milliseconds)
-- `min` // 1 minute (60000 milliseconds)
-- `h` // 1 hour (3600000 milliseconds)
-- `d` // 1 day (86400000 milliseconds)
-- `w` // 1 week (604800000 milliseconds)
-- `m` // 1 month (2628000000 milliseconds)
-- `y` // 1 year (31536000000 milliseconds)
+- `ms // 1 millisecond`
+- `s // 1 second (1000 milliseconds)`
+- `min // 1 minute (60000 milliseconds)`
+- `h // 1 hour (3600000 milliseconds)`
+- `d // 1 day (86400000 milliseconds)`
+- `w // 1 week (604800000 milliseconds)`
+- `m // 1 month (varies; position will be on the same day of the month)`
+- `y // 1 year (31536000000 milliseconds)`
+
+It's not recommended to add or subtract more than 12 months at a time.
+Adding and subtracting currently does not handle leap days either, so you'll need to add or subtract a day to make up for that. I promise this will be addressed before 2016. ;)
 
 ##Why not use MomentJS?
 [Moment](http://momentjs.com/) is awesome and I personally use it in a lot of projects. This is not intended to replace Moment by any means, it's simply intended to provide a more focused set of features at a fraction of the weight. Moment's unminified .js file is 104KB while Gregorian's is 16KB. If you need the date manipulation or the other many awesome features found in Moment, you're better off using that of course!
