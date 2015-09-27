@@ -167,9 +167,11 @@ function add(n, increment) {
 	/**
   * Handle month so that you always wind up on the same day of the month
   */
+	var newMonth;
+	var newYear;
 	if (increment === 'm') {
-		var newMonth = this.d.getMonth() + n + 1;
-		var newYear = this.d.getFullYear();
+		newMonth = this.d.getMonth() + n + 1;
+		newYear = this.d.getFullYear();
 		if (newMonth > 12) {
 			newYear = this.d.getFullYear() + 1;
 			newMonth = newMonth - 12;
@@ -179,8 +181,11 @@ function add(n, increment) {
 		date = new Date(newYear + '-' + newMonth + '-' + this.d.toISOString().substring(8));
 	}
 
+	/**
+  * Handle year so that you always wind up on the same day of the year with leap years
+  */
 	if (increment === 'y') {
-		var newYear = this.d.getFullYear() + n;
+		newYear = this.d.getFullYear() + n;
 		date = new Date(newYear + '-' + this.d.toISOString().substring(5));
 	}
 
@@ -222,7 +227,7 @@ module.exports = reformAp;
 function reformDate(obj) {
 	if (obj == null) throw new TypeError('This is null or undefined');
 	obj = new Date(obj);
-	if (Object.prototype.toString.call(obj) === "[object Date]") {
+	if (Object.prototype.toString.call(obj) === '[object Date]') {
 		if (isNaN(obj.getTime())) {
 			throw new TypeError('This is not a valid date');
 		}
@@ -445,9 +450,11 @@ function subtract(n, increment) {
 	/**
   * Handle month so that you always wind up on the same day of the month
   */
+	var newYear;
+	var newMonth;
 	if (increment === 'm') {
-		var newMonth = this.d.getMonth() - n + 1;
-		var newYear = this.d.getFullYear();
+		newMonth = this.d.getMonth() - n + 1;
+		newYear = this.d.getFullYear();
 		if (newMonth < 0) {
 			newYear = this.d.getFullYear() - 1;
 			newMonth = newMonth + 12;
@@ -458,7 +465,7 @@ function subtract(n, increment) {
 	}
 
 	if (increment === 'y') {
-		var newYear = this.d.getFullYear() - n;
+		newYear = this.d.getFullYear() - n;
 		date = new Date(newYear + '-' + this.d.toISOString().substring(5));
 	}
 
@@ -542,37 +549,31 @@ function to(format) {
 	'zz' // timezone offset UTC -6:00
 	];
 
-	search.some(function (piece, i) {
+	search.some(function (piece) {
 		//console.log(converted + ' vs ' + piece);
 		if (converted.indexOf(piece) !== -1) {
 			switch (piece) {
 				case 'unix':
 					converted = reformTo.unix(date);
 					return true;
-					break;
 				case 'utc-short':
 					converted = reformTo.utc(date, 'short');
 					return true;
-					break;
 				case 'utc':
 					converted = reformTo.utc(date);
 					return true;
-					break;
 				case 'iso-short':
 					converted = reformTo.iso(date, 'short');
 					return true;
-					break;
 				case 'iso':
 					converted = reformTo.iso(date);
 					return true;
-					break;
 				default:
 					// console.log('Search string is: ' + piece);
 					// console.log('Converted string is: ' + to[piece](date));
 					var replacer = reformTo[piece](date).toString();
 					converted = converted.replace(piece, replacer);
 					return false;
-					break;
 			}
 		}
 	});

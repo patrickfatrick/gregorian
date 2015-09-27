@@ -1,9 +1,12 @@
 #Gregorian
 "A micro library for converting and displaying dates".
+![Gregorian Page](./images/gregorian-page.jpg)
 
 >reform |riˈfôrm|  
 >verb [ with obj. ]  
 >1 make changes in (something, typically a social, political, or economic institution or practice) in order to improve it: an opportunity to reform and restructure an antiquated schooling model._
+
+Gregorian is named after the calendar introduced in 1582 by under Pope Gregory XIII's papacy, the calendar we currently use today. It was a reform of the Julian calendar to make the year 0.002% shorter and also slightly changed the leap year schedule to omit 3 leap days every 400 years.
 
 ##What does it do?
 Gregorian is a wrapper for the native Javascript `Date` object that allows you to customize how to display and write dates pretty minutely.
@@ -32,13 +35,14 @@ Currently this does not convert to a 24-hour clock. This will be implemented soo
 ##Install
 - `npm install gregorian --save`
 - `jspm install npm:gregorian`
+- `git clone git@github.com:patrickfatrick/gregorian.git`
 
 You can install it into your site using `<script src="./node_modules/gregorian/dist/gregorian.min.js"></script>` as usual, or you can include it in a concatenated build using `require('./node_modules/gregorian')`, etc.
 
 ##Usage
 To create a gregorian object, call `gregorian.reform()` with either a date object or a date-string. For instance `gregorian.reform('2015-10-31')` or `gregorian.reform(new Date())`.
 
-But that's kind of boring. To do stuff with it, chain a `.to()` method to it, passing a string for the format you'd like to use. For instance `gregorian.reform('2015-10-31').to('unix')` or `gregorian.reform('2015-10-31').to('iso')`. The will return the converted string or else the number of milliseconds passed since January 1, 1970 in the case of `'unix'`.
+But that's kind of boring. To do stuff with it, chain a `.to()` method to it, passing a string for the format you'd like to use. For instance `gregorian.reform('2015-10-31').to('unix')` or `gregorian.reform('2015-10-31').to('iso')`. This will return the converted string or else the number of milliseconds passed since January 1, 1970 in the case of `'unix'`.
 
 ###Accepted formats
 The following are plug-n-play formats that are simply wrappers for existing Javascript Date methods and should not be used with any other formats. The `-short` methods extend the existing methods by removing the time from the output.
@@ -60,7 +64,7 @@ The following are components you can use to construct a format string like `'mmm
 - `'MMM' // full month (January-December)`
 - `'MM' // abbreviated month (Jan-Dec)`
 - `'mmm' // two-digit month (01-12)`
-- `'mm' // month with no leading zeros( 1-12)`
+- `'mm' // month with no leading zeros (1-12)`
 - `'hhh' // two-digit hours (00-12)`
 - `'hh' // hour with no leading zeros (0-12)`
 - `'HHH' // two-digit 24-hour clock hours (00-24)`
@@ -75,12 +79,14 @@ The following are components you can use to construct a format string like `'mmm
 - `'ml' // milliseconds with no leading zeros (0-999)`
 - `'zz' // timezone offset from UTC (UTC -6:00)`
 
+The string returned uses the local timezone.
+
 ###Adding and subtracting
-You can add amounts to a gregorian object like `gregorian.reform('2015-10-31').add(1, 'd')` or `gregorian.reform('2015-10-31').subtract(1, 'm')`.
+You can manipulate the gregorian object like `gregorian.reform('2015-10-31').add(1, 'd')` or `gregorian.reform('2015-10-31').subtract(1, 'm')`.
 
 This will return a new gregorian object that can then be formatted into a string as usual `gregorian.reform('2015-10-31').subtract(1, 'm').to('iso')`
 
-Accepted increments you can use for adding and subtractions are
+Accepted increments you can use for additions and subtractions are
 
 - `'ms' // 1 millisecond`
 - `'s' // 1 second (1000 milliseconds)`
@@ -94,9 +100,11 @@ Accepted increments you can use for adding and subtractions are
 It's not recommended to add or subtract more than 12 months at a time.
 
 ##Why not use MomentJS?
-[Moment](http://momentjs.com/) is awesome and I personally use it in a lot of projects. This is not intended to replace Moment by any means, it's simply intended to provide a more focused set of features at a fraction of the weight. Moment's unminified .js file is 104KB while Gregorian's is 16KB. If you need the date manipulation or the other many awesome features found in Moment, you're better off using that of course!
+[Moment](http://momentjs.com/) is awesome and I personally use it in a lot of projects. This is not intended to replace Moment by any means, it's simply intended to provide a more focused set of features at a fraction of the weight. Moment's unminified .js file is about 5x the size of Gregorian's.
 
-## What's with the name?
-![Pope Gregory XIII](./images/gregory.jpg)
+##What's the plan?
+I'm planning to add set methods to take a gregorian object and set a specific date or time on it.
+That's about all I'm planning at the moment.
 
-Gregorian is named after the calendar introduced in 1582 by under Pope Gregory XIII's papacy, the calendar we currently use today. It was a reform of the Julian calendar to make the year 0.002% shorter and also slightly changed the leap year schedule to omit 3 leap days every 400 years.
+Each Gregorian release is linted with ESLint and tested with Jest.
+![Gregorian Calendar](./images/gregorian-calendar.jpg)

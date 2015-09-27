@@ -3,7 +3,7 @@
  * @param   {Date}   date a date object
  * @returns {String} the number of milliseconds
  */
-function reformMll (date) {
+function reformMll(date) {
 	var milliseconds = date.getMilliseconds().toString();
 	switch (milliseconds.length) {
 		case 1:

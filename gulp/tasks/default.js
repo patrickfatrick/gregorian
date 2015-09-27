@@ -1,2 +1,2 @@
 var gulp = require('gulp');
-gulp.task('default', ['build', 'min']);
+gulp.task('default', ['lint', 'build', 'min']);

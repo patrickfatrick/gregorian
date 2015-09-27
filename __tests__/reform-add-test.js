@@ -1,4 +1,4 @@
-// __tests__/reform-unix-test.js
+// __tests__/reform-add-test.js
 jest.dontMock('../src/modules/reform-add');
 jest.dontMock('../src/modules/reform');
 jest.dontMock('../src/modules/reform-date');

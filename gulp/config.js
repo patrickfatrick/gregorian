@@ -21,19 +21,7 @@ module.exports = {
 		dest: dest + '/',
 		outputName: 'gregorian.min.js'
 	},
-	jest: {
-		src: '__tests__',
-		options: {
-			"scriptPreprocessor": "./node_modules/babel-jest",
-			"testFileExtensions": [
-				"es6",
-				"js"
-			],
-			"moduleFileExtensions": [
-				"js",
-				"json",
-				"es6"
-			]
-		}
+	lint: {
+		src: src + '/**/*.js'
 	}
 };

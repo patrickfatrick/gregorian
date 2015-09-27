@@ -1,4 +1,4 @@
-// __tests__/reform-unix-test.js
+// __tests__/reform-to-test.js
 jest.dontMock('../src/modules/reform');
 jest.dontMock('../src/modules/reform-to');
 jest.dontMock('../src/modules/reform-date');
@@ -30,7 +30,7 @@ jest.dontMock('../src/modules/reform-utc');
 jest.dontMock('../src/modules/reform-iso');
 
 
-describe('reform', function () {
+describe('reformTo', function () {
 	it('converts a date to a string with a specified format', function () {
 		var reform = require('../src/modules/reform');
 		expect(reform('April 11, 1988').to('unix')).toBe(576741600000);

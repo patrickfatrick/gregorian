@@ -16,7 +16,7 @@ function reform (obj) {
 		to: reformTo,
 		add: reformAdd,
 		subtract: reformSubtract
-	}
+	};
 }
 
 module.exports = reform;

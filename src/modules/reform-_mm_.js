@@ -4,7 +4,7 @@
  * @returns {String}	the abbreviated month
  */
 function reformMM (date) {
-	var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov',  'Dec']
+	var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov',  'Dec'];
 	var month = date.getMonth();
 	return months[month];
 }

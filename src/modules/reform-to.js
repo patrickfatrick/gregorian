@@ -1,4 +1,4 @@
-var reformTo = {}
+var reformTo = {};
 reformTo.AP = require('./reform-_ap_');
 reformTo.ap = require('./reform-ap');
 reformTo.DD = require('./reform-_dd_');
@@ -65,37 +65,31 @@ function to (format) {
 		'zz' // timezone offset UTC -6:00
 	];
 
-	search.some(function(piece, i) {
+	search.some(function(piece) {
 		//console.log(converted + ' vs ' + piece);
 		if (converted.indexOf(piece) !== -1) {
 			switch (piece) {
 				case 'unix':
 					converted = reformTo.unix(date);
 					return true;
-					break;
 				case 'utc-short':
 					converted = reformTo.utc(date, 'short');
 					return true;
-					break;
 				case 'utc':
 					converted = reformTo.utc(date);
 					return true;
-					break;
 				case 'iso-short':
 					converted = reformTo.iso(date, 'short');
 					return true;
-					break;
 				case 'iso':
 					converted = reformTo.iso(date);
 					return true;
-					break;
 				default:
 					// console.log('Search string is: ' + piece);
 					// console.log('Converted string is: ' + to[piece](date));
 					var replacer = reformTo[piece](date).toString();
 					converted = converted.replace(piece, replacer);
 					return false;
-					break;
 			}
 		}
 	});
