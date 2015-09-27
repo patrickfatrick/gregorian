@@ -15,8 +15,7 @@ function add (n, increment) {
 		min: 60000,
 		h: 3600000,
 		d: 86400000,
-		w: 604800000,
-		y: 31536000000
+		w: 604800000
 	}
 	var sum = current + (n * increments[increment]);
 	var date = new Date(sum);
@@ -34,6 +33,11 @@ function add (n, increment) {
 		newMonth = newMonth.toString();
 		newMonth = (newMonth.length < 2) ? '0' + newMonth : newMonth;
 		date = new Date(newYear + '-' + newMonth + '-' + this.d.toISOString().substring(8));
+	}
+	
+	if (increment === 'y') {
+		var newYear = this.d.getFullYear() + n;
+		date = new Date(newYear + '-' + this.d.toISOString().substring(5));
 	}
 	
 	return {

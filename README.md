@@ -1,8 +1,6 @@
 #Gregorian
 "A micro library for converting and displaying dates".
 
------ CURRENTLY A WORK IN PROGRESS AND NOT RECOMMENDED FOR USE JUST YET. -----
-
 >reform |riˈfôrm|  
 >verb [ with obj. ]  
 >1 make changes in (something, typically a social, political, or economic institution or practice) in order to improve it: an opportunity to reform and restructure an antiquated schooling model._
@@ -53,44 +51,47 @@ The following are plug-n-play formats that are simply wrappers for existing Java
 
 The following are components you can use to construct a format string like `'mmm/ddd/yyyy'` or `'DDD, MMM yyyy-mm-dd hhh:ttt.mllap zz'`.
 
-- `'yyyy // four-digit year 2015`
-- `'yy' // two-digit year (20)15`
-- `'DDD' // full day of the week Sunday-Saturday`
-- `'ddd' // two-digit date of the month 01-31`
-- `'DD' // abbreviated day of the week Sun-Sat`
-- `'dd' // date of the month with no leading zeros 1-31`
-- `'MMM' // full month January-December`
-- `'MM' // abbreviated month Jan-Dec`
-- `'mmm' // two-digit month 00-12`
-- `'mm' // month with no leading zeros 1-12`
-- `'hhh' // two-digit hours 01-12`
-- `'hh' // hour with no leading zeros 1-12`
-- `'ttt' // two-digit minutes 00-59`
-- `'tt' // minutes with no leading zeros 0-59`
-- `'AP' // AM or PM`
-- `'ap', // am or pm`
-- `'mll' // milliseconds 000-999`
-- `'ml' // milliseconds with no leading zeros 0-999`
-- `'zz' // timezone offset UTC -6:00`
+- `'yyyy // four-digit year (2015)`
+- `'yy' // two-digit year (15)`
+- `'DDD' // full day of the week (Sunday-Saturday)`
+- `'ddd' // two-digit date of the month (01-31)`
+- `'DD' // abbreviated day of the week (Sun-Sat)`
+- `'dd' // date of the month with no leading zeros (1-31)`
+- `'MMM' // full month (January-December)`
+- `'MM' // abbreviated month (Jan-Dec)`
+- `'mmm' // two-digit month (01-12)`
+- `'mm' // month with no leading zeros( 1-12)`
+- `'hhh' // two-digit hours (00-12)`
+- `'hh' // hour with no leading zeros (0-12)`
+- `'HHH' // two-digit 24-hour clock hours (00-24)`
+- `'HH' // 24-hour clock hour with no leading zeros (0-24)`
+- `'ttt' // two-digit minutes (00-59)`
+- `'tt' // minutes with no leading zeros (0-59)`
+- `'AP' // uppercase 12-hour clock period (AM or PM)`
+- `'ap', // lowercase 12-hour clock period (am or pm)`
+- `'sss' // two-digit seconds (00-59)`
+- `'ss' // seconds with no leading zeros (0-59)`
+- `'mll' // milliseconds (000-999)`
+- `'ml' // milliseconds with no leading zeros (0-999)`
+- `'zz' // timezone offset from UTC (UTC -6:00)`
 
 ###Adding and subtracting
 You can add amounts to a gregorian object like `gregorian.reform('2015-10-31').add(1, 'd')` or `gregorian.reform('2015-10-31').subtract(1, 'm')`.
 
 This will return a new gregorian object that can then be formatted into a string as usual `gregorian.reform('2015-10-31').subtract(1, 'm').to('iso')`
 
-Accepted increments you can use for adding and subtracts are
+Accepted increments you can use for adding and subtractions are
 
-- `ms // 1 millisecond`
-- `s // 1 second (1000 milliseconds)`
-- `min // 1 minute (60000 milliseconds)`
-- `h // 1 hour (3600000 milliseconds)`
-- `d // 1 day (86400000 milliseconds)`
-- `w // 1 week (604800000 milliseconds)`
-- `m // 1 month (varies; position will be on the same day of the month)`
-- `y // 1 year (31536000000 milliseconds)`
+- `'ms' // 1 millisecond`
+- `'s' // 1 second (1000 milliseconds)`
+- `'min' // 1 minute (60000 milliseconds)`
+- `'h' // 1 hour (3600000 milliseconds)`
+- `'d' // 1 day (86400000 milliseconds)`
+- `'w' // 1 week (604800000 milliseconds)`
+- `'m' // 1 month (varies due to month lengths; position will be on the same day of the month)`
+- `'y' // 1 year (varies due to leap years; position will be on the day of the year)`
 
 It's not recommended to add or subtract more than 12 months at a time.
-Adding and subtracting currently does not handle leap days either, so you'll need to add or subtract a day to make up for that. I promise this will be addressed before 2016. ;)
 
 ##Why not use MomentJS?
 [Moment](http://momentjs.com/) is awesome and I personally use it in a lot of projects. This is not intended to replace Moment by any means, it's simply intended to provide a more focused set of features at a fraction of the weight. Moment's unminified .js file is 104KB while Gregorian's is 16KB. If you need the date manipulation or the other many awesome features found in Moment, you're better off using that of course!

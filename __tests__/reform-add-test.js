@@ -12,5 +12,7 @@ describe('reformAdd', function () {
 	 expect(reform('April 11, 1988 00:00 UTC').add(3, 'h').d.toISOString()).toBe('1988-04-11T03:00:00.000Z');
 	 expect(reform('April 11, 1988 00:00 UTC').add(11, 'm').add(5, 'd').d.toISOString()).toBe('1989-03-16T00:00:00.000Z');
 	 expect(reform('April 11, 1988 00:00 UTC').add(3, 'm').add(5, 'd').add(10, 'min').d.toISOString()).toBe('1988-07-16T00:10:00.000Z');
+	 expect(reform('April 11, 1988 00:00 UTC').add(5, 'y').d.toISOString()).toBe('1993-04-11T00:00:00.000Z');
+	 expect(reform('February 27, 1988 00:00 UTC').add(3, 'd').d.toISOString()).toBe('1988-03-01T00:00:00.000Z');
  });
 });

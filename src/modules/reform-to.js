@@ -11,6 +11,10 @@ reformTo.dd = require('./reform-dd');
 reformTo.ddd = require('./reform-ddd');
 reformTo.hh = require('./reform-hh');
 reformTo.hhh = require('./reform-hhh');
+reformTo.HH = require('./reform-_hh_');
+reformTo.HHH = require('./reform-_hhh_');
+reformTo.ss = require('./reform-ss');
+reformTo.sss = require('./reform-sss');
 reformTo.ml = require('./reform-ml');
 reformTo.mll = require('./reform-mll');
 reformTo.tt = require('./reform-tt');
@@ -46,12 +50,16 @@ function to (format) {
 		'mmm', // two-digit month 00-12
 		'MM', // abbreviated month Jan-Dec
 		'mm', // month with no leading zeros 1-12
-		'hhh', // two-digit hours 01-12
+		'hhh', // two-digit hours 00-12
 		'hh', // hour with no leading zeros 1-12
+		'HHH', // two-digit 24-hour clock hours 00-24
+		'HH', // 24-hour clock hour with no leading zeros 0-24
 		'ttt', // two-digit minutes 00-59
 		'tt', // minutes with no leading zeros 0-59
 		'AP', // AM or PM
 		'ap', // am or pm
+		'sss', // two-digit seconds 00-59
+		'ss', // seconds with no leading zeros 0-59
 		'mll', // milliseconds 000-999
 		'ml', // milliseconds with no leading zeros 0-999
 		'zz' // timezone offset UTC -6:00
