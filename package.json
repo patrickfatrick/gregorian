@@ -2,13 +2,13 @@
   "name": "gregorian",
   "version": "1.0.0",
   "description": "A micro library for converting and displaying dates",
-  "main": "gregorian.js",
+  "main": "index.js",
   "scripts": {
     "test": "jest"
   },
   "repository": {
     "type": "git",
-    "url": "https://www.github.com/patrickfatrick/dateify"
+    "url": "https://www.github.com/patrickfatrick/gregorian"
   },
   "keywords": [
     "javascript",

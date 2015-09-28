@@ -1,0 +1,27 @@
+{
+  "name": "gregorian",
+  "main": "index.js",
+  "version": "1.0.0",
+  "authors": [
+    "patrickfatrick <patrick.fricano@icloud.com>"
+  ],
+  "description": "A micro library for converting and displaying dates",
+  "moduleType": [
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "Javascript",
+    "dates"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/patrickfatrick/gregorian",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "client/bower_components",
+    "test",
+    "tests"
+  ]
+}

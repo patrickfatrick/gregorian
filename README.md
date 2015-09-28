@@ -6,10 +6,10 @@
 >verb [ with obj. ]  
 >_1 make changes in (something, typically a social, political, or economic institution or practice) in order to improve it: an opportunity to reform and restructure an antiquated schooling model._
 
-Gregorian is named after the calendar introduced in 1582 by under Pope Gregory XIII's papacy, the calendar we currently use today. It was a reform of the Julian calendar to make the year 0.002% shorter and also slightly changed the leap year schedule to omit 3 leap days every 400 years.
+Gregorian is named after the calendar introduced in 1582 by under Pope Gregory XIII's papacy, the calendar we currently use today. It was a *reform* of the Julian calendar to make the year 0.002% shorter and also slightly changed the leap year schedule to omit 3 leap days every 400 years.
 
 ##What does it do?
-Gregorian is a wrapper for the native Javascript `Date` object that allows you to customize how to display and write dates pretty minutely.
+Gregorian is a wrapper for the native Javascript `Date` object that allows you to customize how to display and write dates pretty minutely. It has no dependencies and can be run either in the browser as a global or as a module.
 
 You can take the same date object and express it like:
 
@@ -35,6 +35,7 @@ Currently this does not convert to a 24-hour clock. This will be implemented soo
 ##Install
 - `npm install gregorian --save`
 - `jspm install npm:gregorian`
+- `bower install gregorian`
 - `git clone git@github.com:patrickfatrick/gregorian.git`
 
 You can install it into your site using `<script src="./node_modules/gregorian/dist/gregorian.min.js"></script>` as usual, or you can include it in a concatenated build using `require('./node_modules/gregorian')`, etc.
@@ -79,7 +80,7 @@ The following are components you can use to construct a format string like `'mmm
 - `'ml' // milliseconds with no leading zeros (0-999)`
 - `'zz' // timezone offset from UTC (UTC -6:00)`
 
-The string returned uses the local timezone.
+The string returned uses the localized timezone.
 
 ###Adding and subtracting
 You can manipulate the gregorian object like `gregorian.reform('2015-10-31').add(1, 'd')` or `gregorian.reform('2015-10-31').subtract(1, 'm')`.
