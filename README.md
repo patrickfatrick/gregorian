@@ -56,7 +56,7 @@ The following are plug-n-play formats that are simply wrappers for existing Java
 
 The following are components you can use to construct a format string like `'mmm/ddd/yyyy'` or `'DDD, MMM yyyy-mm-dd hhh:ttt.mllap zz'`.
 
-- `'yyyy // four-digit year (2015)`
+- `'yyyy' // four-digit year (2015)`
 - `'yy' // two-digit year (15)`
 - `'DDD' // full day of the week (Sunday-Saturday)`
 - `'ddd' // two-digit date of the month (01-31)`
