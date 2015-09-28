@@ -26,9 +26,9 @@ You can take the same date object and express it like:
 
 ##What doesn't it do?
 This does not accept native language input. For instance `gregorian.reform('next Tuesday')` will return a TypeError.
-It accepts anything Javascript natively accepts when creating a date object. `gregorian.reform('April 11, 1988 00:00 UTC')` is valid as is `gregorian.reform('04/11/1988')`.
+It accepts anything Javascript natively accepts when creating a date object. `gregorian.reform('April 11, 1988 00:00 UTC')` is valid as is `gregorian.reform('04/11/1988')` is as valid as `gregorian.reform(new Date('04/11/1988'))` is as valid as `gregorian.reform(576741600000)`.
 
-This does not deal with localization. The library is currently in English only.
+The library is currently in English only.
 
 ##Install
 - `npm install gregorian --save`
