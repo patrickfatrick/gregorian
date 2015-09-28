@@ -1,5 +1,5 @@
 #Gregorian
-"A micro library for converting and displaying dates".
+_A Javascript micro library for converting and displaying dates._
 ![Gregorian Page](./images/gregorian-page.jpg)
 
 >reform |riˈfôrm|  
