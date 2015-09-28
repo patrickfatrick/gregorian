@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Take a date object and output the two-digit hour (01-12)
  * @param   {Date}   date a date object

@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Convert the object passed to a date and test its validity
  * @param {Object} 	obj any object

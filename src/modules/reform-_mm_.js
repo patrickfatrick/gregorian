@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Take a date object and output the abbreviated month
  * @param {Date} 	a date object

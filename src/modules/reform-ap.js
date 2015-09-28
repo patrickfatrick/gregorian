@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Take a date object and output the uncapitalized 12-hour clock period (AM/PM)
  * @param   {Date}   date a date object

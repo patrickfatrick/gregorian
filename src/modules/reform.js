@@ -1,3 +1,5 @@
+'use strict';
+
 var reformDate = require('./reform-date');
 var reformTo = require('./reform-to');
 var reformAdd = require('./reform-add');

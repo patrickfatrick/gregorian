@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Take a date object and output the four-digit year
  * @param {Date} 	a date object

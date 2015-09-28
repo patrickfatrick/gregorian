@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Converts a date object to an ISO string
  * @param   {Date}   date   a date object

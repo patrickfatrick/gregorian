@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Take a date object and output the two-digit month (01-12)
  * @param {Date} 	a date object

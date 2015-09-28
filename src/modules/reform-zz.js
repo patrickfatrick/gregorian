@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Take a date object and output the timezone offset (UTC +- 01:00, etc.)
  * @param   {Date}   date a date object

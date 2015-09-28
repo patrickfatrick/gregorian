@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Converts a date object to a UTC string
  * @param   {Date}   date a date object

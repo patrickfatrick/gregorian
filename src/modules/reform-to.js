@@ -1,3 +1,5 @@
+'use strict';
+
 var reformTo = {};
 reformTo.AP = require('./reform-_ap_');
 reformTo.ap = require('./reform-ap');

@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Take a date object and output the day of the week
  * @param {Date} 	a date object

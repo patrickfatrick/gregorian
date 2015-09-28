@@ -1,3 +1,5 @@
+'use strict';
+
 var to = require('./reform-to');
 var subtract = require('./reform-subtract');
 

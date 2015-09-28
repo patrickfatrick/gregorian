@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Converts a date object to UNIX time (milliseconds from January 1, 1970)
  * @param   {Date}   date a date object

@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Take a date object and output the date of the month with no leading zeros (1-31)
  * @param {Date} 	a date object

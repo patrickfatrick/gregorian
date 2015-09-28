@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Take a date object and outpit the hour with no leading zeros (1-12)
  * @param   {Date}   date a date object

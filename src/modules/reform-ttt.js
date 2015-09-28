@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Take a date object and output the two-digit minutes
  * @param   {Date}   date a date object

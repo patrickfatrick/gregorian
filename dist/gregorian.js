@@ -1,4 +1,6 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}(g.gregorian || (g.gregorian = {})).js = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+'use strict';
+
 /**
  * Gregorian
  * Author: Patrick Fricano
@@ -8,18 +10,16 @@
  * Also serves as a wrapper for common JS date methods like toUTCString and toISOString
  * toLocaleDateString is currently not well-supported especially on mobile, so we're avoiding it.
  * 
- * 
- * 
  * gregorian.reform.to('__FORMAT STRING__') string with formatting options specified with keyword strings
  * 		See ./modules/reform-to.js for more information on this
- * gregorian.reform.to('iso') ISO string including time such as '2015-09-12T23:06:19Z'
+ * gregorian.reform(__OBJECT__).to('iso') ISO string including time such as '2015-09-12T23:06:19Z'
  * 		`iso-short` can be added to reduce the string to just the date, like '2015-09-12'
- * gregorian.reform.to('utc') UTC string such as 'Sat, 12 Sep 2015 06:00:00 GMT'
+ * gregorian.reform(__OBJECT__).to('utc') UTC string such as 'Sat, 12 Sep 2015 06:00:00 GMT'
  * 		`utc-short` can be added to reduce the string to just the date, like 'Sat, 12 Sep 2015'
- * gregorian.reform.to('unix') milliseconds since January 1, 1970
+ * gregorian.reform(__OBJECT__).to('unix') milliseconds since January 1, 1970
+ * gregorian.reform(__OBJECT__).add(_NUMBER__, __INCREMENT_STRING__) add time
+ * gregorian.reform(__OBJECT__).subtract(_NUMBER__, __INCREMENT_STRING__) subtract time
  */
-
-'use strict';
 
 var reform = require('./modules/reform');
 
@@ -30,13 +30,13 @@ var gregorian = {
 module.exports = gregorian;
 
 },{"./modules/reform":32}],2:[function(require,module,exports){
+'use strict';
+
 /**
  * Take a date object and output the capitalized 12-hour clock period (AM/PM)
  * @param   {Date}   date a date object
  * @returns {String} the capitalized 12-hour clock period 
  */
-'use strict';
-
 function reformAP(date) {
   var hour = date.getHours();
   var ampm = hour < 12 ? 'AM' : 'PM';
@@ -46,13 +46,13 @@ function reformAP(date) {
 module.exports = reformAP;
 
 },{}],3:[function(require,module,exports){
+'use strict';
+
 /**
  * Take a date object and output the abreviated day of the week
  * @param {Date} 	a date object
  * @returns {Number}	the abbreviated day of the week
  */
-'use strict';
-
 function reformDD(date) {
   var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   var dayOfWeek = date.getDay();
@@ -62,13 +62,13 @@ function reformDD(date) {
 module.exports = reformDD;
 
 },{}],4:[function(require,module,exports){
+'use strict';
+
 /**
  * Take a date object and output the day of the week
  * @param {Date} 	a date object
  * @returns {String} the full day of the week
  */
-'use strict';
-
 function reformDDD(date) {
   var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   var dayOfWeek = date.getDay();
@@ -78,13 +78,13 @@ function reformDDD(date) {
 module.exports = reformDDD;
 
 },{}],5:[function(require,module,exports){
+'use strict';
+
 /**
  * Take a date object and outpit the 24-hour clock hour with no leading zeros (0-23)
  * @param   {Date}   date a date object
  * @returns {String} the hour with no leading zeros
  */
-"use strict";
-
 function reformHH(date) {
   var hour = date.getHours();
   return hour;
@@ -93,13 +93,13 @@ function reformHH(date) {
 module.exports = reformHH;
 
 },{}],6:[function(require,module,exports){
+'use strict';
+
 /**
  * Take a date object and outpit the 24-hour clock hour with no leading zeros (0-23)
  * @param   {Date}   date a date object
  * @returns {String} the hour with no leading zeros
  */
-'use strict';
-
 function reformHHH(date) {
   var hour = date.getHours().toString();
   return hour.length < 2 ? '0' + hour : hour;
@@ -108,13 +108,13 @@ function reformHHH(date) {
 module.exports = reformHHH;
 
 },{}],7:[function(require,module,exports){
+'use strict';
+
 /**
  * Take a date object and output the abbreviated month
  * @param {Date} 	a date object
  * @returns {String}	the abbreviated month
  */
-'use strict';
-
 function reformMM(date) {
   var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
   var month = date.getMonth();
@@ -124,13 +124,13 @@ function reformMM(date) {
 module.exports = reformMM;
 
 },{}],8:[function(require,module,exports){
+'use strict';
+
 /**
  * Take a date object and output the month
  * @param {Date} 	a date object
  * @returns {String}	the full month
  */
-'use strict';
-
 function reformMMM(date) {
   var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   var month = date.getMonth();
@@ -201,13 +201,13 @@ function add(n, increment) {
 module.exports = add;
 
 },{"./reform-subtract":23,"./reform-to":24}],10:[function(require,module,exports){
+'use strict';
+
 /**
  * Take a date object and output the uncapitalized 12-hour clock period (AM/PM)
  * @param   {Date}   date a date object
  * @returns {String} the uncapitalized 12-hour clock period 
  */
-'use strict';
-
 function reformAp(date) {
   var hour = date.getHours();
   var ampm = hour < 12 ? 'am' : 'pm';
@@ -217,13 +217,13 @@ function reformAp(date) {
 module.exports = reformAp;
 
 },{}],11:[function(require,module,exports){
+'use strict';
+
 /**
  * Convert the object passed to a date and test its validity
  * @param {Object} 	obj any object
  * @returns {Date}	if string passes the test, return the date object
  */
-'use strict';
-
 function reformDate(obj) {
 	if (obj == null) throw new TypeError('This is null or undefined');
 	obj = new Date(obj);
@@ -238,13 +238,13 @@ function reformDate(obj) {
 module.exports = reformDate;
 
 },{}],12:[function(require,module,exports){
+'use strict';
+
 /**
  * Take a date object and output the date of the month with no leading zeros (1-31)
  * @param {Date} 	a date object
  * @returns {Number}	the date of the month with no leading zeros
  */
-"use strict";
-
 function reformDd(date) {
   var day = date.getDate().toString();
   return day;
@@ -253,13 +253,13 @@ function reformDd(date) {
 module.exports = reformDd;
 
 },{}],13:[function(require,module,exports){
+'use strict';
+
 /**
  * Take a date object and output the two-digit date of the month (01-31)
  * @param {Date} 	a date object
  * @returns {Number}	the two-digit date of the month
  */
-'use strict';
-
 function reformDdd(date) {
   var day = date.getDate().toString();
   return day.length < 2 ? '0' + day : day;
@@ -268,13 +268,13 @@ function reformDdd(date) {
 module.exports = reformDdd;
 
 },{}],14:[function(require,module,exports){
+'use strict';
+
 /**
  * Take a date object and outpit the hour with no leading zeros (1-12)
  * @param   {Date}   date a date object
  * @returns {String} the hour with no leading zeros
  */
-"use strict";
-
 function reformHh(date) {
 	var hour = date.getHours();
 	if (hour === 0) hour = 12;
@@ -286,13 +286,13 @@ function reformHh(date) {
 module.exports = reformHh;
 
 },{}],15:[function(require,module,exports){
+'use strict';
+
 /**
  * Take a date object and output the two-digit hour (01-12)
  * @param   {Date}   date a date object
  * @returns {String} the two-digit hour
  */
-'use strict';
-
 function reformHhh(date) {
 	var hour = date.getHours();
 	if (hour === 0) hour = 12;
@@ -305,14 +305,14 @@ function reformHhh(date) {
 module.exports = reformHhh;
 
 },{}],16:[function(require,module,exports){
+'use strict';
+
 /**
  * Converts a date object to an ISO string
  * @param   {Date}   date   a date object
  * @param {String}		format optional 'short' to remove the time
  * @returns {String} ISO String including time
  */
-'use strict';
-
 function reformISO(date, format) {
   format = format || null;
   //console.log('iso function date: ' + date);
@@ -323,13 +323,13 @@ function reformISO(date, format) {
 module.exports = reformISO;
 
 },{}],17:[function(require,module,exports){
+'use strict';
+
 /**
  * Take a date object and output the milliseconds with no leading zeros (0-999)
  * @param   {Date} date a date object
  * @returns {String}    the number of milliseconds
  */
-"use strict";
-
 function reformMl(date) {
   var milliseconds = date.getMilliseconds().toString();
   return milliseconds;
@@ -338,13 +338,13 @@ function reformMl(date) {
 module.exports = reformMl;
 
 },{}],18:[function(require,module,exports){
+'use strict';
+
 /**
  * Take a date object and and output the three-digit milliseconds (000-999)
  * @param   {Date}   date a date object
  * @returns {String} the number of milliseconds
  */
-'use strict';
-
 function reformMll(date) {
 	var milliseconds = date.getMilliseconds().toString();
 	switch (milliseconds.length) {
@@ -364,13 +364,13 @@ function reformMll(date) {
 module.exports = reformMll;
 
 },{}],19:[function(require,module,exports){
+'use strict';
+
 /**
  * Take a date object and output the numeric month (1-12)
  * @param {Date} 	a date object
  * @returns {Number}	the month with no leading zeros
  */
-"use strict";
-
 function reformMm(date) {
   var month = (date.getMonth() + 1).toString();
   return month;
@@ -379,13 +379,13 @@ function reformMm(date) {
 module.exports = reformMm;
 
 },{}],20:[function(require,module,exports){
+'use strict';
+
 /**
  * Take a date object and output the two-digit month (01-12)
  * @param {Date} 	a date object
  * @returns {Number}	the two-digit month
  */
-'use strict';
-
 function reformMmm(date) {
   var month = (date.getMonth() + 1).toString();
   return month.length < 2 ? '0' + month : month;
@@ -394,13 +394,13 @@ function reformMmm(date) {
 module.exports = reformMmm;
 
 },{}],21:[function(require,module,exports){
+'use strict';
+
 /**
  * Take a date object and outpit the seconds with no leading zeros (0-59)
  * @param   {Date}   date a date object
  * @returns {String} the seconds with no leading zeros
  */
-"use strict";
-
 function reformSs(date) {
   var second = date.getSeconds();
   return second;
@@ -409,13 +409,13 @@ function reformSs(date) {
 module.exports = reformSs;
 
 },{}],22:[function(require,module,exports){
+'use strict';
+
 /**
  * Take a date object and outpit the two-digit seconds (0-59)
  * @param   {Date}   date a date object
  * @returns {String} the two-digit seconds
  */
-'use strict';
-
 function reformSs(date) {
   var second = date.getSeconds().toString();
   return second.length < 2 ? '0' + second : second;
@@ -584,13 +584,13 @@ function to(format) {
 module.exports = to;
 
 },{"./reform-_ap_":2,"./reform-_dd_":3,"./reform-_ddd_":4,"./reform-_hh_":5,"./reform-_hhh_":6,"./reform-_mm_":7,"./reform-_mmm_":8,"./reform-ap":10,"./reform-dd":12,"./reform-ddd":13,"./reform-hh":14,"./reform-hhh":15,"./reform-iso":16,"./reform-ml":17,"./reform-mll":18,"./reform-mm":19,"./reform-mmm":20,"./reform-ss":21,"./reform-sss":22,"./reform-tt":25,"./reform-ttt":26,"./reform-unix":27,"./reform-utc":28,"./reform-yy":29,"./reform-yyyy":30,"./reform-zz":31}],25:[function(require,module,exports){
+'use strict';
+
 /**
  * Take a date object and output the minutes with no leading zeros
  * @param   {Date} date a date object
  * @returns {String}  the minutes with no leading zeros
  */
-"use strict";
-
 function reformTt(date) {
   var minute = date.getMinutes().toString();
   return minute;
@@ -599,13 +599,13 @@ function reformTt(date) {
 module.exports = reformTt;
 
 },{}],26:[function(require,module,exports){
+'use strict';
+
 /**
  * Take a date object and output the two-digit minutes
  * @param   {Date}   date a date object
  * @returns {String} the two-digit minutes
  */
-'use strict';
-
 function reformTtt(date) {
   var minute = date.getMinutes().toString();
   return minute.length < 2 ? '0' + minute : minute;
@@ -614,13 +614,13 @@ function reformTtt(date) {
 module.exports = reformTtt;
 
 },{}],27:[function(require,module,exports){
+'use strict';
+
 /**
  * Converts a date object to UNIX time (milliseconds from January 1, 1970)
  * @param   {Date}   date a date object
  * @returns {Number} milliseconds from January 1, 1970
  */
-
-"use strict";
 
 function reformUnix(date) {
   return Date.parse(date);
@@ -629,14 +629,14 @@ function reformUnix(date) {
 module.exports = reformUnix;
 
 },{}],28:[function(require,module,exports){
+'use strict';
+
 /**
  * Converts a date object to a UTC string
  * @param   {Date}   date a date object
  * @param 	{String}	format optional 'shart' to remove the time from the output
  * @returns {String} UTC string with or without time
  */
-
-'use strict';
 
 function reformUTC(date, format) {
 	format = format || null;
@@ -657,13 +657,13 @@ function reformUTC(date, format) {
 module.exports = reformUTC;
 
 },{}],29:[function(require,module,exports){
+'use strict';
+
 /**
  * Take a date object and output the two-digit year
  * @param {Date} 	a date object
  * @returns {Number}	the two-digit year
  */
-"use strict";
-
 function reformYy(date) {
   return date.getFullYear().toString().substr(2);
 }
@@ -671,13 +671,13 @@ function reformYy(date) {
 module.exports = reformYy;
 
 },{}],30:[function(require,module,exports){
+'use strict';
+
 /**
  * Take a date object and output the four-digit year
  * @param {Date} 	a date object
  * @returns {Number}	the four-digit year
  */
-"use strict";
-
 function reformYyyy(date) {
   return date.getFullYear();
 }
@@ -685,13 +685,13 @@ function reformYyyy(date) {
 module.exports = reformYyyy;
 
 },{}],31:[function(require,module,exports){
+'use strict';
+
 /**
  * Take a date object and output the timezone offset (UTC +- 01:00, etc.)
  * @param   {Date}   date a date object
  * @returns {String} the timezone offset 
  */
-'use strict';
-
 function reformZz(date) {
   var offset = date.getTimezoneOffset() / 60 * -1;
   return 'UTC ' + offset + ':00';

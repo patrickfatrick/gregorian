@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Take a date object and and output the three-digit milliseconds (000-999)
  * @param   {Date}   date a date object

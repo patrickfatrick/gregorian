@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Take a date object and output the minutes with no leading zeros
  * @param   {Date} date a date object
