@@ -6,7 +6,7 @@ var buffer = require('vinyl-buffer');
 var source = require('vinyl-source-stream');
 var config = require('../config').build;
 
-var bundler = browserify(config.src, {debug: true, standalone: config.outputName});
+var bundler = browserify(config.src, {standalone: config.standalone});
 bundler.transform(config.transform);
 gulp.task('build', bundle);
 

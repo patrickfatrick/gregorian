@@ -10,7 +10,8 @@ module.exports = {
 		config: './config.js',
 		src: src + '/gregorian.js',
 		dest: dest + '/',
-		outputName: 'gregorian.js'
+		outputName: 'gregorian.js',
+		standalone: 'gregorian'
 	},
 	min: {
 		transform: ['babelify', {
@@ -19,7 +20,8 @@ module.exports = {
 		config: './config.js',
 		src: src + '/gregorian.js',
 		dest: dest + '/',
-		outputName: 'gregorian.min.js'
+		outputName: 'gregorian.min.js',
+		standalone: 'gregorian'
 	},
 	lint: {
 		src: src + '/**/*.js'

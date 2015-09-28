@@ -1,7 +1,7 @@
 {
   "name": "gregorian",
   "main": "index.js",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "authors": [
     "patrickfatrick <patrick.fricano@icloud.com>"
   ],
