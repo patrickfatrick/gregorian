@@ -17,5 +17,6 @@ describe('reformAdd', function () {
 	 expect(reform('April 11, 1988 00:00 UTC').subtract(3, 'y').d.toISOString()).toBe('1985-04-11T00:00:00.000Z');
 	 expect(reform('March 1, 1988 00:00 UTC').subtract(3, 'd').d.toISOString()).toBe('1988-02-27T00:00:00.000Z');
 	 expect(reform('October 31, 2015 00:00 UTC').subtract(1, 'm').d.toISOString()).toBe('2015-09-30T00:00:00.000Z');
+	 expect(reform('October 31, 2015 00:00 UTC').subtract(15, 'm').d.toISOString()).toBe('2014-07-31T00:00:00.000Z');
  });
 });

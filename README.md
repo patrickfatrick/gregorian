@@ -9,7 +9,7 @@ _A Javascript micro library for converting and displaying dates._
 Gregorian is named after the calendar introduced in 1582 by under Pope Gregory XIII's papacy, the calendar we currently use today. It was a **reform** of the Julian calendar to make the year 0.002% shorter and also slightly changed the leap year schedule to omit 3 leap days every 400 years.
 
 ##What does it do?
-Gregorian is a wrapper for the native Javascript `Date` object that allows you to customize how to display and write dates pretty minutely. It has no dependencies and can be run either in the browser as a global or as a module.
+Gregorian is a wrapper for the native Javascript `Date` object that allows you to customize how to display and write dates pretty minutely. It has no dependencies and can be run either in the browser as a global or as a module. Each release is linted with ESLint and tested with Jest to minimize errors.
 
 You can take the same date object and express it like:
 
@@ -108,11 +108,9 @@ Accepted increments you can use for additions and subtractions are
 'h' // 1 hour (3600000 milliseconds)
 'd' // 1 day (86400000 milliseconds)
 'w' // 1 week (604800000 milliseconds)
-'m' // 1 month (varies due to month lengths; position will be on the same day of the month)
-'y' // 1 year (varies due to leap years; position will be on the day of the year)
+'m' // 1 month (varies due to month lengths; position will be on the same date and time of the month)
+'y' // 1 year (varies due to leap years; position will be on the date and time of the year)
 ```
-
-It's not recommended to add or subtract more than 12 months at a time.
 
 ##Why not use MomentJS?
 [Moment](http://momentjs.com/) is awesome and I personally use it in a lot of projects. This is not intended to replace Moment by any means, it's simply intended to provide a more focused set of features at a fraction of the weight. Moment's unminified .js file is about 5x the size of Gregorian's.
@@ -124,6 +122,6 @@ It's not recommended to add or subtract more than 12 months at a time.
 - Add more testing.
 
 
-Each Gregorian release is linted with ESLint and tested with Jest.
+_Each Gregorian release is linted with ESLint and tested with Jest._
 
 ![Gregorian Calendar](./images/gregorian-calendar.jpg)
