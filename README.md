@@ -34,7 +34,7 @@ The library is currently in English only.
 
 ##Install
 
-```javascript
+```bash
 npm install gregorian --save
 jspm install npm:gregorian
 bower install gregorian
