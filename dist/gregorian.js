@@ -167,26 +167,34 @@ function add(n, increment) {
 	/**
   * Handle month so that you always wind up on the same day of the month
   */
-	var newMonth;
+
 	var newYear;
+	var newMonth;
+	var newDate = this.d.getUTCDate();
+
 	if (increment === 'm') {
-		newMonth = this.d.getMonth() + n + 1;
-		newYear = this.d.getFullYear();
-		if (newMonth > 12) {
-			newYear = this.d.getFullYear() + 1;
-			newMonth = newMonth - 12;
+		newMonth = this.d.getUTCMonth() + n;
+		newYear = this.d.getUTCFullYear();
+
+		if (newDate > new Date(this.d.setUTCFullYear(newYear, newMonth + 1, 0)).getUTCDate()) {
+			date = new Date(this.d.setUTCFullYear(newYear, newMonth + 1, 0));
+		} else {
+			date = new Date(this.d.setUTCFullYear(newYear, newMonth, newDate));
 		}
-		newMonth = newMonth.toString();
-		newMonth = newMonth.length < 2 ? '0' + newMonth : newMonth;
-		date = new Date(newYear + '-' + newMonth + '-' + this.d.toISOString().substring(8));
 	}
 
 	/**
-  * Handle year so that you always wind up on the same day of the year with leap years
+  * Handle year so that you always wind up on the same day of the month
   */
 	if (increment === 'y') {
-		newYear = this.d.getFullYear() + n;
-		date = new Date(newYear + '-' + this.d.toISOString().substring(5));
+		newYear = this.d.getUTCFullYear() + n;
+		newMonth = this.d.getUTCMonth();
+
+		if (newDate > new Date(this.d.setUTCFullYear(newYear, newMonth + 1, 0)).getUTCDate()) {
+			date = new Date(this.d.setUTCFullYear(newYear, newMonth + 1, 0));
+		} else {
+			date = new Date(this.d.setUTCFullYear(newYear, newMonth, newDate));
+		}
 	}
 
 	return {
@@ -447,26 +455,37 @@ function subtract(n, increment) {
 	};
 	var sum = current - n * increments[increment];
 	var date = new Date(sum);
+
 	/**
   * Handle month so that you always wind up on the same day of the month
   */
 	var newYear;
 	var newMonth;
+	var newDate = this.d.getUTCDate();
+
 	if (increment === 'm') {
-		newMonth = this.d.getMonth() - n + 1;
-		newYear = this.d.getFullYear();
-		if (newMonth < 0) {
-			newYear = this.d.getFullYear() - 1;
-			newMonth = newMonth + 12;
+		newMonth = this.d.getUTCMonth() - n;
+		newYear = this.d.getUTCFullYear();
+
+		if (newDate > new Date(this.d.setUTCFullYear(newYear, newMonth + 1, 0)).getUTCDate()) {
+			date = new Date(this.d.setUTCFullYear(newYear, newMonth + 1, 0));
+		} else {
+			date = new Date(this.d.setUTCFullYear(newYear, newMonth, newDate));
 		}
-		newMonth = newMonth.toString();
-		newMonth = newMonth.length < 2 ? '0' + newMonth : newMonth;
-		date = new Date(newYear + '-' + newMonth + '-' + this.d.toISOString().substring(8));
 	}
 
+	/**
+  * Handle year so that you always wind up on the same day of the month
+  */
 	if (increment === 'y') {
-		newYear = this.d.getFullYear() - n;
-		date = new Date(newYear + '-' + this.d.toISOString().substring(5));
+		newYear = this.d.getUTCFullYear() - n;
+		newMonth = this.d.getUTCMonth();
+
+		if (newDate > new Date(this.d.setUTCFullYear(newYear, newMonth + 1, 0)).getUTCDate()) {
+			date = new Date(this.d.setUTCFullYear(newYear, newMonth + 1, 0));
+		} else {
+			date = new Date(this.d.setUTCFullYear(newYear, newMonth, newDate));
+		}
 	}
 
 	return {

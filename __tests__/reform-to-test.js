@@ -33,13 +33,13 @@ jest.dontMock('../src/modules/reform-iso');
 describe('reformTo', function () {
 	it('converts a date to a string with a specified format', function () {
 		var reform = require('../src/modules/reform');
-		expect(reform('April 11, 1988').to('unix')).toBe(576741600000);
-		expect(reform('April 11, 1988').to('iso')).toBe('1988-04-11T06:00:00.000Z');
-		expect(reform('April 11, 1988').to('iso-short')).toBe('1988-04-11');
-		expect(reform('09/25/2015').to('DDD, yyyy-mm-dd hhh:ttt.mllap zz')).toBe('Friday, 2015-9-25 12:00.000am UTC -6:00');
-		expect(reform('09/25/2015').to('DD, yy-mmm-ddd hh:tt.mlAP zz')).toBe('Fri, 15-09-25 12:0.0AM UTC -6:00');
-		expect(reform('09/25/2015').to('DDD, MMM yyyy-mm-dd hhh:ttt.mllap zz')).toBe('Friday, September 2015-9-25 12:00.000am UTC -6:00');
-		expect(reform('09/25/2015').to('DDD, MM yyyy-mm-dd hhh:ttt.mllap zz')).toBe('Friday, Sept 2015-9-25 12:00.000am UTC -6:00');
+		expect(reform('April 11, 1988 07:45 UTC').to('unix')).toBe(576747900000);
+		expect(reform('April 11, 1988 07:45 UTC').to('iso')).toBe('1988-04-11T07:45:00.000Z');
+		expect(reform('April 11, 1988 00:00 UTC').to('iso-short')).toBe('1988-04-11');
+		expect(reform('09/25/2015 00:00 UTC -06:00').to('DDD, yyyy-mm-dd hhh:ttt.mllap zz')).toBe('Friday, 2015-9-25 12:00.000am UTC -6:00');
+		expect(reform('09/25/2015 UTC -06:00').to('DD, yy-mmm-ddd hh:tt.mlAP zz')).toBe('Fri, 15-09-25 12:0.0AM UTC -6:00');
+		expect(reform('09/25/2015 UTC -06:00').to('DDD, MMM yyyy-mm-dd hhh:ttt.mllap zz')).toBe('Friday, September 2015-9-25 12:00.000am UTC -6:00');
+		expect(reform('09/25/2015 UTC -06:00').to('DDD, MM yyyy-mm-dd hhh:ttt.mllap zz')).toBe('Friday, Sept 2015-9-25 12:00.000am UTC -6:00');
 		expect(reform('09/25/2015 23:59 UTC').to('DDD, MM yyyy-mm-dd HH:ttt:ss.mll zz')).toBe('Friday, Sept 2015-9-25 17:59:0.000 UTC -6:00');
 		expect(reform('09/25/2015 01:00 UTC').to('DDD, MM yyyy-mm-dd HH:ttt:sss.mll zz')).toBe('Thursday, Sept 2015-9-24 19:00:00.000 UTC -6:00');
 	});
