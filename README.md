@@ -43,6 +43,8 @@ git clone git@github.com:patrickfatrick/gregorian.git
 
 You can install it into your site using `<script src="./gregorian/dist/gregorian.min.js"></script>` as usual, or you can include it in a concatenated build using `require('./node_modules/gregorian')`, etc.
 
+To run the tests, `npm test`.
+
 ##Usage
 To create a gregorian object, call `gregorian.reform()` with either a date object or a date-string. For instance `gregorian.reform('2015-10-31')` or `gregorian.reform(new Date())`.
 
@@ -120,7 +122,6 @@ Accepted increments you can use for additions and subtractions are
 - Add setter functions to take an existing gregorian object and set a specific date or time on it.
 - Add ability to make a translation with a config, as well as direct translations for some common languages.
 - Add more testing.
-
 
 _Each Gregorian release is linted with ESLint and tested with Jest._
 
