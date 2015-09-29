@@ -69,7 +69,9 @@ function to (format) {
 
 	search.some(function(piece) {
 		//console.log(converted + ' vs ' + piece);
-		if (converted.indexOf(piece) !== -1) {
+		//if (converted.indexOf(piece) !== -1) {
+		var re = new RegExp('([~!@#$%^&*()_+=`{}\[\]\|\\:;\"\'<>,.\/\? ])*' + piece + '([~!@#$%^&*()_+=`{}\[\]\|\\:;\"\'<>,.\/\? ])*', 'g')
+		if (re.test(converted)) {
 			switch (piece) {
 				case 'unix':
 					converted = reformTo.unix(date);
@@ -90,7 +92,7 @@ function to (format) {
 					// console.log('Search string is: ' + piece);
 					// console.log('Converted string is: ' + to[piece](date));
 					var replacer = reformTo[piece](date).toString();
-					converted = converted.replace(piece, replacer);
+					converted = converted.replace(re, replacer);
 					return false;
 			}
 		}
