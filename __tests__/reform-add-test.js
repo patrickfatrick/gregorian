@@ -17,5 +17,10 @@ describe('reformAdd', function () {
 	 expect(reform('February 27, 1988 00:00 UTC').add(3, 'd').d.toISOString()).toBe('1988-03-01T00:00:00.000Z');
 	 expect(reform('October 31, 2015 00:00 UTC').add(1, 'm').d.toISOString()).toBe('2015-11-30T00:00:00.000Z');
 	 expect(reform('October 31, 2015 00:00 UTC').add(15, 'm').d.toISOString()).toBe('2017-01-31T00:00:00.000Z');
+	 expect(reform('2015-10-31T04:56:14.877Z').add(123, 'ms').d.toISOString()).toBe('2015-10-31T04:56:15.000Z');
+	 expect(reform('2015-10-31T04:56:14.877Z').add(8, 's').d.toISOString()).toBe('2015-10-31T04:56:22.877Z');
+	 expect(reform('2015-10-31T04:56:14.877Z').add(8, 'min').d.toISOString()).toBe('2015-10-31T05:04:14.877Z');
+	 expect(reform('2015-10-31T04:56:14.877Z').add(8, 'h').d.toISOString()).toBe('2015-10-31T12:56:14.877Z');
+	 expect(reform('2015-10-31T04:56:14.877Z').add(8, 'd').d.toISOString()).toBe('2015-11-08T04:56:14.877Z');
  });
 });

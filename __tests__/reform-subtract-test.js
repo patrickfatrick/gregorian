@@ -4,7 +4,7 @@ jest.dontMock('../src/modules/reform');
 jest.dontMock('../src/modules/reform-date');
 jest.dontMock('../src/modules/reform-to');
 
-describe('reformAdd', function () {
+describe('reformSubtract', function () {
  it('subtracts specified increments to the date', function () {
 	 var reform = require('../src/modules/reform');
    expect(reform('April 11, 1988 00:00 UTC').subtract(1, 'd').d.toISOString()).toBe('1988-04-10T00:00:00.000Z');
@@ -18,5 +18,6 @@ describe('reformAdd', function () {
 	 expect(reform('March 1, 1988 00:00 UTC').subtract(3, 'd').d.toISOString()).toBe('1988-02-27T00:00:00.000Z');
 	 expect(reform('October 31, 2015 00:00 UTC').subtract(1, 'm').d.toISOString()).toBe('2015-09-30T00:00:00.000Z');
 	 expect(reform('October 31, 2015 00:00 UTC').subtract(15, 'm').d.toISOString()).toBe('2014-07-31T00:00:00.000Z');
+	 expect(reform('2015-10-31T04:56:15.123Z').subtract(123, 'ms').d.toISOString()).toBe('2015-10-31T04:56:15.000Z');
  });
 });
