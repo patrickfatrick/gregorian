@@ -142,8 +142,8 @@ module.exports = reformMMM;
 },{}],9:[function(require,module,exports){
 'use strict';
 
-var to = require('./reform-to');
-var subtract = require('./reform-subtract');
+//var to = require('./reform-to');
+//var subtract = require('./reform-subtract');
 
 /**
  * Adds specified increments to a gregorian object
@@ -200,15 +200,15 @@ function add(n, increment) {
 	return {
 		d: date,
 		input: this.input,
-		to: to,
+		to: this.to,
 		add: add,
-		subtract: subtract
+		subtract: this.subtract
 	};
 }
 
 module.exports = add;
 
-},{"./reform-subtract":23,"./reform-to":24}],10:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 'use strict';
 
 /**
@@ -434,8 +434,8 @@ module.exports = reformSs;
 },{}],23:[function(require,module,exports){
 'use strict';
 
-var to = require('./reform-to');
-var add = require('./reform-add');
+//var to = require('./reform-to');
+//var add = require('./reform-add');
 
 /**
  * Subtracts specified increments to a gregorian object
@@ -491,15 +491,15 @@ function subtract(n, increment) {
 	return {
 		d: date,
 		input: this.input,
-		to: to,
-		add: add,
+		to: this.to,
+		add: this.add,
 		subtract: subtract
 	};
 }
 
 module.exports = subtract;
 
-},{"./reform-add":9,"./reform-to":24}],24:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 'use strict';
 
 var reformTo = {};

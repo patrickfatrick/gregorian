@@ -1,7 +1,7 @@
 'use strict';
 
-var to = require('./reform-to');
-var add = require('./reform-add');
+//var to = require('./reform-to');
+//var add = require('./reform-add');
 
 /**
  * Subtracts specified increments to a gregorian object
@@ -57,8 +57,8 @@ function subtract (n, increment) {
 	return {
 		d: date,
 		input: this.input,
-		to: to,
-		add: add,
+		to: this.to,
+		add: this.add,
 		subtract: subtract
 	};
 }
