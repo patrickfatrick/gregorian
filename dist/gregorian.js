@@ -142,9 +142,6 @@ module.exports = reformMMM;
 },{}],9:[function(require,module,exports){
 'use strict';
 
-//var to = require('./reform-to');
-//var subtract = require('./reform-subtract');
-
 /**
  * Adds specified increments to a gregorian object
  * @param   {Number} n         a number to multiply the increment by
@@ -152,53 +149,49 @@ module.exports = reformMMM;
  * @returns {Object} a new gregorian object
  */
 function add(n, increment) {
-	var current = Date.parse(this.d);
-	var increments = {
-		ms: 1,
-		s: 1000,
-		min: 60000,
-		h: 3600000,
-		d: 86400000,
-		w: 604800000
+
+	var increments = {};
+
+	increments.ms = function (date) {
+		return new Date(date.setUTCMilliseconds(date.getUTCMilliseconds() + n));
 	};
-	var sum = current + n * increments[increment];
-	var date = new Date(sum);
+	increments.s = function (date) {
+		return new Date(date.setUTCSeconds(date.getUTCSeconds() + n));
+	};
+	increments.min = function (date) {
+		return new Date(date.setUTCMinutes(date.getUTCMinutes() + n));
+	};
+	increments.h = function (date) {
+		return new Date(date.setUTCHours(date.getUTCHours() + n));
+	};
+	increments.d = function (date) {
+		return new Date(date.setUTCDate(date.getUTCDate() + n));
+	};
+	increments.m = function (date) {
+		var newMonth = date.getUTCMonth() + n;
+		var newYear = date.getUTCFullYear();
+		var newDate = date.getUTCDate();
 
-	/**
-  * Handle month so that you always wind up on the same day of the month
-  */
-
-	var newYear;
-	var newMonth;
-	var newDate = this.d.getUTCDate();
-
-	if (increment === 'm') {
-		newMonth = this.d.getUTCMonth() + n;
-		newYear = this.d.getUTCFullYear();
-
-		if (newDate > new Date(this.d.setUTCFullYear(newYear, newMonth + 1, 0)).getUTCDate()) {
-			date = new Date(this.d.setUTCFullYear(newYear, newMonth + 1, 0));
+		if (newDate > new Date(date.setUTCFullYear(newYear, newMonth + 1, 0)).getUTCDate()) {
+			return new Date(date.setUTCFullYear(newYear, newMonth + 1, 0));
 		} else {
-			date = new Date(this.d.setUTCFullYear(newYear, newMonth, newDate));
+			return new Date(date.setUTCFullYear(newYear, newMonth, newDate));
 		}
-	}
+	};
+	increments.y = function (date) {
+		var newYear = date.getUTCFullYear() + n;
+		var newMonth = date.getUTCMonth();
+		var newDate = date.getUTCDate();
 
-	/**
-  * Handle year so that you always wind up on the same day of the month
-  */
-	if (increment === 'y') {
-		newYear = this.d.getUTCFullYear() + n;
-		newMonth = this.d.getUTCMonth();
-
-		if (newDate > new Date(this.d.setUTCFullYear(newYear, newMonth + 1, 0)).getUTCDate()) {
-			date = new Date(this.d.setUTCFullYear(newYear, newMonth + 1, 0));
+		if (newDate > new Date(date.setUTCFullYear(newYear, newMonth + 1, 0)).getUTCDate()) {
+			return new Date(date.setUTCFullYear(newYear, newMonth + 1, 0));
 		} else {
-			date = new Date(this.d.setUTCFullYear(newYear, newMonth, newDate));
+			return new Date(date.setUTCFullYear(newYear, newMonth, newDate));
 		}
-	}
+	};
 
 	return {
-		d: date,
+		d: increments[increment](this.d),
 		input: this.input,
 		to: this.to,
 		add: add,
@@ -434,9 +427,6 @@ module.exports = reformSs;
 },{}],23:[function(require,module,exports){
 'use strict';
 
-//var to = require('./reform-to');
-//var add = require('./reform-add');
-
 /**
  * Subtracts specified increments to a gregorian object
  * @param   {Number} n         a number to multiply the increment by
@@ -444,52 +434,48 @@ module.exports = reformSs;
  * @returns {Object} a new gregorian object
  */
 function subtract(n, increment) {
-	var current = Date.parse(this.d);
-	var increments = {
-		ms: 1,
-		s: 1000,
-		min: 60000,
-		h: 3600000,
-		d: 86400000,
-		w: 604800000
+	var increments = {};
+
+	increments.ms = function (date) {
+		return new Date(date.setUTCMilliseconds(date.getUTCMilliseconds() - n));
 	};
-	var sum = current - n * increments[increment];
-	var date = new Date(sum);
+	increments.s = function (date) {
+		return new Date(date.setUTCSeconds(date.getUTCSeconds() - n));
+	};
+	increments.min = function (date) {
+		return new Date(date.setUTCMinutes(date.getUTCMinutes() - n));
+	};
+	increments.h = function (date) {
+		return new Date(date.setUTCHours(date.getUTCHours() - n));
+	};
+	increments.d = function (date) {
+		return new Date(date.setUTCDate(date.getUTCDate() - n));
+	};
+	increments.m = function (date) {
+		var newMonth = date.getUTCMonth() - n;
+		var newYear = date.getUTCFullYear();
+		var newDate = date.getUTCDate();
 
-	/**
-  * Handle month so that you always wind up on the same day of the month
-  */
-	var newYear;
-	var newMonth;
-	var newDate = this.d.getUTCDate();
-
-	if (increment === 'm') {
-		newMonth = this.d.getUTCMonth() - n;
-		newYear = this.d.getUTCFullYear();
-
-		if (newDate > new Date(this.d.setUTCFullYear(newYear, newMonth + 1, 0)).getUTCDate()) {
-			date = new Date(this.d.setUTCFullYear(newYear, newMonth + 1, 0));
+		if (newDate > new Date(date.setUTCFullYear(newYear, newMonth + 1, 0)).getUTCDate()) {
+			return new Date(date.setUTCFullYear(newYear, newMonth + 1, 0));
 		} else {
-			date = new Date(this.d.setUTCFullYear(newYear, newMonth, newDate));
+			return new Date(date.setUTCFullYear(newYear, newMonth, newDate));
 		}
-	}
+	};
+	increments.y = function (date) {
+		var newYear = date.getUTCFullYear() - n;
+		var newMonth = date.getUTCMonth();
+		var newDate = date.getUTCDate();
 
-	/**
-  * Handle year so that you always wind up on the same day of the month
-  */
-	if (increment === 'y') {
-		newYear = this.d.getUTCFullYear() - n;
-		newMonth = this.d.getUTCMonth();
-
-		if (newDate > new Date(this.d.setUTCFullYear(newYear, newMonth + 1, 0)).getUTCDate()) {
-			date = new Date(this.d.setUTCFullYear(newYear, newMonth + 1, 0));
+		if (newDate > new Date(date.setUTCFullYear(newYear, newMonth + 1, 0)).getUTCDate()) {
+			return new Date(date.setUTCFullYear(newYear, newMonth + 1, 0));
 		} else {
-			date = new Date(this.d.setUTCFullYear(newYear, newMonth, newDate));
+			return new Date(date.setUTCFullYear(newYear, newMonth, newDate));
 		}
-	}
+	};
 
 	return {
-		d: date,
+		d: increments[increment](this.d),
 		input: this.input,
 		to: this.to,
 		add: this.add,

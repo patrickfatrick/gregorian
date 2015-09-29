@@ -11,19 +11,19 @@ function subtract (n, increment) {
 	
 	increments.ms = function (date) {
 		return new Date(date.setUTCMilliseconds(date.getUTCMilliseconds() - n));
-	}
+	};
 	increments.s = function (date) {
 		return new Date(date.setUTCSeconds(date.getUTCSeconds() - n));
-	}
+	};
 	increments.min = function (date) {
 		return new Date(date.setUTCMinutes(date.getUTCMinutes() - n));
-	}
+	};
 	increments.h = function (date) {
 		return new Date(date.setUTCHours(date.getUTCHours() - n));
-	}
+	};
 	increments.d = function (date) {
 		return new Date(date.setUTCDate(date.getUTCDate() - n));
-	}
+	};
 	increments.m = function (date) {
 		var newMonth = date.getUTCMonth() - n;
 		var newYear = date.getUTCFullYear();
@@ -34,7 +34,7 @@ function subtract (n, increment) {
 		} else {
 			return new Date(date.setUTCFullYear(newYear, newMonth, newDate));							
 		}
-	}
+	};
 	increments.y = function (date) {
 		var newYear = date.getUTCFullYear() - n;
 		var newMonth = date.getUTCMonth();
@@ -45,7 +45,7 @@ function subtract (n, increment) {
 		} else {
 			return new Date(date.setUTCFullYear(newYear, newMonth, newDate));							
 		}
-	}
+	};
 	
 	return {
 		d: increments[increment](this.d),
