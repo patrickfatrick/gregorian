@@ -88,8 +88,8 @@ function to (format) {
 					converted = reformTo.iso(date);
 					return true;
 				default:
-					 //console.log('Search string is: ' + piece);
-					 //console.log('Converted string is: ' + reformTo[piece](date));
+					//console.log('Search string is: ' + piece);
+					//console.log('Converted string is: ' + reformTo[piece](date));
 					var replacer = reformTo[piece](date).toString();
 					converted = converted.replace(re, replacer);
 					return false;
