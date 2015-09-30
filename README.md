@@ -41,7 +41,7 @@ bower install gregorian
 git clone git@github.com:patrickfatrick/gregorian.git
 ```
 
-You can install it into your site using `<script src="./gregorian/dist/gregorian.min.js"></script>` as usual, or you can include it in a concatenated build using `require('./node_modules/gregorian')`, etc.
+You can install it into your site using `<script src="./gregorian/dist/gregorian.min.js"></script>` as usual, or you can include it as a module using `require('./node_modules/gregorian')` or `import gregorian from 'gregorian'`, etc., with your favorite module loader.
 
 To run the tests, `npm test`.
 
