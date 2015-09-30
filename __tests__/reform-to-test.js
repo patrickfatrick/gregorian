@@ -37,7 +37,8 @@ describe('reformTo', function () {
 		expect(reform('April 11, 1988 07:45 UTC').to('iso')).toBe('1988-04-11T07:45:00.000Z');
 		expect(reform('April 11, 1988 00:00 UTC').to('iso-short')).toBe('1988-04-11');
 		expect(reform('09/25/2015 00:00 UTC -06:00').to('DD, yyyy-m-d hh:tt.ll+ap zz')).toBe('Friday, 2015-9-25 12:00.000am UTC -6:00');
-		expect(reform('09/25/2015 UTC -06:00').to('D, yy-mm-dd h:t.l#AP zz', '#')).toBe('Fri, 15-09-25 12:0.0AM UTC -6:00');
+		expect(reform('09/25/2015 UTC -06:00').to('D, yy-mm#dd h:t.l#AP zz', '#')).toBe('Fri, 15-0925 12:0.0AM UTC -6:00');
+		expect(reform('09/25/2015 UTC -06:00').to('D#_#yy#_#mm#_#dd#_#h:t.l#AP#_#zz', '#')).toBe('Fri_15_09_25_12:0.0AM_UTC -6:00');
 		expect(reform('09/25/2015 UTC -06:00').to('DD, MM yyyy-m-d hh:tt.ll+ap zz')).toBe('Friday, September 2015-9-25 12:00.000am UTC -6:00');
 		expect(reform('09/25/2015 UTC -06:00').to('DD, M yyyy-m-d hh:tt.ll?ap zz', '?')).toBe('Friday, Sept 2015-9-25 12:00.000am UTC -6:00');
 		expect(reform('09/25/2015 23:59 UTC').to('DD, M yyyy-m-d H:tt:s.ll zz')).toBe('Friday, Sept 2015-9-25 17:59:0.000 UTC -6:00');
