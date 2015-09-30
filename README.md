@@ -101,6 +101,12 @@ gregorian.reform('09/25/2015 23:59 UTC').to('DD, M yyyy-m-d H:tt:s.ll zz') // 'F
 gregorian.reform('09/25/2015 01:00 UTC').to('DD, M yyyy-m-d H:tt:ss.ll zz') // 'Thursday, Sept 2015-9-24 19:00:00.000 UTC -6:00'
 ```
 
+**NOTE:** Due to how RegEx handles underscores we will need to get a little crazier with the delimiting if you want to output underscores in your formatted date string.
+
+```javascript
+gregorian.reform('09/25/2015 UTC -06:00').to('D#_#yy#_#mm#_#dd#_#h:t.l#AP#_#zz', '#') // 'Fri_15_09_25_12:0.0AM_UTC -6:00'
+```
+
 ###Adding and subtracting
 You can manipulate the gregorian object like 
 

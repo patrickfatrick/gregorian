@@ -701,7 +701,7 @@ function to(format, delimiter) {
 		}
 	});
 	if (typeof converted === 'string') {
-		converted = converted.replace(delimiter, '');
+		converted = converted.replace(new RegExp('\\' + delimiter, 'g'), '');
 	}
 	// console .log(converted);
 	return converted;

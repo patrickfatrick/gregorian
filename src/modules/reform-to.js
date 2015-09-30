@@ -34,7 +34,7 @@ reformTo.iso = require('./reform-to-iso');
  * @returns {String}	the date reformatted into the specified format
  */
 function to (format, delimiter) {
-	delimiter = new RegExp('\\' + delimiter, 'g') || new RegExp(/\+/g);
+	delimiter = delimiter || '+';
 	var date = this.d;
 	var converted = format;
 	var search = [
@@ -98,7 +98,7 @@ function to (format, delimiter) {
 		}
 	});
 	if (typeof converted === 'string') {
-		converted = converted.replace(delimiter, '');
+		converted = converted.replace(new RegExp('\\' + delimiter, 'g'), '');
 	}
 	// console .log(converted);
 	return converted;
