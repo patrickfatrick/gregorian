@@ -88,7 +88,7 @@ The following are components you can use to construct a format string like `'mm/
 'l' // milliseconds with no leading zeros (0-999)
 'zz' // timezone offset from UTC (UTC -6:00)
 ```
-**NOTE:** Any format strings directly touching each other should be speparated with a `'+'` or else with an optional punctuation delimiter. This delimiter will be removed from the final string.
+**NOTE:** Any format strings directly touching each other should be separated with a `'+'` or else with an optional punctuation delimiter. This delimiter will be removed from the final string.
 
 Some examples:
 
