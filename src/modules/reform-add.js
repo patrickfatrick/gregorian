@@ -10,13 +10,13 @@ function add (n, increment) {
 	
 	var increments = {};
 	
-	increments.ms = function (date) {
+	increments.l = function (date) {
 		return new Date(date.setUTCMilliseconds(date.getUTCMilliseconds() + n));
 	};
 	increments.s = function (date) {
 		return new Date(date.setUTCSeconds(date.getUTCSeconds() + n));
 	};
-	increments.min = function (date) {
+	increments.t = function (date) {
 		return new Date(date.setUTCMinutes(date.getUTCMinutes() + n));
 	};
 	increments.h = function (date) {

@@ -61,35 +61,45 @@ The following are plug-n-play formats that are simply wrappers for existing Java
 'iso-short'
 ```
 
-The following are components you can use to construct a format string like `'mmm/ddd/yyyy'` or `'DDD, MMM yyyy-mm-dd hhh:ttt.mllap zz'`.
+The following are components you can use to construct a format string like `'mm/dd/yyyy'` or `'DD, MM yyyy-mm-dd hh:tt.ll+ap zz'`. 
 
 ```javascript
 'yyyy' // four-digit year (2015)
 'yy' // two-digit year (15)
-'DDD' // full day of the week (Sunday-Saturday)
-'ddd' // two-digit date of the month (01-31)
-'DD' // abbreviated day of the week (Sun-Sat)
-'dd' // date of the month with no leading zeros (1-31)
-'MMM' // full month (January-December)
-'MM' // abbreviated month (Jan-Dec)
-'mmm' // two-digit month (01-12)
-'mm' // month with no leading zeros (1-12)
-'hhh' // two-digit hours (00-12)
-'hh' // hour with no leading zeros (0-12)
-'HHH' // two-digit 24-hour clock hours (00-24)
-'HH' // 24-hour clock hour with no leading zeros (0-24)
-'ttt' // two-digit minutes (00-59)
-'tt' // minutes with no leading zeros (0-59)
+'DD' // full day of the week (Sunday-Saturday)
+'D' // abbreviated day of the week (Sun-Sat)
+'dd' // two-digit date of the month (01-31)
+'d' // date of the month with no leading zeros (1-31)
+'MM' // full month (January-December)
+'M' // abbreviated month (Jan-Dec)
+'mm' // two-digit month (01-12)
+'m' // month with no leading zeros (1-12)
+'hh' // two-digit hours (00-12)
+'h' // hour with no leading zeros (0-12)
+'HH' // two-digit 24-hour clock hours (00-24)
+'H' // 24-hour clock hour with no leading zeros (0-24)
+'tt' // two-digit minutes (00-59)
+'t' // minutes with no leading zeros (0-59)
 'AP' // uppercase 12-hour clock period (AM or PM)
 'ap', // lowercase 12-hour clock period (am or pm)
-'sss' // two-digit seconds (00-59)
-'ss' // seconds with no leading zeros (0-59)
-'mll' // milliseconds (000-999)
-'ml' // milliseconds with no leading zeros (0-999)
+'ss' // two-digit seconds (00-59)
+'s' // seconds with no leading zeros (0-59)
+'ll' // milliseconds (000-999)
+'l' // milliseconds with no leading zeros (0-999)
 'zz' // timezone offset from UTC (UTC -6:00)
 ```
+**NOTE:** Any format strings directly touching each other should be speparated with a `'+'` or else with an optional punctuation delimiter. This delimiter will be removed from the final string.
 
-The string returned uses the localized timezone.
+Some examples:
+
+```javascript
+gregorian.reform('09/25/2015 00:00 UTC -06:00').to('DD, yyyy-m-d hh:tt.ll+ap zz') // 'Friday, 2015-9-25 12:00.000am UTC -6:00'
+gregorian.reform('09/25/2015 UTC -06:00').to('D, yy-mm-dd h:t.l#AP zz', '#') // 'Fri, 15-09-25 12:0.0AM UTC -6:00'
+gregorian.reform('09/25/2015 UTC -06:00').to('DD, MM yyyy-m-d hh:tt.ll+ap zz') // 'Friday, September 2015-9-25 12:00.000am UTC -6:00'
+gregorian.reform('09/25/2015 UTC -06:00').to('DD, M yyyy-m-d hh:tt.ll?ap zz', '?') // 'Friday, Sept 2015-9-25 12:00.000am UTC -6:00'
+gregorian.reform('09/25/2015 23:59 UTC').to('DD, M yyyy-m-d H:tt:s.ll zz') // 'Friday, Sept 2015-9-25 17:59:0.000 UTC -6:00'
+gregorian.reform('09/25/2015 01:00 UTC').to('DD, M yyyy-m-d H:tt:ss.ll zz') // 'Thursday, Sept 2015-9-24 19:00:00.000 UTC -6:00'
+```
 
 ###Adding and subtracting
 You can manipulate the gregorian object like 
@@ -104,14 +114,14 @@ This will return a new gregorian object that can then be formatted into a string
 Accepted increments you can use for additions and subtractions are
 
 ```javascript
-'ms' // 1 millisecond
-'s' // 1 second (1000 milliseconds)
-'min' // 1 minute (60000 milliseconds)
-'h' // 1 hour (3600000 milliseconds)
-'d' // 1 day (86400000 milliseconds)
-'w' // 1 week (604800000 milliseconds)
-'m' // 1 month (varies due to month lengths; position will be on the same date and time of the month)
-'y' // 1 year (varies due to leap years; position will be on the date and time of the year)
+'l' // 1 millisecond
+'s' // 1 second
+'t' // 1 minute
+'h' // 1 hour
+'d' // 1 day
+'w' // 1 week
+'m' // 1 month (position will be on the same date and time of the month)
+'y' // 1 year (position will be on the date and time of the year)
 ```
 
 ##Why not use MomentJS?

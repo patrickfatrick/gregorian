@@ -1,39 +1,40 @@
 'use strict';
 
 var reformTo = {};
-reformTo.AP = require('./reform-_ap_');
-reformTo.ap = require('./reform-ap');
-reformTo.DD = require('./reform-_dd_');
-reformTo.DDD = require('./reform-_ddd_');
-reformTo.MM = require('./reform-_mm_');
-reformTo.MMM = require('./reform-_mmm_');
-reformTo.mm = require('./reform-mm');
-reformTo.mmm = require('./reform-mmm');
-reformTo.dd = require('./reform-dd');
-reformTo.ddd = require('./reform-ddd');
-reformTo.hh = require('./reform-hh');
-reformTo.hhh = require('./reform-hhh');
-reformTo.HH = require('./reform-_hh_');
-reformTo.HHH = require('./reform-_hhh_');
-reformTo.ss = require('./reform-ss');
-reformTo.sss = require('./reform-sss');
-reformTo.ml = require('./reform-ml');
-reformTo.mll = require('./reform-mll');
-reformTo.tt = require('./reform-tt');
-reformTo.ttt = require('./reform-ttt');
-reformTo.yy = require('./reform-yy');
-reformTo.yyyy = require('./reform-yyyy');
-reformTo.zz = require('./reform-zz');
-reformTo.unix = require('./reform-unix');
-reformTo.utc = require('./reform-utc');
-reformTo.iso = require('./reform-iso');
+reformTo.AP = require('./reform-to-_ap_');
+reformTo.ap = require('./reform-to-ap');
+reformTo.D = require('./reform-to-_d_');
+reformTo.DD = require('./reform-to-_dd_');
+reformTo.M = require('./reform-to-_m_');
+reformTo.MM = require('./reform-to-_mm_');
+reformTo.m = require('./reform-to-m');
+reformTo.mm = require('./reform-to-mm');
+reformTo.d = require('./reform-to-d');
+reformTo.dd = require('./reform-to-dd');
+reformTo.h = require('./reform-to-h');
+reformTo.hh = require('./reform-to-hh');
+reformTo.H = require('./reform-to-_h_');
+reformTo.HH = require('./reform-to-_hh_');
+reformTo.s = require('./reform-to-s');
+reformTo.ss = require('./reform-to-ss');
+reformTo.l = require('./reform-to-l');
+reformTo.ll = require('./reform-to-ll');
+reformTo.t = require('./reform-to-t');
+reformTo.tt = require('./reform-to-tt');
+reformTo.yy = require('./reform-to-yy');
+reformTo.yyyy = require('./reform-to-yyyy');
+reformTo.zz = require('./reform-to-zz');
+reformTo.unix = require('./reform-to-unix');
+reformTo.utc = require('./reform-to-utc');
+reformTo.iso = require('./reform-to-iso');
 
 /**
  * Take a Gregorian object and output the reformatted string
  * @param {String} 	format a string or date object (something that can be converted to a valid date)
  * @returns {String}	the date reformatted into the specified format
  */
-function to (format) {
+function to (format, delimiter) {
+	delimiter = delimiter || '+';
 	var date = this.d;
 	var converted = format;
 	var search = [
@@ -44,32 +45,32 @@ function to (format) {
 		'iso', // ISO string 
 		'yyyy', // four-digit year 2015
 		'yy', // two-digit year (20)15
-		'DDD', // full day of the week Sunday-Saturday
-		'ddd', // two-digit date of the month 01-31
-		'DD', // abbreviated day of the week Sun-Sat
-		'dd', // date of the month with no leading zeros 1-31
-		'MMM', // full month January-December
-		'mmm', // two-digit month 00-12
-		'MM', // abbreviated month Jan-Dec
-		'mm', // month with no leading zeros 1-12
-		'hhh', // two-digit hours 00-12
-		'hh', // hour with no leading zeros 1-12
-		'HHH', // two-digit 24-hour clock hours 00-24
-		'HH', // 24-hour clock hour with no leading zeros 0-24
-		'ttt', // two-digit minutes 00-59
-		'tt', // minutes with no leading zeros 0-59
+		'DD', // full day of the week Sunday-Saturday
+		'dd', // two-digit date of the month 01-31
+		'D', // abbreviated day of the week Sun-Sat
+		'd', // date of the month with no leading zeros 1-31
+		'MM', // full month January-December
+		'mm', // two-digit month 00-12
+		'M', // abbreviated month Jan-Dec
+		'm', // month with no leading zeros 1-12
+		'hh', // two-digit hours 00-12
+		'h', // hour with no leading zeros 1-12
+		'HH', // two-digit 24-hour clock hours 00-24
+		'H', // 24-hour clock hour with no leading zeros 0-24
+		'tt', // two-digit minutes 00-59
+		't', // minutes with no leading zeros 0-59
 		'AP', // AM or PM
 		'ap', // am or pm
-		'sss', // two-digit seconds 00-59
-		'ss', // seconds with no leading zeros 0-59
-		'mll', // milliseconds 000-999
-		'ml', // milliseconds with no leading zeros 0-999
+		'ss', // two-digit seconds 00-59
+		's', // seconds with no leading zeros 0-59
+		'll', // milliseconds 000-999
+		'l', // milliseconds with no leading zeros 0-999
 		'zz' // timezone offset UTC -6:00
 	];
 
 	search.some(function(piece) {
 		//console.log(converted + ' vs ' + piece);
-		var re = new RegExp(piece, 'g');
+		var re = new RegExp('\\b' + piece + '\\b', 'g');
 		if (re.test(converted)) {
 			switch (piece) {
 				case 'unix':
@@ -96,7 +97,10 @@ function to (format) {
 			}
 		}
 	});
-	// console.log(converted);
+	if (typeof converted === 'string') {
+		converted = converted.replace(delimiter, '');
+	}
+	// console .log(converted);
 	return converted;
 }
 
