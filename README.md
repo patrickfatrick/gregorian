@@ -9,7 +9,7 @@ _A Javascript micro library for converting and displaying dates._
 Gregorian is named after the calendar introduced in 1582 by under Pope Gregory XIII's papacy, the calendar we currently use today. It was a **reform** of the Julian calendar to make the year 0.002% shorter and also slightly changed the leap year schedule to omit 3 leap days every 400 years.
 
 ##What does it do?
-Gregorian is a wrapper for the native Javascript `Date` object that allows you to customize how to display and write dates pretty minutely. IT also allows you to do some basic date manipulation (See section 'Adding and Subtracting' below). It has no dependencies and can be run either in the browser as a global or as a module. Each release is linted with ESLint and tested with Jest to minimize errors.
+Gregorian is a wrapper for the native Javascript `Date` object that allows you to customize how to display and write dates pretty minutely. It also allows you to do some basic date manipulation (See section 'Adding and Subtracting' below). It has no dependencies and can be run either in the browser as a global or as a module. Each release is linted with ESLint and tested with Jest to minimize errors.
 
 You can take the same date object and express it like:
 
