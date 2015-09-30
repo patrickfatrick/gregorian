@@ -9,7 +9,7 @@ _A Javascript micro library for converting and displaying dates._
 Gregorian is named after the calendar introduced in 1582 by under Pope Gregory XIII's papacy, the calendar we currently use today. It was a **reform** of the Julian calendar to make the year 0.002% shorter and also slightly changed the leap year schedule to omit 3 leap days every 400 years.
 
 ##What does it do?
-Gregorian is a wrapper for the native Javascript `Date` object that allows you to customize how to display and write dates pretty minutely. It has no dependencies and can be run either in the browser as a global or as a module. Each release is linted with ESLint and tested with Jest to minimize errors.
+Gregorian is a wrapper for the native Javascript `Date` object that allows you to customize how to display and write dates pretty minutely. IT also allows you to do some basic date manipulation (See section 'Adding and Subtracting' below). It has no dependencies and can be run either in the browser as a global or as a module. Each release is linted with ESLint and tested with Jest to minimize errors.
 
 You can take the same date object and express it like:
 
@@ -27,7 +27,7 @@ and more!
 ```
 
 ##What doesn't it do?
-This does not accept native language input. For instance `gregorian.reform('next Tuesday')` will return a TypeError.
+This does not accept native language input. For instance `gregorian.reform('next Tuesday')` will throw a TypeError.
 It accepts anything Javascript natively accepts when creating a date object. `gregorian.reform('April 11, 1988 00:00 UTC')` is valid as is `gregorian.reform('04/11/1988')` is as valid as `gregorian.reform(new Date('04/11/1988'))` is as valid as `gregorian.reform(576741600000)`.
 
 The library is currently in English only.
@@ -111,8 +111,8 @@ gregorian.reform('09/25/2015 UTC -06:00').to('D#_#yy#_#mm#_#dd#_#h:t.l#AP#_#zz',
 You can manipulate the gregorian object like 
 
 ```javascript
-gregorian.reform('2015-10-31').add(1, 'd')
-gregorian.reform('2015-10-31').subtract(1, 'm')
+gregorian.reform('2015-10-31').add(5, 'd')
+gregorian.reform('2015-10-31').subtract(7, 'm')
 ```
 
 This will return a new gregorian object that can then be formatted into a string as usual `gregorian.reform('2015-10-31').subtract(1, 'm').to('iso')`
