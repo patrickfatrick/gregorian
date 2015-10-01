@@ -19,5 +19,7 @@ describe('reformSubtract', function () {
 	 expect(reform('October 31, 2015 00:00 UTC').subtract(1, 'm').d.toISOString()).toBe('2015-09-30T00:00:00.000Z');
 	 expect(reform('October 31, 2015 00:00 UTC').subtract(15, 'm').d.toISOString()).toBe('2014-07-31T00:00:00.000Z');
 	 expect(reform('2015-10-31T04:56:15.123Z').subtract(123, 'l').d.toISOString()).toBe('2015-10-31T04:56:15.000Z');
+	 expect(reform('2015-10-31T04:56:14.877Z').subtract(2, 'w').d.toISOString()).toBe('2015-10-17T04:56:14.877Z');
+	 expect(reform('2015-10-31T04:56:14.877Z').subtract(8, 'w').d.toISOString()).toBe('2015-09-05T04:56:14.877Z');
  });
 });

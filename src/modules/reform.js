@@ -4,6 +4,7 @@ var reformDate = require('./reform-date');
 var reformTo = require('./reform-to');
 var reformAdd = require('./reform-add');
 var reformSubtract = require('./reform-subtract');
+var reformRestart = require('./reform-restart');
 
 /**
  * Take a string or date object and convert it into a gregorian object
@@ -17,7 +18,8 @@ function reform (obj) {
 		input: obj,
 		to: reformTo,
 		add: reformAdd,
-		subtract: reformSubtract
+		subtract: reformSubtract,
+		restart: reformRestart
 	};
 }
 

@@ -9,7 +9,7 @@ _A Javascript micro library for converting and displaying dates._
 Gregorian is named after the calendar introduced in 1582 by under Pope Gregory XIII's papacy, the calendar we currently use today. It was a **reform** of the Julian calendar to make the year 0.002% shorter and also slightly changed the leap year schedule to omit 3 leap days every 400 years.
 
 ##What does it do?
-Gregorian is a wrapper for the native Javascript `Date` object that allows you to customize how to display and write dates pretty minutely. It also allows you to do some basic date manipulation (See section 'Adding and Subtracting' below). It has no dependencies and can be run either in the browser as a global or as a module. Each release is linted with ESLint and tested with Jest to minimize errors.
+Gregorian is a wrapper for the native Javascript `Date` object that allows you to customize how to display and write dates pretty minutely. It also allows you to do some basic date manipulation (See section 'Manipulation' below). It has no dependencies and can be run either in the browser as a global or as a module. Each release is linted with ESLint and tested with Jest to minimize errors.
 
 You can take the same date object and express it like:
 
@@ -107,12 +107,13 @@ gregorian.reform('09/25/2015 01:00 UTC').to('DD, M yyyy-m-d H:tt:ss.ll zz') // '
 gregorian.reform('09/25/2015 UTC -06:00').to('D#_#yy#_#mm#_#dd#_#h:t.l#AP#_#zz', '#') // 'Fri_15_09_25_12:0.0AM_UTC -6:00'
 ```
 
+##Manipulation
 ###Adding and subtracting
 You can manipulate the gregorian object like 
 
 ```javascript
-gregorian.reform('2015-10-31').add(5, 'd')
-gregorian.reform('2015-10-31').subtract(7, 'm')
+gregorian.reform('2015-10-31').add(5, 'd') // 2015-11-05
+gregorian.reform('2015-10-31').subtract(7, 'm') // 2015-03-31
 ```
 
 This will return a new gregorian object that can then be formatted into a string as usual `gregorian.reform('2015-10-31').subtract(1, 'm').to('iso')`
@@ -129,7 +130,18 @@ Accepted increments you can use for additions and subtractions are
 'm' // 1 month (position will be on the same date and time of the month)
 'y' // 1 year (position will be on the date and time of the year)
 ```
+###Restarting
+You can set the date or time to the start of the increment specified. For instance,
 
+```javascript
+gregorian.reform('April 11, 1988 8:23:15.123 UTC').restart('s') // '1988-04-11T08:23:15.000Z'
+gregorian.reform('April 11, 1988 8:23:15.123 UTC').restart('t') // '1988-04-11T08:23:00.000Z'
+gregorian.reform('April 11, 1988 8:23:15.123 UTC').restart('h') // '1988-04-11T08:00:00.000Z'
+gregorian.reform('April 11, 1988 8:23:15.123 UTC').restart('d') // '1988-04-11T00:00:00.000Z'
+gregorian.reform('April 11, 1988 8:23:15.123 UTC').restart('w') // '1988-04-10T00:00:00.000Z'
+gregorian.reform('April 11, 1988 8:23:15.123 UTC').restart('m') // '1988-04-01T00:00:00.000Z'
+gregorian.reform('April 11, 1988 8:23:15.123 UTC').restart('y') // '1988-01-01T00:00:00.000Z'
+```
 ##Why not use MomentJS?
 [Moment](http://momentjs.com/) is awesome and I personally use it in a lot of projects. This is not intended to replace Moment by any means, it's simply intended to provide a more focused set of features at a fraction of the weight. Moment's unminified .js file is about 5x the size of Gregorian's.
 

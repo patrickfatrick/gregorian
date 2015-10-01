@@ -24,6 +24,9 @@ function subtract (n, increment) {
 	increments.d = function (date) {
 		return new Date(date.setUTCDate(date.getUTCDate() - n));
 	};
+	increments.w = function (date) {
+		return new Date(date.setUTCDate(date.getUTCDate() - (n * 7)));
+	};
 	increments.m = function (date) {
 		var newMonth = date.getUTCMonth() - n;
 		var newYear = date.getUTCFullYear();

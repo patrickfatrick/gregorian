@@ -29,7 +29,7 @@ var gregorian = {
 
 module.exports = gregorian;
 
-},{"./modules/reform":32}],2:[function(require,module,exports){
+},{"./modules/reform":33}],2:[function(require,module,exports){
 'use strict';
 
 /**
@@ -56,6 +56,9 @@ function add(n, increment) {
 	};
 	increments.d = function (date) {
 		return new Date(date.setUTCDate(date.getUTCDate() + n));
+	};
+	increments.w = function (date) {
+		return new Date(date.setUTCDate(date.getUTCDate() + n * 7));
 	};
 	increments.m = function (date) {
 		var newMonth = date.getUTCMonth() + n;
@@ -116,6 +119,59 @@ module.exports = reformDate;
 'use strict';
 
 /**
+ * Sets the date or time to the start of the specified increment
+ * @param   {String} increment an increment to set
+ * @returns {Object} a new gregorian object
+ */
+function restart(increment) {
+	var increments = {};
+
+	increments.s = function (date) {
+		return new Date(date.setUTCSeconds(date.getUTCSeconds(), 0));
+	};
+	increments.t = function (date) {
+		return new Date(date.setUTCMinutes(date.getUTCMinutes(), 0, 0));
+	};
+	increments.h = function (date) {
+		return new Date(date.setUTCHours(date.getUTCHours(), 0, 0, 0));
+	};
+	increments.d = function (date) {
+		date.setUTCDate(date.getUTCDate());
+		date.setUTCHours(0, 0, 0, 0);
+		return new Date(date);
+	};
+	increments.w = function (date) {
+		date.setUTCDate(date.getUTCDate() - date.getUTCDay());
+		date.setUTCHours(0, 0, 0, 0);
+		return new Date(date);
+	};
+	increments.m = function (date) {
+		date.setUTCMonth(date.getUTCMonth(), 1);
+		date.setUTCHours(0, 0, 0, 0);
+		return new Date(date);
+	};
+	increments.y = function (date) {
+		date.setUTCFullYear(date.getUTCFullYear(), 0, 1);
+		date.setUTCHours(0, 0, 0, 0);
+		return new Date(date);
+	};
+
+	return {
+		d: increments[increment](this.d),
+		input: this.input,
+		to: this.to,
+		add: this.add,
+		subtract: this.subtract,
+		restart: restart
+	};
+}
+
+module.exports = restart;
+
+},{}],5:[function(require,module,exports){
+'use strict';
+
+/**
  * Subtracts specified increments to a gregorian object
  * @param   {Number} n         a number to multiply the increment by
  * @param   {String} increment an increment to subtract
@@ -138,6 +194,9 @@ function subtract(n, increment) {
 	};
 	increments.d = function (date) {
 		return new Date(date.setUTCDate(date.getUTCDate() - n));
+	};
+	increments.w = function (date) {
+		return new Date(date.setUTCDate(date.getUTCDate() - n * 7));
 	};
 	increments.m = function (date) {
 		var newMonth = date.getUTCMonth() - n;
@@ -173,7 +232,7 @@ function subtract(n, increment) {
 
 module.exports = subtract;
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 'use strict';
 
 /**
@@ -189,7 +248,7 @@ function reformAP(date) {
 
 module.exports = reformAP;
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 'use strict';
 
 /**
@@ -205,7 +264,7 @@ function reformDD(date) {
 
 module.exports = reformDD;
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 'use strict';
 
 /**
@@ -221,7 +280,7 @@ function reformDDD(date) {
 
 module.exports = reformDDD;
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 'use strict';
 
 /**
@@ -236,7 +295,7 @@ function reformHH(date) {
 
 module.exports = reformHH;
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 'use strict';
 
 /**
@@ -251,7 +310,7 @@ function reformHHH(date) {
 
 module.exports = reformHHH;
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 'use strict';
 
 /**
@@ -267,7 +326,7 @@ function reformMM(date) {
 
 module.exports = reformMM;
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 'use strict';
 
 /**
@@ -283,7 +342,7 @@ function reformMMM(date) {
 
 module.exports = reformMMM;
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 'use strict';
 
 /**
@@ -299,7 +358,7 @@ function reformAp(date) {
 
 module.exports = reformAp;
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 'use strict';
 
 /**
@@ -314,7 +373,7 @@ function reformDd(date) {
 
 module.exports = reformDd;
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 'use strict';
 
 /**
@@ -329,7 +388,7 @@ function reformDdd(date) {
 
 module.exports = reformDdd;
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 'use strict';
 
 /**
@@ -347,7 +406,7 @@ function reformHh(date) {
 
 module.exports = reformHh;
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 'use strict';
 
 /**
@@ -366,7 +425,7 @@ function reformHhh(date) {
 
 module.exports = reformHhh;
 
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 'use strict';
 
 /**
@@ -384,7 +443,7 @@ function reformISO(date, format) {
 
 module.exports = reformISO;
 
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 'use strict';
 
 /**
@@ -399,7 +458,7 @@ function reformMl(date) {
 
 module.exports = reformMl;
 
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 'use strict';
 
 /**
@@ -425,7 +484,7 @@ function reformMll(date) {
 
 module.exports = reformMll;
 
-},{}],20:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 'use strict';
 
 /**
@@ -440,7 +499,7 @@ function reformMm(date) {
 
 module.exports = reformMm;
 
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 'use strict';
 
 /**
@@ -455,7 +514,7 @@ function reformMmm(date) {
 
 module.exports = reformMmm;
 
-},{}],22:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 'use strict';
 
 /**
@@ -470,7 +529,7 @@ function reformSs(date) {
 
 module.exports = reformSs;
 
-},{}],23:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 'use strict';
 
 /**
@@ -485,7 +544,7 @@ function reformSs(date) {
 
 module.exports = reformSs;
 
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 'use strict';
 
 /**
@@ -500,7 +559,7 @@ function reformTt(date) {
 
 module.exports = reformTt;
 
-},{}],25:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 'use strict';
 
 /**
@@ -515,7 +574,7 @@ function reformTtt(date) {
 
 module.exports = reformTtt;
 
-},{}],26:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 'use strict';
 
 /**
@@ -530,7 +589,7 @@ function reformUnix(date) {
 
 module.exports = reformUnix;
 
-},{}],27:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 'use strict';
 
 /**
@@ -558,7 +617,7 @@ function reformUTC(date, format) {
 
 module.exports = reformUTC;
 
-},{}],28:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 'use strict';
 
 /**
@@ -572,7 +631,7 @@ function reformYy(date) {
 
 module.exports = reformYy;
 
-},{}],29:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 'use strict';
 
 /**
@@ -586,7 +645,7 @@ function reformYyyy(date) {
 
 module.exports = reformYyyy;
 
-},{}],30:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 'use strict';
 
 /**
@@ -601,7 +660,7 @@ function reformZz(date) {
 
 module.exports = reformZz;
 
-},{}],31:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 'use strict';
 
 var reformTo = {};
@@ -709,13 +768,14 @@ function to(format, delimiter) {
 
 module.exports = to;
 
-},{"./reform-to-_ap_":5,"./reform-to-_d_":6,"./reform-to-_dd_":7,"./reform-to-_h_":8,"./reform-to-_hh_":9,"./reform-to-_m_":10,"./reform-to-_mm_":11,"./reform-to-ap":12,"./reform-to-d":13,"./reform-to-dd":14,"./reform-to-h":15,"./reform-to-hh":16,"./reform-to-iso":17,"./reform-to-l":18,"./reform-to-ll":19,"./reform-to-m":20,"./reform-to-mm":21,"./reform-to-s":22,"./reform-to-ss":23,"./reform-to-t":24,"./reform-to-tt":25,"./reform-to-unix":26,"./reform-to-utc":27,"./reform-to-yy":28,"./reform-to-yyyy":29,"./reform-to-zz":30}],32:[function(require,module,exports){
+},{"./reform-to-_ap_":6,"./reform-to-_d_":7,"./reform-to-_dd_":8,"./reform-to-_h_":9,"./reform-to-_hh_":10,"./reform-to-_m_":11,"./reform-to-_mm_":12,"./reform-to-ap":13,"./reform-to-d":14,"./reform-to-dd":15,"./reform-to-h":16,"./reform-to-hh":17,"./reform-to-iso":18,"./reform-to-l":19,"./reform-to-ll":20,"./reform-to-m":21,"./reform-to-mm":22,"./reform-to-s":23,"./reform-to-ss":24,"./reform-to-t":25,"./reform-to-tt":26,"./reform-to-unix":27,"./reform-to-utc":28,"./reform-to-yy":29,"./reform-to-yyyy":30,"./reform-to-zz":31}],33:[function(require,module,exports){
 'use strict';
 
 var reformDate = require('./reform-date');
 var reformTo = require('./reform-to');
 var reformAdd = require('./reform-add');
 var reformSubtract = require('./reform-subtract');
+var reformRestart = require('./reform-restart');
 
 /**
  * Take a string or date object and convert it into a gregorian object
@@ -729,12 +789,13 @@ function reform(obj) {
 		input: obj,
 		to: reformTo,
 		add: reformAdd,
-		subtract: reformSubtract
+		subtract: reformSubtract,
+		restart: reformRestart
 	};
 }
 
 module.exports = reform;
 
-},{"./reform-add":2,"./reform-date":3,"./reform-subtract":4,"./reform-to":31}]},{},[1])(1)
+},{"./reform-add":2,"./reform-date":3,"./reform-restart":4,"./reform-subtract":5,"./reform-to":32}]},{},[1])(1)
 });
 //# sourceMappingURL=gregorian.js.map

@@ -22,5 +22,7 @@ describe('reformAdd', function () {
 	 expect(reform('2015-10-31T04:56:14.877Z').add(8, 't').d.toISOString()).toBe('2015-10-31T05:04:14.877Z');
 	 expect(reform('2015-10-31T04:56:14.877Z').add(8, 'h').d.toISOString()).toBe('2015-10-31T12:56:14.877Z');
 	 expect(reform('2015-10-31T04:56:14.877Z').add(8, 'd').d.toISOString()).toBe('2015-11-08T04:56:14.877Z');
+	 expect(reform('2015-10-31T04:56:14.877Z').add(2, 'w').d.toISOString()).toBe('2015-11-14T04:56:14.877Z');
+	 expect(reform('2015-10-31T04:56:14.877Z').add(8, 'w').d.toISOString()).toBe('2015-12-26T04:56:14.877Z');
  });
 });
