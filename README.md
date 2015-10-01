@@ -76,8 +76,8 @@ The following are components you can use to construct a format string like `'mm/
 'm' // month with no leading zeros (1-12)
 'hh' // two-digit hours (00-12)
 'h' // hour with no leading zeros (0-12)
-'HH' // two-digit 24-hour clock hours (00-24)
-'H' // 24-hour clock hour with no leading zeros (0-24)
+'HH' // two-digit 24-hour clock hours (00-23)
+'H' // 24-hour clock hour with no leading zeros (0-23)
 'tt' // two-digit minutes (00-59)
 't' // minutes with no leading zeros (0-59)
 'AP' // uppercase 12-hour clock period (AM or PM)
@@ -143,7 +143,7 @@ gregorian.reform('April 11, 1988 8:23:15.123').restart('m') // '1988-04-01T07:00
 gregorian.reform('April 11, 1988 8:23:15.123').restart('y') // '1988-01-01T07:00:00.000Z'
 ```
 
-Note that the day through year `restart` functions return times in the local time zone. You would see a two-hour different running these same functions in Eastern vs Mountain time.
+Note that the day through year `restart` functions return times in the local time zone. You would see a two-hour difference running these same functions in Eastern vs Mountain time.
 ##Why not use MomentJS?
 [Moment](http://momentjs.com/) is awesome and I personally use it in a lot of projects. This is not intended to replace Moment by any means, it's simply intended to provide a more focused set of features at a fraction of the weight. Moment's unminified .js file is about 4x the size of Gregorian's.
 
