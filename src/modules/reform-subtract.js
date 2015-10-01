@@ -55,7 +55,8 @@ function subtract (n, increment) {
 		input: this.input,
 		to: this.to,
 		add: this.add,
-		subtract: subtract
+		subtract: subtract,
+		restart: this.restart
 	};
 }
 

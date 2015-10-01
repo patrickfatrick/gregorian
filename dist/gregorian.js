@@ -88,7 +88,8 @@ function add(n, increment) {
 		input: this.input,
 		to: this.to,
 		add: add,
-		subtract: this.subtract
+		subtract: this.subtract,
+		restart: this.restart
 	};
 }
 
@@ -127,32 +128,32 @@ function restart(increment) {
 	var increments = {};
 
 	increments.s = function (date) {
-		return new Date(date.setUTCSeconds(date.getUTCSeconds(), 0));
+		return new Date(date.setSeconds(date.getSeconds(), 0));
 	};
 	increments.t = function (date) {
-		return new Date(date.setUTCMinutes(date.getUTCMinutes(), 0, 0));
+		return new Date(date.setMinutes(date.getMinutes(), 0, 0));
 	};
 	increments.h = function (date) {
-		return new Date(date.setUTCHours(date.getUTCHours(), 0, 0, 0));
+		return new Date(date.setHours(date.getHours(), 0, 0, 0));
 	};
 	increments.d = function (date) {
-		date.setUTCDate(date.getUTCDate());
-		date.setUTCHours(0, 0, 0, 0);
+		date.setDate(date.getDate());
+		date.setHours(0, 0, 0, 0);
 		return new Date(date);
 	};
 	increments.w = function (date) {
-		date.setUTCDate(date.getUTCDate() - date.getUTCDay());
-		date.setUTCHours(0, 0, 0, 0);
+		date.setDate(date.getDate() - date.getDay());
+		date.setHours(0, 0, 0, 0);
 		return new Date(date);
 	};
 	increments.m = function (date) {
-		date.setUTCMonth(date.getUTCMonth(), 1);
-		date.setUTCHours(0, 0, 0, 0);
+		date.setMonth(date.getMonth(), 1);
+		date.setHours(0, 0, 0, 0);
 		return new Date(date);
 	};
 	increments.y = function (date) {
-		date.setUTCFullYear(date.getUTCFullYear(), 0, 1);
-		date.setUTCHours(0, 0, 0, 0);
+		date.setFullYear(date.getFullYear(), 0, 1);
+		date.setHours(0, 0, 0, 0);
 		return new Date(date);
 	};
 
@@ -226,7 +227,8 @@ function subtract(n, increment) {
 		input: this.input,
 		to: this.to,
 		add: this.add,
-		subtract: subtract
+		subtract: subtract,
+		restart: this.restart
 	};
 }
 

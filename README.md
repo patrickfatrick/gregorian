@@ -131,19 +131,21 @@ Accepted increments you can use for additions and subtractions are
 'y' // 1 year (position will be on the date and time of the year)
 ```
 ###Restarting
-You can set the date or time to the start of the increment specified. For instance,
+You can set the date or time to the start of the increment specified in local time. For instance,
 
 ```javascript
 gregorian.reform('April 11, 1988 8:23:15.123 UTC').restart('s') // '1988-04-11T08:23:15.000Z'
 gregorian.reform('April 11, 1988 8:23:15.123 UTC').restart('t') // '1988-04-11T08:23:00.000Z'
 gregorian.reform('April 11, 1988 8:23:15.123 UTC').restart('h') // '1988-04-11T08:00:00.000Z'
-gregorian.reform('April 11, 1988 8:23:15.123 UTC').restart('d') // '1988-04-11T00:00:00.000Z'
-gregorian.reform('April 11, 1988 8:23:15.123 UTC').restart('w') // '1988-04-10T00:00:00.000Z'
-gregorian.reform('April 11, 1988 8:23:15.123 UTC').restart('m') // '1988-04-01T00:00:00.000Z'
-gregorian.reform('April 11, 1988 8:23:15.123 UTC').restart('y') // '1988-01-01T00:00:00.000Z'
+gregorian.reform('April 11, 1988 8:23:15.123').restart('d') // '1988-04-11T06:00:00.000Z'
+gregorian.reform('April 11, 1988 8:23:15.123').restart('w') // '1988-04-10T06:00:00.000Z'
+gregorian.reform('April 11, 1988 8:23:15.123').restart('m') // '1988-04-01T07:00:00.000Z'
+gregorian.reform('April 11, 1988 8:23:15.123').restart('y') // '1988-01-01T07:00:00.000Z'
 ```
+
+Note that the day through year `restart` functions return times in the local time zone. You would see a two-hour different running these same functions in Eastern vs Mountain time.
 ##Why not use MomentJS?
-[Moment](http://momentjs.com/) is awesome and I personally use it in a lot of projects. This is not intended to replace Moment by any means, it's simply intended to provide a more focused set of features at a fraction of the weight. Moment's unminified .js file is about 5x the size of Gregorian's.
+[Moment](http://momentjs.com/) is awesome and I personally use it in a lot of projects. This is not intended to replace Moment by any means, it's simply intended to provide a more focused set of features at a fraction of the weight. Moment's unminified .js file is about 4x the size of Gregorian's.
 
 ##What's the plan?
 
