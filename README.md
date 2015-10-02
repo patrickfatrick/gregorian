@@ -1,6 +1,8 @@
 #Gregorian
 _A Javascript micro library for converting and displaying dates._
+
 [![Build Status](https://travis-ci.org/patrickfatrick/gregorian.svg)](https://travis-ci.org/patrickfatrick/gregorian)
+
 ![Gregorian Page](./images/gregorian-page.jpg)
 
 >reform |riˈfôrm|  
