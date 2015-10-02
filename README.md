@@ -2,6 +2,7 @@
 _A Javascript micro library for converting and displaying dates._
 
 [![Build Status](https://travis-ci.org/patrickfatrick/gregorian.svg)](https://travis-ci.org/patrickfatrick/gregorian)
+[![Coverage Status](https://coveralls.io/repos/patrickfatrick/gregorian/badge.svg?branch=master&service=github)](https://coveralls.io/github/patrickfatrick/gregorian?branch=master)
 
 ![Gregorian Page](./images/gregorian-page.jpg)
 
@@ -137,13 +138,13 @@ Accepted increments you can use for additions and subtractions are
 You can set the date or time to the start of the increment specified in local time. For instance,
 
 ```javascript
-gregorian.reform('April 11, 1988 8:23:15.123 UTC').restart('s') // '1988-04-11T08:23:15.000Z'
-gregorian.reform('April 11, 1988 8:23:15.123 UTC').restart('t') // '1988-04-11T08:23:00.000Z'
-gregorian.reform('April 11, 1988 8:23:15.123 UTC').restart('h') // '1988-04-11T08:00:00.000Z'
-gregorian.reform('April 11, 1988 8:23:15.123').restart('d') // '1988-04-11T06:00:00.000Z'
-gregorian.reform('April 11, 1988 8:23:15.123').restart('w') // '1988-04-10T06:00:00.000Z'
-gregorian.reform('April 11, 1988 8:23:15.123').restart('m') // '1988-04-01T07:00:00.000Z'
-gregorian.reform('April 11, 1988 8:23:15.123').restart('y') // '1988-01-01T07:00:00.000Z'
+gregorian.reform('April 11, 1988 8:23:15.123').restart('s') // '1988-04-11 08:23:15'
+gregorian.reform('April 11, 1988 8:23:15.123').restart('t') // '1988-04-11 08:23:00'
+gregorian.reform('April 11, 1988 8:23:15.123').restart('h') // '1988-04-11 08:00:00'
+gregorian.reform('April 11, 1988 8:23:15.123').restart('d') // '1988-04-11 00:00:00'
+gregorian.reform('April 11, 1988 8:23:15.123').restart('w') // '1988-04-10 00:00:00'
+gregorian.reform('April 11, 1988 8:23:15.123').restart('m') // '1988-04-01 00:00:00'
+gregorian.reform('April 11, 1988 8:23:15.123').restart('y') // '1988-01-01 00:00:00'
 ```
 
 Note that the day through year `restart` functions return times in the local time zone. You would see a two-hour difference running these same functions in Eastern vs Mountain time.
