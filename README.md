@@ -21,7 +21,7 @@ You can take the same date object and express it like:
 'April 11, 1988'
 '1988-04-11'
 '4/11/88'
-'Monday, 11 Apr 1988 12:00:00.000AM UTC 00:00'
+'Monday, 11 Apr 1988 12:00:00.000AM UTC 0:00'
 'Monday'
 'Mon, April 11'
 '1988-04-11T00:00:00.000Z' // ISO string
