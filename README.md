@@ -2,6 +2,8 @@
 _A Javascript micro library for converting and displaying dates._
 
 [![Build Status](https://travis-ci.org/patrickfatrick/gregorian.svg)](https://travis-ci.org/patrickfatrick/gregorian)
+[![Dependency Status](https://david-dm.org/patrickfatrick/gregorian.svg)](https://david-dm.org/patrickfatrick/gregorian)
+[![devDependency Status](https://david-dm.org/patrickfatrick/gregorian/dev-status.svg)](https://david-dm.org/patrickfatrick/gregorian#info=devDependencies)
 
 ![Gregorian Page](./images/gregorian-page.jpg)
 
