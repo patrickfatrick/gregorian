@@ -21,6 +21,7 @@
     "babelify": "^6.3.0",
     "browserify": "^11.2.0",
     "chai": "^3.3.0",
+    "coveralls": "^2.11.4",
     "gulp": "^3.9.0",
     "gulp-eslint": "^1.0.0",
     "gulp-sourcemaps": "^1.5.2",
