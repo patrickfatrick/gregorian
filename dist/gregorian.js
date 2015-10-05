@@ -7,6 +7,10 @@
  * https://www.github.com/patrickfatrick/gregorian
  */
 
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 var _modulesReform = require('./modules/reform');
@@ -17,7 +21,8 @@ var gregorian = {
   reform: _modulesReform2['default']
 };
 
-module.exports = gregorian;
+exports['default'] = gregorian;
+module.exports = exports['default'];
 
 },{"./modules/reform":7}],2:[function(require,module,exports){
 'use strict';

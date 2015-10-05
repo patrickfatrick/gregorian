@@ -1,6 +1,5 @@
 /* */
-'format cjs';
 
-var gregorian = require('./src/gregorian');
+import gregorian from './src/gregorian';
 
-module.exports = gregorian;
+export default gregorian;

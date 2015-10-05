@@ -12,4 +12,4 @@ let gregorian = {
 	reform: reform
 };
 
-module.exports = gregorian;
+export default gregorian;
