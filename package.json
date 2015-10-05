@@ -17,6 +17,7 @@
   "author": "Patrick Fricano <patrick.fricano@icloud.com>",
   "license": "MIT",
   "devDependencies": {
+    "babel": "^5.8.23",
     "babelify": "^6.3.0",
     "browserify": "^11.2.0",
     "chai": "^3.3.0",
