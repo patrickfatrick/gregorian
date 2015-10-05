@@ -1,9 +1,10 @@
 // test/reform-add-test.js
-var should = require('chai').should();
-var reform = require('../src/modules/reform');
+import chai from 'chai';
+import reform from '../src/modules/reform';
 
-describe('reformAdd', function () {
- it('adds specified increments to the date', function () {
+chai.should();
+describe('add', () => {
+ it('adds specified increments to the date', () => {
    reform('April 11, 1988 00:00 UTC').add(1, 'd').d.toISOString().should.equal('1988-04-12T00:00:00.000Z');
 	 reform('April 11, 1988 00:00 UTC').add(1, 'd').add(1, 'm').d.toISOString().should.equal('1988-05-12T00:00:00.000Z');
 	 reform('February 29, 1988 00:00 UTC').add(1, 'y').d.toISOString().should.equal('1989-02-28T00:00:00.000Z');

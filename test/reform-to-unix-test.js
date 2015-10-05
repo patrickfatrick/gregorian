@@ -1,9 +1,10 @@
 // test/reform-to-unix-test.js
-var should = require('chai').should();
-var reformUnix = require('../src/modules/reform-to-unix');
+import chai from 'chai';
+import {unix} from '../src/modules/reform-to-functions';
 
-describe('reformUnix', function () {
- it('converts a string to a unix timestamp', function () {
-   reformUnix(new Date('April 11, 1988 00:00 UTC')).should.equal(576720000000);
+chai.should();
+describe('unix', () => {
+ it('converts a string to a unix timestamp', () => {
+   unix(new Date('April 11, 1988 00:00 UTC')).should.equal(576720000000);
  });
 });

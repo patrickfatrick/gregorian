@@ -24,5 +24,11 @@
 		"browser": true,
 		"commonjs": true
 	},
+	"ecmaFeatures" :{
+		"arrowFunctions": true,
+		"blockBindings": true,
+		"modules": true,
+		"forOf": true
+	},
 	"extends": "eslint:recommended"
 }

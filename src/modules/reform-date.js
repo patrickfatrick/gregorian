@@ -5,7 +5,7 @@
  * @param {Object} 	obj any object
  * @returns {Date}	if string passes the test, return the date object
  */
-function reformDate (obj) {
+export default function (obj) {
 	if (obj == null) throw new TypeError('This is null or undefined');
 	obj = new Date(obj);
 	if (Object.prototype.toString.call(obj) === '[object Date]') {
@@ -15,5 +15,3 @@ function reformDate (obj) {
 	}
 	return obj;
 }
-
-module.exports = reformDate;

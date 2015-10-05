@@ -1,9 +1,10 @@
 // test/reform-subtract-test.js
-var should = require('chai').should();
-var reform = require('../src/modules/reform');
+import chai from 'chai';
+import reform from '../src/modules/reform';
 
-describe('reformSubtract', function () {
- it('subtracts specified increments to the date', function () {
+chai.should();
+describe('subtract', () => {
+ it('subtracts specified increments to the date', () => {
    reform('April 11, 1988 00:00 UTC').subtract(1, 'd').d.toISOString().should.equal('1988-04-10T00:00:00.000Z');
 	 reform('April 11, 1988 06:00 UTC').subtract(1, 'd').subtract(1, 'm').d.toISOString().should.equal('1988-03-10T06:00:00.000Z');
 	 reform('February 29, 1988 00:00 UTC').subtract(1, 'y').d.toISOString().should.equal('1987-02-28T00:00:00.000Z');

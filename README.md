@@ -148,9 +148,10 @@ gregorian.reform('April 11, 1988 8:23:15.123').restart('m') // '1988-04-01 00:00
 gregorian.reform('April 11, 1988 8:23:15.123').restart('y') // '1988-01-01 00:00:00'
 ```
 
-Note that the day through year `restart` functions return times in the local time zone. You would see a two-hour difference running these same functions in Eastern vs Mountain time.
+Note that the `restart` functions return times in the local time zone. You would see a two-hour difference running these same functions in Eastern vs Mountain time.
+
 ##Why not use MomentJS?
-[Moment](http://momentjs.com/) is awesome and I personally use it in a lot of projects. This is not intended to replace Moment by any means, it's simply intended to provide a more focused set of features at a fraction of the weight. Moment's unminified .js file is about 4x the size of Gregorian's.
+[Moment](http://momentjs.com/) is awesome and I personally use it in a lot of projects. This is not intended to replace Moment by any means, it's simply intended to provide a more focused set of features at a fraction of the weight. Moment's minified .js file is about 5x the size of Gregorian's.
 
 ##What's the plan?
 

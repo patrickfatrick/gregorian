@@ -6,32 +6,32 @@
  * @param   {String} increment an increment to add
  * @returns {Object} a new gregorian object
  */
-function add (n, increment) {
+function addSubtract (obj, n, increment) {
 	
-	var increments = {};
+	let increments = {};
 	
-	increments.l = function (date) {
+	increments.l = date => {
 		return new Date(date.setUTCMilliseconds(date.getUTCMilliseconds() + n));
 	};
-	increments.s = function (date) {
+	increments.s = date => {
 		return new Date(date.setUTCSeconds(date.getUTCSeconds() + n));
 	};
-	increments.t = function (date) {
+	increments.t = date => {
 		return new Date(date.setUTCMinutes(date.getUTCMinutes() + n));
 	};
-	increments.h = function (date) {
+	increments.h = date => {
 		return new Date(date.setUTCHours(date.getUTCHours() + n));
 	};
-	increments.d = function (date) {
+	increments.d = date => {
 		return new Date(date.setUTCDate(date.getUTCDate() + n));
 	};
-	increments.w = function (date) {
+	increments.w = date => {
 		return new Date(date.setUTCDate(date.getUTCDate() + (n * 7)));
 	};
-	increments.m = function (date) {
-		var newMonth = date.getUTCMonth() + n;
-		var newYear = date.getUTCFullYear();
-		var newDate = date.getUTCDate();
+	increments.m = date => {
+		let newMonth = date.getUTCMonth() + n;
+		let newYear = date.getUTCFullYear();
+		let newDate = date.getUTCDate();
 		
 		if (newDate > new Date(date.setUTCFullYear(newYear, newMonth + 1, 0)).getUTCDate()) {
 			return new Date(date.setUTCFullYear(newYear, newMonth + 1, 0));
@@ -39,10 +39,10 @@ function add (n, increment) {
 			return new Date(date.setUTCFullYear(newYear, newMonth, newDate));							
 		}
 	};
-	increments.y = function (date) {
-		var newYear = date.getUTCFullYear() + n;
-		var newMonth = date.getUTCMonth();
-		var newDate = date.getUTCDate();
+	increments.y = date => {
+		let newYear = date.getUTCFullYear() + n;
+		let newMonth = date.getUTCMonth();
+		let newDate = date.getUTCDate();
 		
 		if (newDate > new Date(date.setUTCFullYear(newYear, newMonth + 1, 0)).getUTCDate()) {
 			return new Date(date.setUTCFullYear(newYear, newMonth + 1, 0));
@@ -52,13 +52,19 @@ function add (n, increment) {
 	};
 	
 	return {
-		d: increments[increment](this.d),
-		input: this.input,
-		to: this.to,
-		add: add,
-		subtract: this.subtract,
-		restart: this.restart
+		d: increments[increment](obj.d),
+		input: obj.input,
+		to: obj.to,
+		add: obj.add,
+		subtract: obj.subtract,
+		restart: obj.restart
 	};
 }
 
-module.exports = add;
+export var add = function (n, increment) {
+	return addSubtract(this, n * 1, increment);
+};
+
+export var subtract = function (n, increment) {
+	return addSubtract(this, n * -1, increment);
+};

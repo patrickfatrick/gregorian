@@ -7,3 +7,6 @@ node_modules
 
 #debug
 npm-debug.log
+
+#coverage
+coverage

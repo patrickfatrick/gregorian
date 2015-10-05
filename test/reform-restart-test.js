@@ -1,9 +1,10 @@
 // test/reform-restart-test.js
-var should = require('chai').should();
-var reform = require('../src/modules/reform');
+import chai from 'chai';
+import reform from '../src/modules/reform';
 
-describe('reformRestart', function () {
- it('sets the date and time to the start of the specified increment', function () {
+chai.should();
+describe('restart', () => {
+ it('sets the date and time to the start of the specified increment', () => {
 	 reform('April 11, 1988 8:23:15.123').restart('s').to('yyyy-mm-dd HH:tt:ss.ll').should.equal('1988-04-11 08:23:15.000');
 	 reform('April 11, 1988 8:23:15.123').restart('t').to('yyyy-mm-dd HH:tt:ss.ll').should.equal('1988-04-11 08:23:00.000');
 	 reform('April 11, 1988 8:23:15.123').restart('h').to('yyyy-mm-dd HH:tt:ss.ll').should.equal('1988-04-11 08:00:00.000');

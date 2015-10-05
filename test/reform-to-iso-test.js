@@ -1,10 +1,11 @@
 // test/reform-to-iso-test.js
-var should = require('chai').should();
-var reformISO = require('../src/modules/reform-to-iso');
+import chai from 'chai';
+import {iso} from '../src/modules/reform-to-functions';
 
-describe('reformISO', function () {
- it('converts a string to an ISO string', function () {
-   reformISO(new Date('April 11, 1988 00:00 UTC')).should.equal('1988-04-11T00:00:00.000Z');
-	 reformISO(new Date('April 11, 1988 00:00 UTC'), 'short').should.equal('1988-04-11');
+chai.should();
+describe('iso', () => {
+ it('converts a string to an ISO string', () => {
+   iso(new Date('April 11, 1988 00:00 UTC')).should.equal('1988-04-11T00:00:00.000Z');
+	 iso(new Date('April 11, 1988 00:00 UTC'), 'short').should.equal('1988-04-11');
  });
 });

@@ -7,7 +7,7 @@ var source = require('vinyl-source-stream');
 var uglify = require('gulp-uglify');
 var config = require('../config').min;
 
-var bundler = browserify(config.src, {standalone: config.standalone});
+var bundler = browserify(config.src, {debug: true, standalone: config.standalone});
 bundler.transform(config.transform);
 gulp.task('min', bundle);
 
