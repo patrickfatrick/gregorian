@@ -156,6 +156,13 @@ Note that the `restart` functions return times in the local time zone. You would
 ##Why not use MomentJS?
 [Moment](http://momentjs.com/) is awesome and I personally use it in a lot of projects. This is not intended to replace Moment by any means, it's simply intended to provide a more focused set of features at a fraction of the weight. Moment's minified .js file is about 5x the size of Gregorian's.
 
+## License
+
+Gregorian is freely distributable under the terms of the [MIT license](./LICENSE).
+
+[license-image]: http://img.shields.io/badge/license-MIT-blue.svg?style=flat
+[license-url]: LICENSE
+
 ##What's the plan?
 
 - Add setter functions to take an existing gregorian object and set a specific date or time on it.
