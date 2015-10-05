@@ -1,6 +1,6 @@
 {
   "name": "gregorian",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A Javascript micro library for converting and displaying dates",
   "main": "index.js",
 	"format": "es6",
