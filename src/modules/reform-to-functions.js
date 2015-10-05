@@ -107,6 +107,33 @@ export var dd = function (date) {
 };
 
 /**
+ * Take a date object and output the date of the month with no leading zeros but with the ordinal (1st-31st)
+ * @param {Date} 	a date object
+ * @returns {String}	the date with no leading zeros but with the ordinal
+ */
+export var dt = function (date) {
+	let day = date.getDate();
+	switch (day) {
+		case 1:
+		case 21:
+		case 31:
+			day += 'st';
+			break;
+		case 2:
+		case 22:
+			day += 'nd';
+			break;
+		case 3:
+		case 23:
+			day += 'rd';
+			break;
+		default:
+			day += 'th';
+	}
+	return day;
+};
+
+/**
  * Take a date object and outpit the hour with no leading zeros (1-12)
  * @param   {Date}   date a date object
  * @returns {String} the hour with no leading zeros

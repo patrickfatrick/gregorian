@@ -12,7 +12,7 @@ export default function (format, delimiter) {
 	delimiter = delimiter || '+';
 	const date = this.d;
 	const search = [
-		'unix', 'utc-short', 'utc', 'iso-short', 'iso', 'yyyy','yy', 'DD', 'dd', 'D', 'd', 'MM', 'mm','M', 'm', 'hh', 'h', 'HH', 'H', 'tt', 't', 'AP', 'ap', 'ss', 's', 'll', 'l', 'zz'
+		'unix', 'utc-short', 'utc', 'iso-short', 'iso', 'yyyy','yy', 'DD', 'dd', 'dt', 'D', 'd', 'MM', 'mm','M', 'm', 'hh', 'h', 'HH', 'H', 'tt', 't', 'AP', 'ap', 'ss', 's', 'll', 'l', 'zz'
 	];
 	let converted = format;
 

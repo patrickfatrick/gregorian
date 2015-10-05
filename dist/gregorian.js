@@ -306,6 +306,34 @@ var dd = function dd(date) {
 
 exports.dd = dd;
 /**
+ * Take a date object and output the date of the month with no leading zeros but with the ordinal (1st-31st)
+ * @param {Date} 	a date object
+ * @returns {String}	the date with no leading zeros but with the ordinal
+ */
+var dt = function dt(date) {
+  var day = date.getDate();
+  switch (day) {
+    case 1:
+    case 21:
+    case 31:
+      day += 'st';
+      break;
+    case 2:
+    case 22:
+      day += 'nd';
+      break;
+    case 3:
+    case 23:
+      day += 'rd';
+      break;
+    default:
+      day += 'th';
+  }
+  return day;
+};
+
+exports.dt = dt;
+/**
  * Take a date object and outpit the hour with no leading zeros (1-12)
  * @param   {Date}   date a date object
  * @returns {String} the hour with no leading zeros
@@ -536,7 +564,7 @@ var to = _interopRequireWildcard(_reformToFunctions);
 exports['default'] = function (format, delimiter) {
 	delimiter = delimiter || '+';
 	var date = this.d;
-	var search = ['unix', 'utc-short', 'utc', 'iso-short', 'iso', 'yyyy', 'yy', 'DD', 'dd', 'D', 'd', 'MM', 'mm', 'M', 'm', 'hh', 'h', 'HH', 'H', 'tt', 't', 'AP', 'ap', 'ss', 's', 'll', 'l', 'zz'];
+	var search = ['unix', 'utc-short', 'utc', 'iso-short', 'iso', 'yyyy', 'yy', 'DD', 'dd', 'dt', 'D', 'd', 'MM', 'mm', 'M', 'm', 'hh', 'h', 'HH', 'H', 'tt', 't', 'AP', 'ap', 'ss', 's', 'll', 'l', 'zz'];
 	var converted = format;
 
 	var _iteratorNormalCompletion = true;

@@ -76,6 +76,7 @@ The following are components you can use to construct a format string like `'mm/
 'D' // abbreviated day of the week (Sun-Sat)
 'dd' // two-digit date of the month (01-31)
 'd' // date of the month with no leading zeros (1-31)
+'dt' // date of the month with no leading zeros but with the ordinal (1st-31st)
 'MM' // full month (January-December)
 'M' // abbreviated month (Jan-Dec)
 'mm' // two-digit month (01-12)
