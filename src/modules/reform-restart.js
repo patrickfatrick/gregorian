@@ -44,6 +44,8 @@ export default function (increment) {
 		to: this.to,
 		add: this.add,
 		subtract: this.subtract,
-		restart: this.restart
+		restart: this.restart,
+		reagent: this.reagent,
+		recite: this.recite
 	};
 }

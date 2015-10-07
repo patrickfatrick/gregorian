@@ -57,7 +57,9 @@ function addSubtract (obj, n, increment) {
 		to: obj.to,
 		add: obj.add,
 		subtract: obj.subtract,
-		restart: obj.restart
+		restart: obj.restart,
+		reagent: obj.reagent,
+		recite: obj.recite
 	};
 }
 

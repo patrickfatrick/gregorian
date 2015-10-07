@@ -1,9 +1,11 @@
 'use strict';
 
 import reformDate from './reform-date';
-import reformTo from './reform-to';
+import to from './reform-to';
 import {add, subtract} from './reform-add-subtract';
-import reformRestart from './reform-restart';
+import restart from './reform-restart';
+import reagent from './reagent';
+import recite from './recite';
 
 /**
  * Take a string or date object and convert it into a gregorian object
@@ -15,9 +17,11 @@ export default function (obj) {
 	return {
 		d: date,
 		input: obj,
-		to: reformTo,
+		to: to,
 		add: add,
 		subtract: subtract,
-		restart: reformRestart
+		restart: restart,
+		reagent: reagent,
+		recite: recite
 	};
 }

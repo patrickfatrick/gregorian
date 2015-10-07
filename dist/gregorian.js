@@ -24,7 +24,46 @@ var gregorian = {
 exports['default'] = gregorian;
 module.exports = exports['default'];
 
-},{"./modules/reform":7}],2:[function(require,module,exports){
+},{"./modules/reform":9}],2:[function(require,module,exports){
+/*
+ * Takes a gregorian object and checks that it has a valid date.
+ * @param {Object}  A gregorian object
+ * @return {Boolean}
+ */
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports["default"] = function () {
+  if (isNaN(this.d.getTime())) {
+    return false;
+  }
+  return true;
+};
+
+module.exports = exports["default"];
+
+},{}],3:[function(require,module,exports){
+/*
+ * Takes a gregorian object and outputs the date object
+ * @param {Object}  A gregorian object
+ * @return {Date} the date object it contains
+ */
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports["default"] = function () {
+  return this.d;
+};
+
+module.exports = exports["default"];
+
+},{}],4:[function(require,module,exports){
 'use strict';
 
 /**
@@ -87,7 +126,9 @@ function addSubtract(obj, n, increment) {
 		to: obj.to,
 		add: obj.add,
 		subtract: obj.subtract,
-		restart: obj.restart
+		restart: obj.restart,
+		reagent: obj.reagent,
+		recite: obj.recite
 	};
 }
 
@@ -101,7 +142,7 @@ var subtract = function subtract(n, increment) {
 };
 exports.subtract = subtract;
 
-},{}],3:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 'use strict';
 
 /**
@@ -110,23 +151,17 @@ exports.subtract = subtract;
  * @returns {Date}	if string passes the test, return the date object
  */
 Object.defineProperty(exports, '__esModule', {
-	value: true
+  value: true
 });
 
 exports['default'] = function (obj) {
-	if (obj == null) throw new TypeError('This is null or undefined');
-	obj = new Date(obj);
-	if (Object.prototype.toString.call(obj) === '[object Date]') {
-		if (isNaN(obj.getTime())) {
-			throw new TypeError('This is not a valid date');
-		}
-	}
-	return obj;
+  obj = obj || new Date();
+  return new Date(obj);
 };
 
 module.exports = exports['default'];
 
-},{}],4:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 'use strict';
 
 /**
@@ -177,13 +212,15 @@ exports['default'] = function (increment) {
 		to: this.to,
 		add: this.add,
 		subtract: this.subtract,
-		restart: this.restart
+		restart: this.restart,
+		reagent: this.reagent,
+		recite: this.recite
 	};
 };
 
 module.exports = exports['default'];
 
-},{}],5:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 'use strict';
 
 /**
@@ -541,7 +578,7 @@ var unix = function unix(date) {
 };
 exports.unix = unix;
 
-},{}],6:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -626,7 +663,7 @@ exports['default'] = function (format, delimiter) {
 
 module.exports = exports['default'];
 
-},{"./reform-to-functions":5}],7:[function(require,module,exports){
+},{"./reform-to-functions":7}],9:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -649,6 +686,14 @@ var _reformRestart = require('./reform-restart');
 
 var _reformRestart2 = _interopRequireDefault(_reformRestart);
 
+var _reagent = require('./reagent');
+
+var _reagent2 = _interopRequireDefault(_reagent);
+
+var _recite = require('./recite');
+
+var _recite2 = _interopRequireDefault(_recite);
+
 /**
  * Take a string or date object and convert it into a gregorian object
  * @param   {Object} obj A string or date object that can be parsed into a date
@@ -663,13 +708,15 @@ exports['default'] = function (obj) {
 		to: _reformTo2['default'],
 		add: _reformAddSubtract.add,
 		subtract: _reformAddSubtract.subtract,
-		restart: _reformRestart2['default']
+		restart: _reformRestart2['default'],
+		reagent: _reagent2['default'],
+		recite: _recite2['default']
 	};
 };
 
 module.exports = exports['default'];
 
-},{"./reform-add-subtract":2,"./reform-date":3,"./reform-restart":4,"./reform-to":6}]},{},[1])(1)
+},{"./reagent":2,"./recite":3,"./reform-add-subtract":4,"./reform-date":5,"./reform-restart":6,"./reform-to":8}]},{},[1])(1)
 });
 
 

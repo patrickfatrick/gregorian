@@ -35,6 +35,7 @@ and more!
 
 ##What doesn't it do?
 This does not accept native language input. For instance `gregorian.reform('next Tuesday')` will throw a TypeError.
+
 It accepts anything Javascript natively accepts when creating a date object. `gregorian.reform('April 11, 1988 00:00 UTC')` is valid as is `gregorian.reform('04/11/1988')` is as valid as `gregorian.reform(new Date('04/11/1988'))` is as valid as `gregorian.reform(576741600000)`.
 
 The library is currently in English only.
@@ -53,7 +54,13 @@ You can install it into your site using `<script src="./gregorian/dist/gregorian
 To run the tests, `npm test`.
 
 ##Usage
-To create a gregorian object, call `gregorian.reform()` with either a date object or a date-string. For instance `gregorian.reform('2015-10-31')` or `gregorian.reform(new Date())`.
+To create a gregorian object, call `gregorian.reform()` with either a date object or a date-string. For instance 
+
+```javascript
+gregorian.reform('2015-10-31')
+gregorian.reform(new Date()) // Current date and time
+gregorian.reform() // Current date and time
+```
 
 But that's kind of boring. To do stuff with it, chain a `.to()` method to it, passing a string for the format you'd like to use. For instance `gregorian.reform('2015-10-31').to('unix')` or `gregorian.reform('2015-10-31').to('iso')`. This will return the converted string or else the number of milliseconds passed since January 1, 1970 in the case of `'unix'`.
 
@@ -138,7 +145,7 @@ Accepted increments you can use for additions and subtractions are
 'm' // 1 month (position will be on the same date and time of the month)
 'y' // 1 year (position will be on the date and time of the year)
 ```
-###Restarting
+###Restart
 You can set the date or time to the start of the increment specified in local time. For instance,
 
 ```javascript
@@ -152,6 +159,25 @@ gregorian.reform('April 11, 1988 8:23:15.123').restart('y') // '1988-01-01 00:00
 ```
 
 Note that the `restart` functions return times in the local time zone. You would see a two-hour difference running these same functions in Eastern vs Mountain time.
+
+###Reagent
+As of v1.3 gregorian no longer throws a TypeError when constructing an object with an invalid date. Instead, gregorian now has a method `reagent()` which outputs `true` or `false` depending on the validity of the date it contains. Use this to check the dates that are passed through.
+
+```javascript
+reform().reagent() // true
+reform('next Tuesday').reagent() // false
+```
+
+###Recite
+New to v1.3, `recite()` will simply return the date object that the gregorian object has at that point.
+
+```javascript
+reform('04/11/1988 00:00 UTC').add(1, 'd').recite() // 1988-04-12T00:00:00.000Z
+reform('October 15, 2015 00:00 UTC').add(1, 'y').subtract(5, 'd').subtract(5, 't').restart('h').recite() // 2016-10-09T23:00:00.000Z
+```
+
+###With Date.JS
+You can combine Gregorian with [Date.JS](http://matthewmueller.github.io/date/) to allow for human-readable date input. `gregorian.reform(date('next Tuesday'))` is valid. But do keep in mind that Date.JS is pretty forgiving. `gregorian.reform(date('not a date'))` is also valid and will return a gregorian object for the current date and time. Meanwhile `gregorian.reform(date('next Tuesday'))` will also return the current date and time if the function is run on Tuesday.
 
 ##Why not use MomentJS?
 [Moment](http://momentjs.com/) is awesome and I personally use it in a lot of projects. This is not intended to replace Moment by any means, it's simply intended to provide a more focused set of features at a fraction of the weight. Moment's minified .js file is about 5x the size of Gregorian's.
