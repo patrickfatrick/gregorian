@@ -51,16 +51,8 @@ function addSubtract (obj, n, increment) {
 		}
 	};
 	
-	return {
-		d: increments[increment](obj.d),
-		input: obj.input,
-		to: obj.to,
-		add: obj.add,
-		subtract: obj.subtract,
-		restart: obj.restart,
-		reagent: obj.reagent,
-		recite: obj.recite
-	};
+	obj.d = increments[increment](obj.d);
+	return obj;
 }
 
 export var add = function (n, increment) {

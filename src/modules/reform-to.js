@@ -17,7 +17,6 @@ export default function (format, delimiter) {
 	let converted = format;
 
 	for (let piece of search) {
-		//console.log(converted + ' vs ' + piece);
 		const re = new RegExp('\\b' + piece + '\\b', 'g');
 		if (re.test(converted)) {
 			switch (piece) {
@@ -37,8 +36,6 @@ export default function (format, delimiter) {
 					converted = to.iso(date);
 					break;
 				default:
-					//console.log('Search string is: ' + piece);
-					//console.log('Converted string is: ' + to[piece](date));
 					let replacer = to[piece](date).toString();
 					converted = converted.replace(re, replacer);
 			}
@@ -47,6 +44,5 @@ export default function (format, delimiter) {
 	if (typeof converted === 'string') {
 		converted = converted.replace(new RegExp('\\' + delimiter, 'g'), '');
 	}
-	// console .log(converted);
 	return converted;
 }

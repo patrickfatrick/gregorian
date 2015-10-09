@@ -38,14 +38,6 @@ export default function (increment) {
 		return new Date(date);
 	};
 	
-	return {
-		d: increments[increment](this.d),
-		input: this.input,
-		to: this.to,
-		add: this.add,
-		subtract: this.subtract,
-		restart: this.restart,
-		reagent: this.reagent,
-		recite: this.recite
-	};
+	this.d = increments[increment](this.d);
+	return this;
 }

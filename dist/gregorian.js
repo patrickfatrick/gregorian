@@ -120,16 +120,8 @@ function addSubtract(obj, n, increment) {
 		}
 	};
 
-	return {
-		d: increments[increment](obj.d),
-		input: obj.input,
-		to: obj.to,
-		add: obj.add,
-		subtract: obj.subtract,
-		restart: obj.restart,
-		reagent: obj.reagent,
-		recite: obj.recite
-	};
+	obj.d = increments[increment](obj.d);
+	return obj;
 }
 
 var add = function add(n, increment) {
@@ -206,16 +198,8 @@ exports['default'] = function (increment) {
 		return new Date(date);
 	};
 
-	return {
-		d: increments[increment](this.d),
-		input: this.input,
-		to: this.to,
-		add: this.add,
-		subtract: this.subtract,
-		restart: this.restart,
-		reagent: this.reagent,
-		recite: this.recite
-	};
+	this.d = increments[increment](this.d);
+	return this;
 };
 
 module.exports = exports['default'];
@@ -612,7 +596,6 @@ exports['default'] = function (format, delimiter) {
 		for (var _iterator = search[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 			var piece = _step.value;
 
-			//console.log(converted + ' vs ' + piece);
 			var re = new RegExp('\\b' + piece + '\\b', 'g');
 			if (re.test(converted)) {
 				switch (piece) {
@@ -632,8 +615,6 @@ exports['default'] = function (format, delimiter) {
 						converted = to.iso(date);
 						break;
 					default:
-						//console.log('Search string is: ' + piece);
-						//console.log('Converted string is: ' + to[piece](date));
 						var replacer = to[piece](date).toString();
 						converted = converted.replace(re, replacer);
 				}
@@ -657,7 +638,6 @@ exports['default'] = function (format, delimiter) {
 	if (typeof converted === 'string') {
 		converted = converted.replace(new RegExp('\\' + delimiter, 'g'), '');
 	}
-	// console .log(converted);
 	return converted;
 };
 
