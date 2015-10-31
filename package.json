@@ -4,6 +4,9 @@
 	"description": "A Javascript micro library for converting and displaying dates",
 	"main": "index.js",
 	"format": "es6",
+	"engines": {
+		"npm": "^3.3.8"
+	},
 	"scripts": {
 		"test": "istanbul cover _mocha -- -R spec --compilers js:babel-core/register"
 	},
