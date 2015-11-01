@@ -6,17 +6,17 @@ var buffer = require('vinyl-buffer');
 var source = require('vinyl-source-stream');
 var config = require('../config').build;
 
-var bundler = browserify(config.src, {debug: true, standalone: config.standalone});
+var bundler = browserify(config.src, {debug: true, standalone: config.standalone, extensions: config.extensions});
 bundler.transform(config.transform);
 gulp.task('build', bundle);
 
 function bundle() {
-  return bundler.bundle()
-  // log errors if they happen
-  .on('error', gutil.log.bind(gutil, 'Browserify Error'))
-  .pipe(source(config.outputName))
+	return bundler.bundle()
+	// log errors if they happen
+	.on('error', gutil.log.bind(gutil, 'Browserify Error'))
+	.pipe(source(config.outputName))
 	.pipe(buffer())
 	.pipe(sourcemaps.init({loadMaps: true}))
 	.pipe(sourcemaps.write('./'))
-  .pipe(gulp.dest(config.dest));
+	.pipe(gulp.dest(config.dest));
 }

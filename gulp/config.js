@@ -11,7 +11,8 @@ module.exports = {
 		src: src + '/gregorian.js',
 		dest: dest + '/',
 		outputName: 'gregorian.js',
-		standalone: 'gregorian'
+		standalone: 'gregorian',
+		extensions: ['js']
 	},
 	min: {
 		transform: ['babelify', {
@@ -21,7 +22,8 @@ module.exports = {
 		src: src + '/gregorian.js',
 		dest: dest + '/',
 		outputName: 'gregorian.min.js',
-		standalone: 'gregorian'
+		standalone: 'gregorian',
+		extensions: ['js', 'es6']
 	},
 	lint: {
 		src: src + '/**/*.js'
