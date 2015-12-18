@@ -1,0 +1,13 @@
+machine:
+  node:
+    version: 5
+dependencies:
+  pre:
+    - npm cache clear
+    - npm install npm@'>=3.3.6' -g
+test:
+  post:
+    - cat ./coverage/**/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js
+general:
+  artifacts:
+    - ./coverage

@@ -1,2 +1,2 @@
 import gregorian from './src/gregorian';
-export default gregorian;
+module.exports = gregorian;

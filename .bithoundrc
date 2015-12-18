@@ -1,0 +1,12 @@
+{
+  "ignore": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/gulp/**",
+    "gulpfile.js",
+    "karma.conf.js"
+  ],
+  "test": [
+    "**/test/**"
+  ]
+}

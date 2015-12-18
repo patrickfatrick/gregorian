@@ -11,12 +11,12 @@ import * as to from './reform-to-functions';
 export default function (format, delimiter) {
 	delimiter = delimiter || '+';
 	const date = this.d;
-	const search = [
+	const pieces = [
 		'unix', 'utc-short', 'utc', 'iso-short', 'iso', 'yyyy','yy', 'DD', 'dd', 'dt', 'D', 'd', 'MM', 'mm','M', 'm', 'hh', 'h', 'HH', 'H', 'tt', 't', 'AP', 'ap', 'ss', 's', 'll', 'l', 'zz'
 	];
 	let converted = format;
-
-	for (let piece of search) {
+	
+	pieces.forEach(piece => {
 		const re = new RegExp('\\b' + piece + '\\b', 'g');
 		if (re.test(converted)) {
 			switch (piece) {
@@ -36,11 +36,11 @@ export default function (format, delimiter) {
 					converted = to.iso(date);
 					break;
 				default:
-					let replacer = to[piece](date).toString();
+					let replacer = to[piece](date);
 					converted = converted.replace(re, replacer);
 			}
 		}
-	}
+	});
 	if (typeof converted === 'string') {
 		converted = converted.replace(new RegExp('\\' + delimiter, 'g'), '');
 	}

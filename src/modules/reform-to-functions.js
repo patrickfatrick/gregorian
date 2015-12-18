@@ -266,7 +266,7 @@ export var yy = function (date) {
  * @returns {String}	the four-digit year
  */
 export var yyyy = function (date) {
-	return date.getFullYear().toString();
+	return date.getFullYear();
 };
 
 /**

@@ -21,13 +21,12 @@
 		]
 	},
 	"env": {
-		"es6": true
+		"es6": true,
+		"node": true,
+		"browser": true
 	},
 	"ecmaFeatures" :{
-		"arrowFunctions": true,
-		"blockBindings": true,
 		"modules": true,
-		"forOf": true
 	},
 	"extends": "eslint:recommended"
 }
