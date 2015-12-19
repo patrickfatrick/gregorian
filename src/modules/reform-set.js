@@ -26,10 +26,11 @@ export default function (value, increment) {
 	};
 	increments.w = date => {
 		let currentDay = date.getUTCDay();
+		let currentMilliseconds = date.getUTCMilliseconds();
 		date.setUTCFullYear(date.getUTCFullYear(), 0, value * 7);
 		let n = currentDay - date.getUTCDay();
 		date.setUTCDate(date.getUTCDate() + n);
-		return new Date(date);
+		return new Date(date.setUTCMilliseconds(currentMilliseconds));
 	};
 	increments.m = date => {
 		let newMonth = value - 1;

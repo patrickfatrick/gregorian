@@ -20,8 +20,8 @@ describe('set', () => {
 		reform('2015-10-31T04:56:14.877Z').set(8, 't').d.toISOString().should.equal('2015-10-31T04:08:14.877Z');
 		reform('2015-10-31T04:56:14.877Z').set(8, 'h').d.toISOString().should.equal('2015-10-31T08:56:14.877Z');
 		reform('2015-10-31T04:56:14.877Z').set(8, 'd').d.toISOString().should.equal('2015-10-08T04:56:14.877Z');
-		reform('2015-10-31T04:56:14.877Z').set(15, 'w').d.toISOString().should.include('2015-04-18T04:56:14.');
-		reform('2015-10-31T04:56:14.877Z').set(48, 'w').d.toISOString().should.include('2015-12-05T04:56:14.');
-		reform('2015-10-31T04:56:14.877Z').set(8, 'w').d.toISOString().should.include('2015-02-28T04:56:14.');
+		reform('2015-10-31T04:56:14.877Z').set(15, 'w').d.toISOString().should.equal('2015-04-18T04:56:14.877Z');
+		reform('2015-10-31T04:56:14.877Z').set(48, 'w').d.toISOString().should.equal('2015-12-05T04:56:14.877Z');
+		reform('2015-10-31T04:56:14.877Z').set(8, 'w').d.toISOString().should.equal('2015-02-28T04:56:14.877Z');
 	});
 });

@@ -230,6 +230,6 @@ Gregorian is freely distributable under the terms of the [MIT license](./LICENSE
 
 - Add ability to make a translation with a config, as well as direct translations for some common languages.
 
-_Each Gregorian release is linted with ESLint and tested with Mocha Chai._
+_Each Gregorian release is linted with ESLint and tested with a combination of Karma, Mocha, Chai, and Isparta._
 
 ![Gregorian Calendar](./images/gregorian-calendar.jpg)
