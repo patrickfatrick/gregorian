@@ -1,10 +1,10 @@
 #Gregorian
 _A Javascript micro library for converting and displaying dates._
 
-[![Build Status](https://travis-ci.org/patrickfatrick/gregorian.svg)](https://travis-ci.org/patrickfatrick/gregorian)
-[![Dependency Status](https://david-dm.org/patrickfatrick/gregorian.svg)](https://david-dm.org/patrickfatrick/gregorian)
-[![devDependency Status](https://david-dm.org/patrickfatrick/gregorian/dev-status.svg)](https://david-dm.org/patrickfatrick/gregorian#info=devDependencies)
-[![Coverage Status](https://coveralls.io/repos/patrickfatrick/gregorian/badge.svg?branch=master&service=github)](https://coveralls.io/github/patrickfatrick/gregorian?branch=master)
+[![Circle CI](https://circleci.com/gh/patrickfatrick/gregorian.svg?style=shield)](https://circleci.com/gh/patrickfatrick/gregorian)
+[![codecov.io](https://codecov.io/github/patrickfatrick/gregorian/coverage.svg?branch=master)](https://codecov.io/github/patrickfatrick/gregorian?branch=master)
+[![bitHound Score](https://www.bithound.io/github/patrickfatrick/gregorian/badges/score.svg)](https://www.bithound.io/github/patrickfatrick/gregorian)
+[![bitHound Dependencies](https://www.bithound.io/github/patrickfatrick/gregorian/badges/dependencies.svg)](https://www.bithound.io/github/patrickfatrick/gregorian/master/dependencies/npm)
 [![MIT License][license-image]][license-url]
 
 ![Gregorian Page](./images/gregorian-page.jpg)
@@ -193,7 +193,6 @@ Gregorian is freely distributable under the terms of the [MIT license](./LICENSE
 
 - Add setter functions to take an existing gregorian object and set a specific date or time on it.
 - Add ability to make a translation with a config, as well as direct translations for some common languages.
-- Add more testing.
 
 _Each Gregorian release is linted with ESLint and tested with Mocha Chai._
 
