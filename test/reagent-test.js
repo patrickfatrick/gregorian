@@ -10,7 +10,7 @@ describe('reagent', () => {
 		reform('September 25, 2015 00:00 UTC').reagent().should.be.true;
 		reform(1443139200000).reagent().should.be.true;
 		reform().reagent().should.be.true;
-		reform('October 32, 2015').reagent().should.be.false;
+		reform('a year ago').reagent().should.be.false;
 		reform('next Tuesday').reagent().should.be.false;
 	});
 });

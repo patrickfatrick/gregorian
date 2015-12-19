@@ -34,7 +34,7 @@ var gregorian = {
 
 exports.default = gregorian;
 
-},{"./modules/reform":10}],3:[function(require,module,exports){
+},{"./modules/reform":11}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -198,6 +198,72 @@ exports.default = function (increment) {
 };
 
 },{}],8:[function(require,module,exports){
+'use strict';
+
+/**
+ * Sets the date or time to specified interval
+ * @param   {String} increment an increment to set
+ * @param {String} value what to set the increment to
+ * @returns {Object} a new gregorian object
+ */
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+exports.default = function (value, increment) {
+	var increments = {};
+
+	increments.l = function (date) {
+		return new Date(date.setUTCMilliseconds(value));
+	};
+	increments.s = function (date) {
+		return new Date(date.setUTCSeconds(value));
+	};
+	increments.t = function (date) {
+		return new Date(date.setUTCMinutes(value));
+	};
+	increments.h = function (date) {
+		return new Date(date.setUTCHours(value));
+	};
+	increments.d = function (date) {
+		return new Date(date.setUTCDate(value));
+	};
+	increments.w = function (date) {
+		var currentDay = date.getUTCDay();
+		date.setUTCFullYear(date.getUTCFullYear(), 0, value * 7);
+		var n = currentDay - date.getUTCDay();
+		date.setUTCDate(date.getUTCDate() + n);
+		return new Date(date);
+	};
+	increments.m = function (date) {
+		var newMonth = value - 1;
+		var newYear = date.getUTCFullYear();
+		var newDate = date.getUTCDate();
+
+		if (newDate > new Date(date.setUTCFullYear(newYear, newMonth + 1, 0)).getUTCDate()) {
+			return new Date(date.setUTCFullYear(newYear, newMonth + 1, 0));
+		} else {
+			return new Date(date.setUTCFullYear(newYear, newMonth, newDate));
+		}
+	};
+	increments.y = function (date) {
+		var newYear = value;
+		var newMonth = date.getUTCMonth();
+		var newDate = date.getUTCDate();
+
+		if (newDate > new Date(date.setUTCFullYear(newYear, newMonth + 1, 0)).getUTCDate()) {
+			return new Date(date.setUTCFullYear(newYear, newMonth + 1, 0));
+		} else {
+			return new Date(date.setUTCFullYear(newYear, newMonth, newDate));
+		}
+	};
+
+	this.d = increments[increment](this.d);
+	return this;
+};
+
+},{}],9:[function(require,module,exports){
 'use strict';
 
 /**
@@ -470,7 +536,7 @@ var yy = exports.yy = function yy(date) {
  * @returns {String}	the four-digit year
  */
 var yyyy = exports.yyyy = function yyyy(date) {
-  return date.getFullYear().toString();
+  return date.getFullYear();
 };
 
 /**
@@ -529,7 +595,7 @@ var unix = exports.unix = function unix(date) {
   return Date.parse(date);
 };
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -562,7 +628,7 @@ exports.default = function (format, delimiter) {
 					converted = to.iso(date);
 					break;
 				default:
-					var replacer = to[piece](date).toString();
+					var replacer = to[piece](date);
 					converted = converted.replace(re, replacer);
 			}
 		}
@@ -579,7 +645,7 @@ var to = _interopRequireWildcard(_reformToFunctions);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-},{"./reform-to-functions":8}],10:[function(require,module,exports){
+},{"./reform-to-functions":9}],11:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -596,7 +662,8 @@ exports.default = function (obj) {
 		subtract: _reformAddSubtract.subtract,
 		restart: _reformRestart2.default,
 		reagent: _reagent2.default,
-		recite: _recite2.default
+		recite: _recite2.default,
+		set: _reformSet2.default
 	};
 };
 
@@ -622,9 +689,13 @@ var _recite = require('./recite');
 
 var _recite2 = _interopRequireDefault(_recite);
 
+var _reformSet = require('./reform-set');
+
+var _reformSet2 = _interopRequireDefault(_reformSet);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"./reagent":3,"./recite":4,"./reform-add-subtract":5,"./reform-date":6,"./reform-restart":7,"./reform-to":9}]},{},[1])(1)
+},{"./reagent":3,"./recite":4,"./reform-add-subtract":5,"./reform-date":6,"./reform-restart":7,"./reform-set":8,"./reform-to":10}]},{},[1])(1)
 });
 
 

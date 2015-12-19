@@ -1,4 +1,5 @@
 #Gregorian
+
 _A Javascript micro library for converting and displaying dates._
 
 [![Circle CI](https://circleci.com/gh/patrickfatrick/gregorian.svg?style=shield)](https://circleci.com/gh/patrickfatrick/gregorian)
@@ -15,7 +16,8 @@ _A Javascript micro library for converting and displaying dates._
 
 Gregorian is named after the calendar introduced in 1582 by under Pope Gregory XIII's papacy, the calendar we currently use today. It was a **reform** of the Julian calendar to make the year 0.002% shorter and also slightly changed the leap year schedule to omit 3 leap days every 400 years.
 
-##What does it do?
+## What does it do?
+
 Gregorian is a wrapper for the native Javascript `Date` object that allows you to customize how to display and write dates pretty minutely. It also allows you to do some basic date manipulation (See section 'Manipulation' below). It has no dependencies and can be run either in the browser as a global or as a module. Each release is linted with ESLint and tested with Mocha Chai to minimize errors.
 
 You can take the same date object and express it like:
@@ -33,14 +35,15 @@ You can take the same date object and express it like:
 and more!
 ```
 
-##What doesn't it do?
+## What doesn't it do?
+
 This does not accept native language input. For instance `gregorian.reform('next Tuesday')` will throw a TypeError.
 
 It accepts anything Javascript natively accepts when creating a date object. `gregorian.reform('April 11, 1988 00:00 UTC')` is valid as is `gregorian.reform('04/11/1988')` is as valid as `gregorian.reform(new Date('04/11/1988'))` is as valid as `gregorian.reform(576741600000)`.
 
 The library is currently in English only.
 
-##Install
+## Install
 
 ```bash
 npm install gregorian --save
@@ -53,7 +56,8 @@ You can install it into your site using `<script src="./gregorian/dist/gregorian
 
 To run the tests, `npm test`.
 
-##Usage
+## Usage
+
 To create a gregorian object, call `gregorian.reform()` with either a date object or a date-string. For instance 
 
 ```javascript
@@ -64,7 +68,8 @@ gregorian.reform() // Current date and time
 
 But that's kind of boring. To do stuff with it, chain a `.to()` method to it, passing a string for the format you'd like to use. For instance `gregorian.reform('2015-10-31').to('unix')` or `gregorian.reform('2015-10-31').to('iso')`. This will return the converted string or else the number of milliseconds passed since January 1, 1970 in the case of `'unix'`.
 
-###Accepted formats
+### Accepted formats
+
 The following are plug-n-play formats that are simply wrappers for existing Javascript Date methods and should not be used with any other formats. The `-short` methods extend the existing methods by removing the time from the output.
 
 ```javascript
@@ -122,8 +127,10 @@ gregorian.reform('09/25/2015 01:00 UTC').to('DD, M yyyy-m-d H:tt:ss.ll zz') // '
 gregorian.reform('09/25/2015 UTC -06:00').to('D#_#yy#_#mm#_#dd#_#h:t.l#AP#_#zz', '#') // 'Fri_15_09_25_12:0.0AM_UTC -6:00'
 ```
 
-##Manipulation
-###Adding and subtracting
+## Manipulation
+
+#### Adding and subtracting
+
 You can manipulate the gregorian object like 
 
 ```javascript
@@ -145,7 +152,33 @@ Accepted increments you can use for additions and subtractions are
 'm' // 1 month (position will be on the same date and time of the month)
 'y' // 1 year (position will be on the date and time of the year)
 ```
-###Restart
+
+#### Setting
+
+Setting specific values for different time increments is much like adding and subtracting
+
+```javascript
+gregorian.reform('2015-10-31').add(5, 'd') // 2015-10-05
+gregorian.reform('2015-10-31').subtract(7, 'm') // 2015-07-31
+```
+
+This will return a new gregorian object that can then be formatted into a string as usual `gregorian.reform('2015-10-31').subtract(1, 'm').to('iso')`
+
+Accepted increments you can use for setting are
+
+```javascript
+'l' // 1 millisecond
+'s' // 1 second
+'t' // 1 minute
+'h' // 1 hour
+'d' // 1 day
+'w' // 1 week
+'m' // 1 month (position will be on the same date and time of the month)
+'y' // 1 year (position will be on the date and time of the year)
+```
+
+#### Restart
+
 You can set the date or time to the start of the increment specified in local time. For instance,
 
 ```javascript
@@ -160,7 +193,8 @@ gregorian.reform('April 11, 1988 8:23:15.123').restart('y') // '1988-01-01 00:00
 
 Note that the `restart` functions return times in the local time zone. You would see a two-hour difference running these same functions in Eastern vs Mountain time.
 
-###Reagent
+#### Reagent
+
 As of v1.3 gregorian no longer throws a TypeError when constructing an object with an invalid date. Instead, gregorian now has a method `reagent()` which outputs `true` or `false` depending on the validity of the date it contains. Use this to check the dates that are passed through.
 
 ```javascript
@@ -168,7 +202,8 @@ reform().reagent() // true
 reform('next Tuesday').reagent() // false
 ```
 
-###Recite
+#### Recite
+
 New to v1.3, `recite()` will simply return the date object that the gregorian object has at that point.
 
 ```javascript
@@ -176,10 +211,12 @@ reform('04/11/1988 00:00 UTC').add(1, 'd').recite() // 1988-04-12T00:00:00.000Z
 reform('October 15, 2015 00:00 UTC').add(1, 'y').subtract(5, 'd').subtract(5, 't').restart('h').recite() // 2016-10-09T23:00:00.000Z
 ```
 
-###With Date.JS
+## With Date.JS
+
 You can combine Gregorian with [Date.JS](http://matthewmueller.github.io/date/) to allow for human-readable date input. `gregorian.reform(date('next Tuesday'))` is valid. But do keep in mind that Date.JS is pretty forgiving. `gregorian.reform(date('not a date'))` is also valid and will return a gregorian object for the current date and time. Meanwhile `gregorian.reform(date('next Tuesday'))` will also return the current date and time if the function is run on Tuesday.
 
-##Why not use MomentJS?
+## Why not use MomentJS?
+
 [Moment](http://momentjs.com/) is awesome and I personally use it in a lot of projects. This is not intended to replace Moment by any means, it's simply intended to provide a more focused set of features at a fraction of the weight. Moment's minified .js file is about 5x the size of Gregorian's.
 
 ## License
@@ -189,9 +226,8 @@ Gregorian is freely distributable under the terms of the [MIT license](./LICENSE
 [license-image]: http://img.shields.io/badge/license-MIT-blue.svg?style=flat
 [license-url]: LICENSE
 
-##What's the plan?
+## What's the plan?
 
-- Add setter functions to take an existing gregorian object and set a specific date or time on it.
 - Add ability to make a translation with a config, as well as direct translations for some common languages.
 
 _Each Gregorian release is linted with ESLint and tested with Mocha Chai._

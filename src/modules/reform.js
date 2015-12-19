@@ -6,6 +6,7 @@ import {add, subtract} from './reform-add-subtract';
 import restart from './reform-restart';
 import reagent from './reagent';
 import recite from './recite';
+import set from './reform-set';
 
 /**
  * Take a string or date object and convert it into a gregorian object
@@ -22,6 +23,7 @@ export default function (obj) {
 		subtract: subtract,
 		restart: restart,
 		reagent: reagent,
-		recite: recite
+		recite: recite,
+		set: set
 	};
 }
