@@ -12,29 +12,88 @@ module.exports = _gregorian2.default;
 },{"./src/gregorian":2}],2:[function(require,module,exports){
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _gregorian = require('./modules/gregorian');
+
+var gregorian = new _gregorian.Gregorian();
+exports.default = gregorian;
+
+},{"./modules/gregorian":3}],3:[function(require,module,exports){
+'use strict';
+
 /**
  * Gregorian
  * Author: Patrick Fricano
  * https://www.github.com/patrickfatrick/gregorian
  */
 
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
 Object.defineProperty(exports, "__esModule", {
-  value: true
+	value: true
 });
+exports.Gregorian = undefined;
 
-var _reform = require('./modules/reform');
+var _reformTo = require('./reform-to');
 
-var _reform2 = _interopRequireDefault(_reform);
+var _reformTo2 = _interopRequireDefault(_reformTo);
+
+var _reformAddSubtract = require('./reform-add-subtract');
+
+var _reformRestart = require('./reform-restart');
+
+var _reformRestart2 = _interopRequireDefault(_reformRestart);
+
+var _reagent = require('./reagent');
+
+var _reagent2 = _interopRequireDefault(_reagent);
+
+var _recite = require('./recite');
+
+var _recite2 = _interopRequireDefault(_recite);
+
+var _reformSet = require('./reform-set');
+
+var _reformSet2 = _interopRequireDefault(_reformSet);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var gregorian = {
-  reform: _reform2.default
-};
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-exports.default = gregorian;
+var Gregorian = exports.Gregorian = (function () {
+	function Gregorian() {
+		_classCallCheck(this, Gregorian);
 
-},{"./modules/reform":11}],3:[function(require,module,exports){
+		this.d;
+		this.input;
+		this.to = _reformTo2.default, this.add = _reformAddSubtract.add, this.subtract = _reformAddSubtract.subtract, this.restart = _reformRestart2.default, this.reagent = _reagent2.default, this.recite = _recite2.default, this.set = _reformSet2.default;
+	}
+
+	/**
+  * Form a date (or other object) into a Gregorian object
+  * @param  {Date}   obj any date
+  * @return {Object}     A Gregorian instance
+  */
+
+	_createClass(Gregorian, [{
+		key: 'reform',
+		value: function reform() {
+			var obj = arguments.length <= 0 || arguments[0] === undefined ? new Date() : arguments[0];
+
+			var date = new Date(obj);
+			this.d = date;
+			this.input = obj;
+			return this;
+		}
+	}]);
+
+	return Gregorian;
+})();
+
+},{"./reagent":4,"./recite":5,"./reform-add-subtract":6,"./reform-restart":7,"./reform-set":8,"./reform-to":10}],4:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -48,7 +107,7 @@ exports.default = function () {
   return true;
 };
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -59,7 +118,7 @@ exports.default = function () {
   return this.d;
 };
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 'use strict';
 
 /**
@@ -127,24 +186,6 @@ var add = exports.add = function add(n, increment) {
 
 var subtract = exports.subtract = function subtract(n, increment) {
 	return addSubtract(this, n * -1, increment);
-};
-
-},{}],6:[function(require,module,exports){
-'use strict';
-
-/**
- * Convert the object passed to a date and test its validity
- * @param {Object} 	obj any object
- * @returns {Date}	if string passes the test, return the date object
- */
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-exports.default = function (obj) {
-  obj = obj || new Date();
-  return new Date(obj);
 };
 
 },{}],7:[function(require,module,exports){
@@ -231,10 +272,11 @@ exports.default = function (value, increment) {
 	};
 	increments.w = function (date) {
 		var currentDay = date.getUTCDay();
+		var currentMilliseconds = date.getUTCMilliseconds();
 		date.setUTCFullYear(date.getUTCFullYear(), 0, value * 7);
 		var n = currentDay - date.getUTCDay();
 		date.setUTCDate(date.getUTCDate() + n);
-		return new Date(date);
+		return new Date(date.setUTCMilliseconds(currentMilliseconds));
 	};
 	increments.m = function (date) {
 		var newMonth = value - 1;
@@ -602,8 +644,9 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-exports.default = function (format, delimiter) {
-	delimiter = delimiter || '+';
+exports.default = function (format) {
+	var delimiter = arguments.length <= 1 || arguments[1] === undefined ? '+' : arguments[1];
+
 	var date = this.d;
 	var pieces = ['unix', 'utc-short', 'utc', 'iso-short', 'iso', 'yyyy', 'yy', 'DD', 'dd', 'dt', 'D', 'd', 'MM', 'mm', 'M', 'm', 'hh', 'h', 'HH', 'H', 'tt', 't', 'AP', 'ap', 'ss', 's', 'll', 'l', 'zz'];
 	var converted = format;
@@ -645,57 +688,7 @@ var to = _interopRequireWildcard(_reformToFunctions);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-},{"./reform-to-functions":9}],11:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-exports.default = function (obj) {
-	var date = (0, _reformDate2.default)(obj);
-	return {
-		d: date,
-		input: obj,
-		to: _reformTo2.default,
-		add: _reformAddSubtract.add,
-		subtract: _reformAddSubtract.subtract,
-		restart: _reformRestart2.default,
-		reagent: _reagent2.default,
-		recite: _recite2.default,
-		set: _reformSet2.default
-	};
-};
-
-var _reformDate = require('./reform-date');
-
-var _reformDate2 = _interopRequireDefault(_reformDate);
-
-var _reformTo = require('./reform-to');
-
-var _reformTo2 = _interopRequireDefault(_reformTo);
-
-var _reformAddSubtract = require('./reform-add-subtract');
-
-var _reformRestart = require('./reform-restart');
-
-var _reformRestart2 = _interopRequireDefault(_reformRestart);
-
-var _reagent = require('./reagent');
-
-var _reagent2 = _interopRequireDefault(_reagent);
-
-var _recite = require('./recite');
-
-var _recite2 = _interopRequireDefault(_recite);
-
-var _reformSet = require('./reform-set');
-
-var _reformSet2 = _interopRequireDefault(_reformSet);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-},{"./reagent":3,"./recite":4,"./reform-add-subtract":5,"./reform-date":6,"./reform-restart":7,"./reform-set":8,"./reform-to":10}]},{},[1])(1)
+},{"./reform-to-functions":9}]},{},[1])(1)
 });
 
 
