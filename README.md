@@ -37,7 +37,7 @@ and more!
 
 ## What doesn't it do?
 
-This does not accept native language input. For instance `gregorian.reform('next Tuesday')` will throw a TypeError.
+This does not accept native language input. For instance `gregorian.reform('next Tuesday')` will evaluate to false when using the built in `reagent()` method to check if it's a date.
 
 It accepts anything Javascript natively accepts when creating a date object. `gregorian.reform('April 11, 1988 00:00 UTC')` is valid as is `gregorian.reform('04/11/1988')` is as valid as `gregorian.reform(new Date('04/11/1988'))` is as valid as `gregorian.reform(576741600000)`.
 
