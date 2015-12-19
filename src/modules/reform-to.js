@@ -8,8 +8,7 @@ import * as to from './reform-to-functions';
  * @param {String} 	format a string or date object (something that can be converted to a valid date)
  * @returns {String}	the date reformatted into the specified format
  */
-export default function (format, delimiter) {
-	delimiter = delimiter || '+';
+export default function (format, delimiter = '+') {
 	const date = this.d;
 	const pieces = [
 		'unix', 'utc-short', 'utc', 'iso-short', 'iso', 'yyyy','yy', 'DD', 'dd', 'dt', 'D', 'd', 'MM', 'mm','M', 'm', 'hh', 'h', 'HH', 'H', 'tt', 't', 'AP', 'ap', 'ss', 's', 'll', 'l', 'zz'

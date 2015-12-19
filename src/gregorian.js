@@ -1,15 +1,4 @@
-'use strict';
+import {Gregorian} from './modules/gregorian';
 
-/**
- * Gregorian
- * Author: Patrick Fricano
- * https://www.github.com/patrickfatrick/gregorian
- */
-
-import reform from './modules/reform';
-
-let gregorian = {
-	reform: reform
-};
-
+let gregorian = new Gregorian();
 export default gregorian;
