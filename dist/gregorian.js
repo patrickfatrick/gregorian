@@ -1,27 +1,18 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.gregorian = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
-var _gregorian = require('./src/gregorian');
-
-var _gregorian2 = _interopRequireDefault(_gregorian);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-module.exports = _gregorian2.default;
+var gregorian = require('./src/gregorian');
+module.exports = gregorian;
 
 },{"./src/gregorian":2}],2:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+var Gregorian = require('./modules/Gregorian');
 
-var _gregorian = require('./modules/gregorian');
+var gregorian = new Gregorian();
+module.exports = gregorian;
 
-var gregorian = new _gregorian.Gregorian();
-exports.default = gregorian;
-
-},{"./modules/gregorian":3}],3:[function(require,module,exports){
+},{"./modules/Gregorian":3}],3:[function(require,module,exports){
 'use strict';
 
 /**
@@ -32,44 +23,26 @@ exports.default = gregorian;
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-exports.Gregorian = undefined;
-
-var _reformTo = require('./reform-to');
-
-var _reformTo2 = _interopRequireDefault(_reformTo);
-
-var _reformAddSubtract = require('./reform-add-subtract');
-
-var _reformRestart = require('./reform-restart');
-
-var _reformRestart2 = _interopRequireDefault(_reformRestart);
-
-var _reagent = require('./reagent');
-
-var _reagent2 = _interopRequireDefault(_reagent);
-
-var _recite = require('./recite');
-
-var _recite2 = _interopRequireDefault(_recite);
-
-var _reformSet = require('./reform-set');
-
-var _reformSet2 = _interopRequireDefault(_reformSet);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Gregorian = exports.Gregorian = (function () {
+var to = require('./to');
+var add = require('./add-subtract').add;
+var subtract = require('./add-subtract').subtract;
+var restart = require('./restart');
+var restartUTC = require('./restart-utc');
+var reagent = require('./reagent');
+var recite = require('./recite');
+var setUTC = require('./set-utc');
+var set = require('./set');
+
+module.exports = (function () {
 	function Gregorian() {
 		_classCallCheck(this, Gregorian);
 
 		this.d;
 		this.input;
-		this.to = _reformTo2.default, this.add = _reformAddSubtract.add, this.subtract = _reformAddSubtract.subtract, this.restart = _reformRestart2.default, this.reagent = _reagent2.default, this.recite = _recite2.default, this.set = _reformSet2.default;
+		this.to = to, this.add = add, this.subtract = subtract, this.restart = restart, this.restartUTC = restartUTC, this.reagent = reagent, this.recite = recite, this.setUTC = setUTC;
+		this.set = set;
 	}
 
 	/**
@@ -80,9 +53,8 @@ var Gregorian = exports.Gregorian = (function () {
 
 	_createClass(Gregorian, [{
 		key: 'reform',
-		value: function reform() {
-			var obj = arguments.length <= 0 || arguments[0] === undefined ? new Date() : arguments[0];
-
+		value: function reform(obj) {
+			obj = obj || new Date();
 			var date = new Date(obj);
 			this.d = date;
 			this.input = obj;
@@ -93,32 +65,7 @@ var Gregorian = exports.Gregorian = (function () {
 	return Gregorian;
 })();
 
-},{"./reagent":4,"./recite":5,"./reform-add-subtract":6,"./reform-restart":7,"./reform-set":8,"./reform-to":10}],4:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-exports.default = function () {
-  if (isNaN(this.d.getTime())) {
-    return false;
-  }
-  return true;
-};
-
-},{}],5:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-exports.default = function () {
-  return this.d;
-};
-
-},{}],6:[function(require,module,exports){
+},{"./add-subtract":4,"./reagent":5,"./recite":6,"./restart":9,"./restart-utc":8,"./set":11,"./set-utc":10,"./to":12}],4:[function(require,module,exports){
 'use strict';
 
 /**
@@ -128,9 +75,6 @@ exports.default = function () {
  * @returns {Object} a new gregorian object
  */
 
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
 function addSubtract(obj, n, increment) {
 
 	var increments = {};
@@ -180,15 +124,377 @@ function addSubtract(obj, n, increment) {
 	return obj;
 }
 
-var add = exports.add = function add(n, increment) {
+exports.add = function (n, increment) {
 	return addSubtract(this, n * 1, increment);
 };
 
-var subtract = exports.subtract = function subtract(n, increment) {
+exports.subtract = function (n, increment) {
 	return addSubtract(this, n * -1, increment);
 };
 
+},{}],5:[function(require,module,exports){
+'use strict';
+
+/*
+ * Takes a gregorian object and checks that it has a valid date.
+ * @param {Object}  A gregorian object
+ * @return {Boolean}
+ */
+
+function reagent() {
+  if (isNaN(this.d.getTime())) {
+    return false;
+  }
+  return true;
+}
+
+module.exports = reagent;
+
+},{}],6:[function(require,module,exports){
+'use strict';
+
+/*
+ * Takes a gregorian object and outputs the date object
+ * @param {Object}  A gregorian object
+ * @return {Date} the date object it contains
+ */
+
+function recite() {
+  return this.d;
+}
+
+module.exports = recite;
+
 },{}],7:[function(require,module,exports){
+'use strict';
+
+/**
+ * Take a date object and output the capitalized 12-hour clock period (AM/PM)
+ * @param   {Date}   date a date object
+ * @returns {String} the capitalized 12-hour clock period 
+ */
+
+exports.AP = function (date) {
+  var hour = date.getHours();
+  var ampm = hour < 12 ? 'AM' : 'PM';
+  return ampm;
+};
+
+/**
+ * Take a date object and output the uncapitalized 12-hour clock period (AM/PM)
+ * @param   {Date   date a date object
+ * @returns {String} the uncapitalized 12-hour clock period 
+ */
+exports.ap = function (date) {
+  var hour = date.getHours();
+  var ampm = hour < 12 ? 'am' : 'pm';
+  return ampm;
+};
+
+/**
+ * Take a date object and output the abreviated day of the week
+ * @param {Date} 	a date object
+ * @returns {String}	the abbreviated day of the week
+ */
+exports.D = function (date) {
+  var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  var dayOfWeek = date.getDay();
+  return days[dayOfWeek];
+};
+
+/**
+ * Take a date object and output the day of the week
+ * @param {Date} 	a date object
+ * @returns {String} the full day of the week
+ */
+exports.DD = function (date) {
+  var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  var dayOfWeek = date.getDay();
+  return days[dayOfWeek];
+};
+
+/**
+ * Take a date object and outpit the 24-hour clock hour with no leading zeros (0-23)
+ * @param   {Date}   date a date object
+ * @returns {String} the hour with no leading zeros
+ */
+exports.H = function (date) {
+  var hour = date.getHours();
+  return hour;
+};
+
+/**
+ * Take a date object and outpit the 24-hour clock hour with no leading zeros (0-23)
+ * @param   {Date}   date a date object
+ * @returns {String} the hour with no leading zeros
+ */
+exports.HH = function (date) {
+  var hour = date.getHours().toString();
+  return hour.length < 2 ? '0' + hour : hour;
+};
+
+/**
+ * Take a date object and output the abbreviated month
+ * @param {Date} 	a date object
+ * @returns {String}	the abbreviated month
+ */
+exports.M = function (date) {
+  var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+  var month = date.getMonth();
+  return months[month];
+};
+
+/**
+ * Take a date object and output the month
+ * @param {Date} 	a date object
+ * @returns {String}	the full month
+ */
+exports.MM = function (date) {
+  var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  var month = date.getMonth();
+  return months[month];
+};
+
+/**
+ * Take a date object and output the date of the month with no leading zeros (1-31)
+ * @param {Date} 	a date object
+ * @returns {String}	the date of the month with no leading zeros
+ */
+exports.d = function (date) {
+  var day = date.getDate().toString();
+  return day;
+};
+
+/**
+ * Take a date object and output the two-digit date of the month (01-31)
+ * @param {Date} 	a date object
+ * @returns {String}	the two-digit date of the month
+ */
+exports.dd = function (date) {
+  var day = date.getDate().toString();
+  return day.length < 2 ? '0' + day : day;
+};
+
+/**
+ * Take a date object and output the date of the month with no leading zeros but with the ordinal (1st-31st)
+ * @param {Date} 	a date object
+ * @returns {String}	the date with no leading zeros but with the ordinal
+ */
+exports.dt = function (date) {
+  var day = date.getDate();
+  switch (day) {
+    case 1:
+    case 21:
+    case 31:
+      day += 'st';
+      break;
+    case 2:
+    case 22:
+      day += 'nd';
+      break;
+    case 3:
+    case 23:
+      day += 'rd';
+      break;
+    default:
+      day += 'th';
+  }
+  return day;
+};
+
+/**
+ * Take a date object and outpit the hour with no leading zeros (1-12)
+ * @param   {Date}   date a date object
+ * @returns {String} the hour with no leading zeros
+ */
+exports.h = function (date) {
+  var hour = date.getHours();
+  if (hour === 0) hour = 12;
+  if (hour < 13) hour = hour;
+  if (hour >= 13) hour = hour - 12;
+  return hour;
+};
+
+/**
+ * Take a date object and output the two-digit hour (01-12)
+ * @param   {Date}   date a date object
+ * @returns {String} the two-digit hour
+ */
+exports.hh = function (date) {
+  var hour = date.getHours();
+  if (hour === 0) hour = 12;
+  if (hour < 13) hour = hour;
+  if (hour >= 13) hour = hour - 12;
+  hour = hour.toString();
+  return hour.length < 2 ? '0' + hour : hour;
+};
+
+/**
+ * Take a date object and output the milliseconds with no leading zeros (0-999)
+ * @param   {Date} date a date object
+ * @returns {String}    the number of milliseconds
+ */
+exports.l = function (date) {
+  var milliseconds = date.getMilliseconds().toString();
+  return milliseconds;
+};
+
+/**
+ * Take a date object and and output the three-digit milliseconds (000-999)
+ * @param   {Date}   date a date object
+ * @returns {String} the number of milliseconds
+ */
+exports.ll = function (date) {
+  var milliseconds = date.getMilliseconds().toString();
+  switch (milliseconds.length) {
+    case 1:
+      milliseconds = '00' + milliseconds;
+      break;
+    case 2:
+      milliseconds = '0' + milliseconds;
+      break;
+    default:
+      milliseconds = milliseconds;
+      break;
+  }
+  return milliseconds;
+};
+
+/**
+ * Take a date object and output the numeric month (1-12)
+ * @param {Date} 	a date object
+ * @returns {String}	the month with no leading zeros
+ */
+exports.m = function (date) {
+  var month = (date.getMonth() + 1).toString();
+  return month;
+};
+
+/**
+ * Take a date object and output the two-digit month (01-12)
+ * @param {Date} 	a date object
+ * @returns {String}	the two-digit month
+ */
+exports.mm = function (date) {
+  var month = (date.getMonth() + 1).toString();
+  return month.length < 2 ? '0' + month : month;
+};
+
+/**
+ * Take a date object and outpit the seconds with no leading zeros (0-59)
+ * @param   {Date}   date a date object
+ * @returns {String} the seconds with no leading zeros
+ */
+exports.s = function (date) {
+  var second = date.getSeconds();
+  return second;
+};
+
+/**
+ * Take a date object and outpit the two-digit seconds (0-59)
+ * @param   {Date}   date a date object
+ * @returns {String} the two-digit seconds
+ */
+exports.ss = function (date) {
+  var second = date.getSeconds().toString();
+  return second.length < 2 ? '0' + second : second;
+};
+
+/**
+ * Take a date object and output the minutes with no leading zeros
+ * @param   {Date} date a date object
+ * @returns {String}  the minutes with no leading zeros
+ */
+exports.t = function (date) {
+  var minute = date.getMinutes().toString();
+  return minute;
+};
+
+/**
+ * Take a date object and output the two-digit minutes
+ * @param   {Date}   date a date object
+ * @returns {String} the two-digit minutes
+ */
+exports.tt = function (date) {
+  var minute = date.getMinutes().toString();
+  return minute.length < 2 ? '0' + minute : minute;
+};
+
+/**
+ * Take a date object and output the two-digit year
+ * @param {Date} 	a date object
+ * @returns {String}	the two-digit year
+ */
+exports.yy = function (date) {
+  return date.getFullYear().toString().substr(2);
+};
+
+/**
+ * Take a date object and output the four-digit year
+ * @param {Date} 	a date object
+ * @returns {String}	the four-digit year
+ */
+exports.yyyy = function (date) {
+  return date.getFullYear();
+};
+
+/**
+ * Take a date object and output the timezone offset (UTC +- 01:00, etc.)
+ * @param   {Date}   date a date object
+ * @returns {String} the timezone offset 
+ */
+exports.zz = function (date) {
+  var offset = date.getTimezoneOffset() / 60 * -1;
+  return 'UTC ' + offset + ':00';
+};
+
+/**
+ * Converts a date object to an ISO string
+ * @param   {Date}   date   a date object
+ * @param {String}		format optional 'short' to remove the time
+ * @returns {String} ISO String including time
+ */
+exports.iso = function (date, format) {
+  format = format || null;
+  //console.log('iso function date: ' + date);
+  if (format === 'short') return date.toISOString().split('T')[0];
+  return date.toISOString();
+};
+
+/**
+ * Converts a date object to a UTC string
+ * @param   {Date}   date a date object
+ * @param 	{String}	format optional 'shart' to remove the time from the output
+ * @returns {String} UTC string with or without time
+ */
+
+exports.utc = function (date, format) {
+  format = format || null;
+  var utc = date.toUTCString();
+  if (format === 'short') {
+    var arr = utc.split(' ');
+    var newArr = [];
+
+    for (var i = 0; i < 4; i++) {
+      newArr.push(arr[i]);
+    }
+
+    return newArr.join(' ');
+  }
+  return utc;
+};
+
+/**
+ * Converts a date object to UNIX time (milliseconds from January 1, 1970)
+ * @param   {Date}   date a date object
+ * @returns {Number} milliseconds from January 1, 1970
+ */
+
+exports.unix = function (date) {
+  return Date.parse(date);
+};
+
+},{}],8:[function(require,module,exports){
 'use strict';
 
 /**
@@ -197,11 +503,55 @@ var subtract = exports.subtract = function subtract(n, increment) {
  * @returns {Object} a new gregorian object
  */
 
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
+function restartUTC(increment) {
+	var increments = {};
 
-exports.default = function (increment) {
+	increments.s = function (date) {
+		return new Date(date.setUTCSeconds(date.getUTCSeconds(), 0));
+	};
+	increments.t = function (date) {
+		return new Date(date.setUTCMinutes(date.getUTCMinutes(), 0, 0));
+	};
+	increments.h = function (date) {
+		return new Date(date.setUTCHours(date.getUTCHours(), 0, 0, 0));
+	};
+	increments.d = function (date) {
+		date.setUTCDate(date.getUTCDate());
+		date.setUTCHours(0, 0, 0, 0);
+		return new Date(date);
+	};
+	increments.w = function (date) {
+		date.setUTCDate(date.getUTCDate() - date.getUTCDay());
+		date.setUTCHours(0, 0, 0, 0);
+		return new Date(date);
+	};
+	increments.m = function (date) {
+		date.setUTCMonth(date.getUTCMonth(), 1);
+		date.setUTCHours(0, 0, 0, 0);
+		return new Date(date);
+	};
+	increments.y = function (date) {
+		date.setUTCFullYear(date.getUTCFullYear(), 0, 1);
+		date.setUTCHours(0, 0, 0, 0);
+		return new Date(date);
+	};
+
+	this.d = increments[increment](this.d);
+	return this;
+}
+
+module.exports = restartUTC;
+
+},{}],9:[function(require,module,exports){
+'use strict';
+
+/**
+ * Sets the date or time to the start of the specified increment
+ * @param   {String} increment an increment to set
+ * @returns {Object} a new gregorian object
+ */
+
+function restart(increment) {
 	var increments = {};
 
 	increments.s = function (date) {
@@ -236,9 +586,11 @@ exports.default = function (increment) {
 
 	this.d = increments[increment](this.d);
 	return this;
-};
+}
 
-},{}],8:[function(require,module,exports){
+module.exports = restart;
+
+},{}],10:[function(require,module,exports){
 'use strict';
 
 /**
@@ -248,11 +600,7 @@ exports.default = function (increment) {
  * @returns {Object} a new gregorian object
  */
 
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-exports.default = function (value, increment) {
+function setUTC(value, increment) {
 	var increments = {};
 
 	increments.l = function (date) {
@@ -303,350 +651,88 @@ exports.default = function (value, increment) {
 
 	this.d = increments[increment](this.d);
 	return this;
-};
+}
 
-},{}],9:[function(require,module,exports){
+module.exports = setUTC;
+
+},{}],11:[function(require,module,exports){
 'use strict';
 
 /**
- * Take a date object and output the capitalized 12-hour clock period (AM/PM)
- * @param   {Date}   date a date object
- * @returns {String} the capitalized 12-hour clock period 
+ * Sets the date or time to specified interval
+ * @param   {String} increment an increment to set
+ * @param {String} value what to set the increment to
+ * @returns {Object} a new gregorian object
  */
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var AP = exports.AP = function AP(date) {
-  var hour = date.getHours();
-  var ampm = hour < 12 ? 'AM' : 'PM';
-  return ampm;
-};
+function set(value, increment) {
+	var increments = {};
 
-/**
- * Take a date object and output the uncapitalized 12-hour clock period (AM/PM)
- * @param   {Date   date a date object
- * @returns {String} the uncapitalized 12-hour clock period 
- */
-var ap = exports.ap = function ap(date) {
-  var hour = date.getHours();
-  var ampm = hour < 12 ? 'am' : 'pm';
-  return ampm;
-};
+	increments.l = function (date) {
+		return new Date(date.setMilliseconds(value));
+	};
+	increments.s = function (date) {
+		return new Date(date.setSeconds(value));
+	};
+	increments.t = function (date) {
+		return new Date(date.setMinutes(value));
+	};
+	increments.h = function (date) {
+		return new Date(date.setHours(value));
+	};
+	increments.d = function (date) {
+		return new Date(date.setDate(value));
+	};
+	increments.w = function (date) {
+		var currentDay = date.getDay();
+		var currentMilliseconds = date.getMilliseconds();
+		date.setFullYear(date.getFullYear(), 0, value * 7);
+		var n = currentDay - date.getDay();
+		date.setDate(date.getDate() + n);
+		return new Date(date.setMilliseconds(currentMilliseconds));
+	};
+	increments.m = function (date) {
+		var newMonth = value - 1;
+		var newYear = date.getFullYear();
+		var newDate = date.getDate();
 
-/**
- * Take a date object and output the abreviated day of the week
- * @param {Date} 	a date object
- * @returns {String}	the abbreviated day of the week
- */
-var D = exports.D = function D(date) {
-  var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  var dayOfWeek = date.getDay();
-  return days[dayOfWeek];
-};
+		if (newDate > new Date(date.setFullYear(newYear, newMonth + 1, 0)).getDate()) {
+			return new Date(date.setFullYear(newYear, newMonth + 1, 0));
+		} else {
+			return new Date(date.setFullYear(newYear, newMonth, newDate));
+		}
+	};
+	increments.y = function (date) {
+		var newYear = value;
+		var newMonth = date.getMonth();
+		var newDate = date.getDate();
 
-/**
- * Take a date object and output the day of the week
- * @param {Date} 	a date object
- * @returns {String} the full day of the week
- */
-var DD = exports.DD = function DD(date) {
-  var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  var dayOfWeek = date.getDay();
-  return days[dayOfWeek];
-};
+		if (newDate > new Date(date.setFullYear(newYear, newMonth + 1, 0)).getDate()) {
+			return new Date(date.setFullYear(newYear, newMonth + 1, 0));
+		} else {
+			return new Date(date.setFullYear(newYear, newMonth, newDate));
+		}
+	};
 
-/**
- * Take a date object and outpit the 24-hour clock hour with no leading zeros (0-23)
- * @param   {Date}   date a date object
- * @returns {String} the hour with no leading zeros
- */
-var H = exports.H = function H(date) {
-  var hour = date.getHours();
-  return hour;
-};
+	this.d = increments[increment](this.d);
+	return this;
+}
 
-/**
- * Take a date object and outpit the 24-hour clock hour with no leading zeros (0-23)
- * @param   {Date}   date a date object
- * @returns {String} the hour with no leading zeros
- */
-var HH = exports.HH = function HH(date) {
-  var hour = date.getHours().toString();
-  return hour.length < 2 ? '0' + hour : hour;
-};
+module.exports = set;
 
-/**
- * Take a date object and output the abbreviated month
- * @param {Date} 	a date object
- * @returns {String}	the abbreviated month
- */
-var M = exports.M = function M(date) {
-  var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
-  var month = date.getMonth();
-  return months[month];
-};
-
-/**
- * Take a date object and output the month
- * @param {Date} 	a date object
- * @returns {String}	the full month
- */
-var MM = exports.MM = function MM(date) {
-  var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  var month = date.getMonth();
-  return months[month];
-};
-
-/**
- * Take a date object and output the date of the month with no leading zeros (1-31)
- * @param {Date} 	a date object
- * @returns {String}	the date of the month with no leading zeros
- */
-var d = exports.d = function d(date) {
-  var day = date.getDate().toString();
-  return day;
-};
-
-/**
- * Take a date object and output the two-digit date of the month (01-31)
- * @param {Date} 	a date object
- * @returns {String}	the two-digit date of the month
- */
-var dd = exports.dd = function dd(date) {
-  var day = date.getDate().toString();
-  return day.length < 2 ? '0' + day : day;
-};
-
-/**
- * Take a date object and output the date of the month with no leading zeros but with the ordinal (1st-31st)
- * @param {Date} 	a date object
- * @returns {String}	the date with no leading zeros but with the ordinal
- */
-var dt = exports.dt = function dt(date) {
-  var day = date.getDate();
-  switch (day) {
-    case 1:
-    case 21:
-    case 31:
-      day += 'st';
-      break;
-    case 2:
-    case 22:
-      day += 'nd';
-      break;
-    case 3:
-    case 23:
-      day += 'rd';
-      break;
-    default:
-      day += 'th';
-  }
-  return day;
-};
-
-/**
- * Take a date object and outpit the hour with no leading zeros (1-12)
- * @param   {Date}   date a date object
- * @returns {String} the hour with no leading zeros
- */
-var h = exports.h = function h(date) {
-  var hour = date.getHours();
-  if (hour === 0) hour = 12;
-  if (hour < 13) hour = hour;
-  if (hour >= 13) hour = hour - 12;
-  return hour;
-};
-
-/**
- * Take a date object and output the two-digit hour (01-12)
- * @param   {Date}   date a date object
- * @returns {String} the two-digit hour
- */
-var hh = exports.hh = function hh(date) {
-  var hour = date.getHours();
-  if (hour === 0) hour = 12;
-  if (hour < 13) hour = hour;
-  if (hour >= 13) hour = hour - 12;
-  hour = hour.toString();
-  return hour.length < 2 ? '0' + hour : hour;
-};
-
-/**
- * Take a date object and output the milliseconds with no leading zeros (0-999)
- * @param   {Date} date a date object
- * @returns {String}    the number of milliseconds
- */
-var l = exports.l = function l(date) {
-  var milliseconds = date.getMilliseconds().toString();
-  return milliseconds;
-};
-
-/**
- * Take a date object and and output the three-digit milliseconds (000-999)
- * @param   {Date}   date a date object
- * @returns {String} the number of milliseconds
- */
-var ll = exports.ll = function ll(date) {
-  var milliseconds = date.getMilliseconds().toString();
-  switch (milliseconds.length) {
-    case 1:
-      milliseconds = '00' + milliseconds;
-      break;
-    case 2:
-      milliseconds = '0' + milliseconds;
-      break;
-    default:
-      milliseconds = milliseconds;
-      break;
-  }
-  return milliseconds;
-};
-
-/**
- * Take a date object and output the numeric month (1-12)
- * @param {Date} 	a date object
- * @returns {String}	the month with no leading zeros
- */
-var m = exports.m = function m(date) {
-  var month = (date.getMonth() + 1).toString();
-  return month;
-};
-
-/**
- * Take a date object and output the two-digit month (01-12)
- * @param {Date} 	a date object
- * @returns {String}	the two-digit month
- */
-var mm = exports.mm = function mm(date) {
-  var month = (date.getMonth() + 1).toString();
-  return month.length < 2 ? '0' + month : month;
-};
-
-/**
- * Take a date object and outpit the seconds with no leading zeros (0-59)
- * @param   {Date}   date a date object
- * @returns {String} the seconds with no leading zeros
- */
-var s = exports.s = function s(date) {
-  var second = date.getSeconds();
-  return second;
-};
-
-/**
- * Take a date object and outpit the two-digit seconds (0-59)
- * @param   {Date}   date a date object
- * @returns {String} the two-digit seconds
- */
-var ss = exports.ss = function ss(date) {
-  var second = date.getSeconds().toString();
-  return second.length < 2 ? '0' + second : second;
-};
-
-/**
- * Take a date object and output the minutes with no leading zeros
- * @param   {Date} date a date object
- * @returns {String}  the minutes with no leading zeros
- */
-var t = exports.t = function t(date) {
-  var minute = date.getMinutes().toString();
-  return minute;
-};
-
-/**
- * Take a date object and output the two-digit minutes
- * @param   {Date}   date a date object
- * @returns {String} the two-digit minutes
- */
-var tt = exports.tt = function tt(date) {
-  var minute = date.getMinutes().toString();
-  return minute.length < 2 ? '0' + minute : minute;
-};
-
-/**
- * Take a date object and output the two-digit year
- * @param {Date} 	a date object
- * @returns {String}	the two-digit year
- */
-var yy = exports.yy = function yy(date) {
-  return date.getFullYear().toString().substr(2);
-};
-
-/**
- * Take a date object and output the four-digit year
- * @param {Date} 	a date object
- * @returns {String}	the four-digit year
- */
-var yyyy = exports.yyyy = function yyyy(date) {
-  return date.getFullYear();
-};
-
-/**
- * Take a date object and output the timezone offset (UTC +- 01:00, etc.)
- * @param   {Date}   date a date object
- * @returns {String} the timezone offset 
- */
-var zz = exports.zz = function zz(date) {
-  var offset = date.getTimezoneOffset() / 60 * -1;
-  return 'UTC ' + offset + ':00';
-};
-
-/**
- * Converts a date object to an ISO string
- * @param   {Date}   date   a date object
- * @param {String}		format optional 'short' to remove the time
- * @returns {String} ISO String including time
- */
-var iso = exports.iso = function iso(date, format) {
-  format = format || null;
-  //console.log('iso function date: ' + date);
-  if (format === 'short') return date.toISOString().split('T')[0];
-  return date.toISOString();
-};
-
-/**
- * Converts a date object to a UTC string
- * @param   {Date}   date a date object
- * @param 	{String}	format optional 'shart' to remove the time from the output
- * @returns {String} UTC string with or without time
- */
-
-var utc = exports.utc = function utc(date, format) {
-  format = format || null;
-  var utc = date.toUTCString();
-  if (format === 'short') {
-    var arr = utc.split(' ');
-    var newArr = [];
-
-    for (var i = 0; i < 4; i++) {
-      newArr.push(arr[i]);
-    }
-
-    return newArr.join(' ');
-  }
-  return utc;
-};
-
-/**
- * Converts a date object to UNIX time (milliseconds from January 1, 1970)
- * @param   {Date}   date a date object
- * @returns {Number} milliseconds from January 1, 1970
- */
-
-var unix = exports.unix = function unix(date) {
-  return Date.parse(date);
-};
-
-},{}],10:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
+var reformat = require('./reformat');
 
-exports.default = function (format) {
-	var delimiter = arguments.length <= 1 || arguments[1] === undefined ? '+' : arguments[1];
-
+/**
+ * Take a Gregorian object and output the reformatted string
+ * See https://github.com/patrickfatrick/gregorian#accepted-formats for details
+ * @param {String} 	format a string or date object (something that can be converted to a valid date)
+ * @returns {String}	the date reformatted into the specified format
+ */
+function to(format, delimiter) {
+	delimiter = delimiter || '+';
 	var date = this.d;
 	var pieces = ['unix', 'utc-short', 'utc', 'iso-short', 'iso', 'yyyy', 'yy', 'DD', 'dd', 'dt', 'D', 'd', 'MM', 'mm', 'M', 'm', 'hh', 'h', 'HH', 'H', 'tt', 't', 'AP', 'ap', 'ss', 's', 'll', 'l', 'zz'];
 	var converted = format;
@@ -656,22 +742,22 @@ exports.default = function (format) {
 		if (re.test(converted)) {
 			switch (piece) {
 				case 'unix':
-					converted = to.unix(date);
+					converted = reformat.unix(date);
 					break;
 				case 'utc-short':
-					converted = to.utc(date, 'short');
+					converted = reformat.utc(date, 'short');
 					break;
 				case 'utc':
-					converted = to.utc(date);
+					converted = reformat.utc(date);
 					break;
 				case 'iso-short':
-					converted = to.iso(date, 'short');
+					converted = reformat.iso(date, 'short');
 					break;
 				case 'iso':
-					converted = to.iso(date);
+					converted = reformat.iso(date);
 					break;
 				default:
-					var replacer = to[piece](date);
+					var replacer = reformat[piece](date);
 					converted = converted.replace(re, replacer);
 			}
 		}
@@ -680,15 +766,11 @@ exports.default = function (format) {
 		converted = converted.replace(new RegExp('\\' + delimiter, 'g'), '');
 	}
 	return converted;
-};
+}
 
-var _reformToFunctions = require('./reform-to-functions');
+module.exports = to;
 
-var to = _interopRequireWildcard(_reformToFunctions);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-},{"./reform-to-functions":9}]},{},[1])(1)
+},{"./reformat":7}]},{},[1])(1)
 });
 
 

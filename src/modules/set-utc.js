@@ -1,35 +1,39 @@
 'use strict';
 
 /**
- * Adds specified increments to a gregorian object
- * @param   {Number} n         a number to multiply the increment by
- * @param   {String} increment an increment to add
+ * Sets the date or time to specified interval
+ * @param   {String} increment an increment to set
+ * @param {String} value what to set the increment to
  * @returns {Object} a new gregorian object
  */
-function addSubtract (obj, n, increment) {
-	
+function setUTC (value, increment) {
 	let increments = {};
 	
 	increments.l = date => {
-		return new Date(date.setUTCMilliseconds(date.getUTCMilliseconds() + n));
+		return new Date(date.setUTCMilliseconds(value));
 	};
 	increments.s = date => {
-		return new Date(date.setUTCSeconds(date.getUTCSeconds() + n));
+		return new Date(date.setUTCSeconds(value));
 	};
 	increments.t = date => {
-		return new Date(date.setUTCMinutes(date.getUTCMinutes() + n));
+		return new Date(date.setUTCMinutes(value));
 	};
 	increments.h = date => {
-		return new Date(date.setUTCHours(date.getUTCHours() + n));
+		return new Date(date.setUTCHours(value));
 	};
 	increments.d = date => {
-		return new Date(date.setUTCDate(date.getUTCDate() + n));
+		return new Date(date.setUTCDate(value));
 	};
 	increments.w = date => {
-		return new Date(date.setUTCDate(date.getUTCDate() + (n * 7)));
+		let currentDay = date.getUTCDay();
+		let currentMilliseconds = date.getUTCMilliseconds();
+		date.setUTCFullYear(date.getUTCFullYear(), 0, value * 7);
+		let n = currentDay - date.getUTCDay();
+		date.setUTCDate(date.getUTCDate() + n);
+		return new Date(date.setUTCMilliseconds(currentMilliseconds));
 	};
 	increments.m = date => {
-		let newMonth = date.getUTCMonth() + n;
+		let newMonth = value - 1;
 		let newYear = date.getUTCFullYear();
 		let newDate = date.getUTCDate();
 		
@@ -40,7 +44,7 @@ function addSubtract (obj, n, increment) {
 		}
 	};
 	increments.y = date => {
-		let newYear = date.getUTCFullYear() + n;
+		let newYear = value;
 		let newMonth = date.getUTCMonth();
 		let newDate = date.getUTCDate();
 		
@@ -51,14 +55,8 @@ function addSubtract (obj, n, increment) {
 		}
 	};
 	
-	obj.d = increments[increment](obj.d);
-	return obj;
+	this.d = increments[increment](this.d);
+	return this;
 }
 
-export var add = function (n, increment) {
-	return addSubtract(this, n * 1, increment);
-};
-
-export var subtract = function (n, increment) {
-	return addSubtract(this, n * -1, increment);
-};
+module.exports = setUTC;

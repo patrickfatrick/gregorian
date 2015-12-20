@@ -5,7 +5,7 @@
  * @param   {Date}   date a date object
  * @returns {String} the capitalized 12-hour clock period 
  */
-export var AP = function (date) {
+exports.AP = function (date) {
 	const hour = date.getHours();
 	const ampm = (hour < 12) ? 'AM' : 'PM';
 	return ampm;
@@ -16,7 +16,7 @@ export var AP = function (date) {
  * @param   {Date   date a date object
  * @returns {String} the uncapitalized 12-hour clock period 
  */
-export var ap = function (date) {
+exports.ap = function (date) {
 	const hour = date.getHours();
 	const ampm = (hour < 12) ? 'am' : 'pm';
 	return ampm;
@@ -27,7 +27,7 @@ export var ap = function (date) {
  * @param {Date} 	a date object
  * @returns {String}	the abbreviated day of the week
  */
-export var D = function (date) {
+exports.D = function (date) {
 	const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 	const dayOfWeek = date.getDay();
 	return days[dayOfWeek];
@@ -38,7 +38,7 @@ export var D = function (date) {
  * @param {Date} 	a date object
  * @returns {String} the full day of the week
  */
-export var DD = function (date) {
+exports.DD = function (date) {
 	const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 	const dayOfWeek = date.getDay();
 	return days[dayOfWeek];
@@ -49,7 +49,7 @@ export var DD = function (date) {
  * @param   {Date}   date a date object
  * @returns {String} the hour with no leading zeros
  */
-export var H = function (date) {
+exports.H = function (date) {
 	const hour = date.getHours();
 	return hour;
 };
@@ -59,7 +59,7 @@ export var H = function (date) {
  * @param   {Date}   date a date object
  * @returns {String} the hour with no leading zeros
  */
-export var HH = function (date) {
+exports.HH = function (date) {
 	const hour = date.getHours().toString();
 	return (hour.length < 2) ? '0' + hour : hour;
 };
@@ -69,7 +69,7 @@ export var HH = function (date) {
  * @param {Date} 	a date object
  * @returns {String}	the abbreviated month
  */
-export var M = function (date) {
+exports.M = function (date) {
 	const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov',  'Dec'];
 	const month = date.getMonth();
 	return months[month];
@@ -80,7 +80,7 @@ export var M = function (date) {
  * @param {Date} 	a date object
  * @returns {String}	the full month
  */
-export var MM = function (date) {
+exports.MM = function (date) {
 	const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 	const month = date.getMonth();
 	return months[month];
@@ -91,7 +91,7 @@ export var MM = function (date) {
  * @param {Date} 	a date object
  * @returns {String}	the date of the month with no leading zeros
  */
-export var d = function (date) {
+exports.d = function (date) {
 	const day = date.getDate().toString();
 	return day;
 };
@@ -101,7 +101,7 @@ export var d = function (date) {
  * @param {Date} 	a date object
  * @returns {String}	the two-digit date of the month
  */
-export var dd = function (date) {
+exports.dd = function (date) {
 	const day = date.getDate().toString();
 	return (day.length < 2) ? '0' + day : day;
 };
@@ -111,7 +111,7 @@ export var dd = function (date) {
  * @param {Date} 	a date object
  * @returns {String}	the date with no leading zeros but with the ordinal
  */
-export var dt = function (date) {
+exports.dt = function (date) {
 	let day = date.getDate();
 	switch (day) {
 		case 1:
@@ -138,7 +138,7 @@ export var dt = function (date) {
  * @param   {Date}   date a date object
  * @returns {String} the hour with no leading zeros
  */
-export var h = function (date) {
+exports.h = function (date) {
 	let hour = date.getHours();
 	if (hour === 0) hour = 12;
 	if (hour < 13) hour = hour;
@@ -151,7 +151,7 @@ export var h = function (date) {
  * @param   {Date}   date a date object
  * @returns {String} the two-digit hour
  */
-export var hh = function (date) {
+exports.hh = function (date) {
 	let hour = date.getHours();
 	if (hour === 0) hour = 12;
 	if (hour < 13) hour = hour;
@@ -165,7 +165,7 @@ export var hh = function (date) {
  * @param   {Date} date a date object
  * @returns {String}    the number of milliseconds
  */
-export var l = function (date) {
+exports.l = function (date) {
 	const milliseconds = date.getMilliseconds().toString();
 	return milliseconds;
 };
@@ -175,7 +175,7 @@ export var l = function (date) {
  * @param   {Date}   date a date object
  * @returns {String} the number of milliseconds
  */
-export var ll = function (date) {
+exports.ll = function (date) {
 	let milliseconds = date.getMilliseconds().toString();
 	switch (milliseconds.length) {
 		case 1:
@@ -196,7 +196,7 @@ export var ll = function (date) {
  * @param {Date} 	a date object
  * @returns {String}	the month with no leading zeros
  */
-export var m = function (date) {
+exports.m = function (date) {
 	const month = (date.getMonth() + 1).toString();
 	return month;
 };
@@ -206,7 +206,7 @@ export var m = function (date) {
  * @param {Date} 	a date object
  * @returns {String}	the two-digit month
  */
-export var mm = function (date) {
+exports.mm = function (date) {
 	let month = (date.getMonth() + 1).toString();
 	return (month.length < 2) ? '0' + month : month;
 };
@@ -216,7 +216,7 @@ export var mm = function (date) {
  * @param   {Date}   date a date object
  * @returns {String} the seconds with no leading zeros
  */
-export var s = function (date) {
+exports.s = function (date) {
 	const second = date.getSeconds();
 	return second;
 };
@@ -226,7 +226,7 @@ export var s = function (date) {
  * @param   {Date}   date a date object
  * @returns {String} the two-digit seconds
  */
-export var ss = function (date) {
+exports.ss = function (date) {
 	let second = date.getSeconds().toString();
 	return (second.length < 2) ? '0' + second : second;
 };
@@ -236,7 +236,7 @@ export var ss = function (date) {
  * @param   {Date} date a date object
  * @returns {String}  the minutes with no leading zeros
  */
-export var t = function (date) {
+exports.t = function (date) {
 	const minute = date.getMinutes().toString();
 	return minute;
 };
@@ -246,7 +246,7 @@ export var t = function (date) {
  * @param   {Date}   date a date object
  * @returns {String} the two-digit minutes
  */
-export var tt = function (date) {
+exports.tt = function (date) {
 	let minute = date.getMinutes().toString();
 	return (minute.length < 2) ? '0' + minute : minute;
 };
@@ -256,7 +256,7 @@ export var tt = function (date) {
  * @param {Date} 	a date object
  * @returns {String}	the two-digit year
  */
-export var yy = function (date) {
+exports.yy = function (date) {
 	return date.getFullYear().toString().substr(2);
 };
 
@@ -265,7 +265,7 @@ export var yy = function (date) {
  * @param {Date} 	a date object
  * @returns {String}	the four-digit year
  */
-export var yyyy = function (date) {
+exports.yyyy = function (date) {
 	return date.getFullYear();
 };
 
@@ -274,7 +274,7 @@ export var yyyy = function (date) {
  * @param   {Date}   date a date object
  * @returns {String} the timezone offset 
  */
-export var zz = function (date) {
+exports.zz = function (date) {
 	const offset = date.getTimezoneOffset() / 60 * -1;
 	return 'UTC ' + offset + ':00';
 };
@@ -285,7 +285,7 @@ export var zz = function (date) {
  * @param {String}		format optional 'short' to remove the time
  * @returns {String} ISO String including time
  */
-export var iso = function (date, format) {
+exports.iso = function (date, format) {
 	format = format || null;
 	//console.log('iso function date: ' + date);
 	if (format === 'short') return date.toISOString().split('T')[0];
@@ -299,7 +299,7 @@ export var iso = function (date, format) {
  * @returns {String} UTC string with or without time
  */
 
-export var utc = function (date, format) {
+exports.utc = function (date, format) {
 	format = format || null;
 	const utc = date.toUTCString();
 	if (format === 'short') {
@@ -321,6 +321,6 @@ export var utc = function (date, format) {
  * @returns {Number} milliseconds from January 1, 1970
  */
 
-export var unix = function (date) {
+exports.unix = function (date) {
 	return Date.parse(date);
 };

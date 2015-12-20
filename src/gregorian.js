@@ -1,4 +1,6 @@
-import {Gregorian} from './modules/Gregorian';
+'use strict';
+
+var Gregorian = require('./modules/Gregorian');
 
 let gregorian = new Gregorian();
-export default gregorian;
+module.exports = gregorian;

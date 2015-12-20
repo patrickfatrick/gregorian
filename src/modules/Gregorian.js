@@ -6,14 +6,17 @@
  * https://www.github.com/patrickfatrick/gregorian
  */
 
-import to from './reform-to';
-import {add, subtract} from './reform-add-subtract';
-import restart from './reform-restart';
-import reagent from './reagent';
-import recite from './recite';
-import set from './reform-set';
+var to = require('./to');
+var add = require('./add-subtract').add;
+var subtract = require('./add-subtract').subtract;
+var restart = require('./restart');
+var restartUTC = require('./restart-utc');
+var reagent = require('./reagent');
+var recite = require('./recite');
+var setUTC = require('./set-utc');
+var set = require('./set');
 
-export class Gregorian {
+module.exports = class Gregorian {
 	constructor () {
 		this.d;
 		this.input;
@@ -21,8 +24,10 @@ export class Gregorian {
 		this.add = add,
 		this.subtract = subtract,
 		this.restart = restart,
+		this.restartUTC = restartUTC,
 		this.reagent = reagent,
 		this.recite = recite,
+		this.setUTC = setUTC;
 		this.set = set;
 	}
 
@@ -31,10 +36,11 @@ export class Gregorian {
 	 * @param  {Date}   obj any date
 	 * @return {Object}     A Gregorian instance
 	 */
-	reform (obj = new Date()) {
+	reform (obj) {
+		obj = obj || new Date();
 		const date = new Date(obj);
 		this.d = date;
 		this.input = obj;
 		return this;
 	}
-}
+};

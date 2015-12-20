@@ -1,2 +1,4 @@
-import gregorian from './src/gregorian';
+'use strict';
+
+var gregorian = require('./src/gregorian');
 module.exports = gregorian;

@@ -5,7 +5,7 @@
  * @param   {String} increment an increment to set
  * @returns {Object} a new gregorian object
  */
-export default function (increment) {
+function restart (increment) {
 	let increments = {};
 	
 	increments.s = date => {
@@ -41,3 +41,5 @@ export default function (increment) {
 	this.d = increments[increment](this.d);
 	return this;
 }
+
+module.exports = restart;

@@ -158,8 +158,15 @@ Accepted increments you can use for additions and subtractions are
 Setting specific values for different time increments is much like adding and subtracting
 
 ```javascript
-gregorian.reform('2015-10-31').add(5, 'd') // 2015-10-05
-gregorian.reform('2015-10-31').subtract(7, 'm') // 2015-07-31
+gregorian.reform('2015-10-31').set(5, 'd') // 2015-10-05
+gregorian.reform('2015-10-31').set(7, 'm') // 2015-07-31
+```
+
+There is also a method for setting with UTC.
+
+```javascript
+gregorian.reform('2015-10-31T00:00:000Z').setUTC(5, 'd') // 2015-10-05 00:00:000 UTC
+gregorian.reform('2015-10-31T00:00:000Z').setUTC(7, 'm') // 2015-07-31 00:00:000 UTC
 ```
 
 This will return a new gregorian object that can then be formatted into a string as usual `gregorian.reform('2015-10-31').subtract(1, 'm').to('iso')`
@@ -191,7 +198,13 @@ gregorian.reform('April 11, 1988 8:23:15.123').restart('m') // '1988-04-01 00:00
 gregorian.reform('April 11, 1988 8:23:15.123').restart('y') // '1988-01-01 00:00:00'
 ```
 
-Note that the `restart` functions return times in the local time zone. You would see a two-hour difference running these same functions in Eastern vs Mountain time.
+There is also a method for restart in UTC.
+
+```javascript
+gregorian.reform('2015-10-31T03:42:877Z').restartUTC('d') // 2015-10-31 00:00:000 UTC
+gregorian.reform('2015-10-31T03:42:877Z').restartUTC('m') // 2015-10-01 00:00:000 UTC
+// etc.
+```
 
 #### Reagent
 
@@ -217,7 +230,7 @@ You can combine Gregorian with [Date.JS](http://matthewmueller.github.io/date/) 
 
 ## Why not use MomentJS?
 
-[Moment](http://momentjs.com/) is awesome and I personally use it in a lot of projects. This is not intended to replace Moment by any means, it's simply intended to provide a more focused set of features at a fraction of the weight. Moment's minified .js file is about 5x the size of Gregorian's.
+[Moment](http://momentjs.com/) is awesome and I personally use it in a lot of projects. This is not intended to replace Moment by any means, it's simply intended to provide a more focused set of features at a fraction of the weight. Gregorian's minified .js filesize is a fraction of Moment's.
 
 ## License
 
