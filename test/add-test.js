@@ -44,7 +44,6 @@ describe('add', () => {
 		gregorian.reform('October 31, 2015 00:00 UTC').add(15, 'm').d.toISOString().should.equal('2017-01-31T00:00:00.000Z');
 	});
 	it('is timezone-agnostic', () => {
-		console.log(gregorian.reform('October 31, 2015 23:42:00').add(3, 'h').recite());
 		gregorian.reform('October 30, 2015 23:42:00').add(3, 'h').to('yyyy-mm-dd HH:tt:ss.ll')
 			.should.equal('2015-10-31 02:42:00.000');
 	});

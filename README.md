@@ -43,6 +43,14 @@ It accepts anything Javascript natively accepts when creating a date object. `gr
 
 The library is currently in English only.
 
+## Changelog
+
+#### v1.5
+
+- New UTC-based manipulation functions where it makes sense (`setUTC()`, `restartUTC`).
+- Converted the module setup to CommonJS to work with Node out of the box. Sorry ES6 modules :(
+- Testing has been improved with many more descriptions that indicate what's being tested.
+
 ## Install
 
 ```bash
