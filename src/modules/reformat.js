@@ -141,8 +141,7 @@ exports.dt = function (date) {
 exports.h = function (date) {
 	let hour = date.getHours();
 	if (hour === 0) hour = 12;
-	if (hour < 13) hour = hour;
-	if (hour >= 13) hour = hour - 12;
+	hour = (hour < 13) ? hour : hour - 12;
 	return hour;
 };
 
@@ -154,8 +153,7 @@ exports.h = function (date) {
 exports.hh = function (date) {
 	let hour = date.getHours();
 	if (hour === 0) hour = 12;
-	if (hour < 13) hour = hour;
-	if (hour >= 13) hour = hour - 12;
+	hour = (hour < 13) ? hour : hour - 12;
 	hour = hour.toString();
 	return (hour.length < 2) ? '0' + hour : hour;
 };
@@ -185,7 +183,7 @@ exports.ll = function (date) {
 			milliseconds = '0' + milliseconds;
 			break;
 		default:
-			milliseconds = milliseconds;
+			milliseconds = '' + milliseconds;
 			break;
 	}
 	return milliseconds;

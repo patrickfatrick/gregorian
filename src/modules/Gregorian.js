@@ -15,6 +15,8 @@ var reagent = require('./reagent');
 var recite = require('./recite');
 var setUTC = require('./set-utc');
 var set = require('./set');
+var getUTC = require('./get-utc');
+var get = require('./get');
 
 module.exports = class Gregorian {
 	constructor () {
@@ -29,6 +31,8 @@ module.exports = class Gregorian {
 		this.recite = recite,
 		this.setUTC = setUTC;
 		this.set = set;
+		this.getUTC = getUTC;
+		this.get = get;
 	}
 
 	/**

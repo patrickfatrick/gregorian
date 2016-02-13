@@ -6,7 +6,7 @@
  * @returns {Object} a new gregorian object
  */
 function restartUTC (increment) {
-	let increments = {};
+	var increments = {};
 	
 	increments.s = date => {
 		return new Date(date.setUTCSeconds(date.getUTCSeconds(), 0));

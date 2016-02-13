@@ -45,9 +45,13 @@ The library is currently in English only.
 
 ## Changelog
 
+#### v1.6
+
+- New `get()` and `getUTC()` methods.
+
 #### v1.5
 
-- New UTC-based manipulation functions where it makes sense (`setUTC()`, `restartUTC`).
+- New UTC-based manipulation functions where it makes sense (`setUTC()`, `restartUTC()`).
 - Converted the module setup to CommonJS to work with Node out of the box. Sorry ES6 modules :(
 - Testing has been improved with many more descriptions that indicate what's being tested.
 
@@ -190,6 +194,36 @@ Accepted increments you can use for setting are
 'w' // 1 week
 'm' // 1 month (position will be on the same date and time of the month)
 'y' // 1 year (position will be on the date and time of the year)
+```
+
+#### Getting
+
+This will retrieve specific time increments for the Gregorian object.
+
+```javascript
+gregorian.reform('2015-10-31').get('d') // 31
+gregorian.reform('2015-10-31').get('m') // 9
+```
+
+There is also a method for getting the UTC value.
+
+```javascript
+gregorian.reform('2015-10-31T00:00:000Z').getUTC('d') // 31
+gregorian.reform('2015-10-31T00:00:000Z').getUTC('m') // 9
+```
+
+Accepted increments you can use for getting are
+
+```javascript
+'z' // the time zone offset in hours, always returns 0 when used with getUTC()
+'l' // the millisecond
+'s' // the second
+'t' // the minute
+'h' // the hour
+'d' // the day
+'w' // the week
+'m' // the month
+'y' // the year
 ```
 
 #### Restart

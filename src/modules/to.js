@@ -18,6 +18,7 @@ function to (format, delimiter) {
 	
 	pieces.forEach(piece => {
 		const re = new RegExp('\\b' + piece + '\\b', 'g');
+		let replacer;
 		if (re.test(converted)) {
 			switch (piece) {
 				case 'unix':
@@ -36,7 +37,7 @@ function to (format, delimiter) {
 					converted = reformat.iso(date);
 					break;
 				default:
-					let replacer = reformat[piece](date);
+					replacer = reformat[piece](date);
 					converted = converted.replace(re, replacer);
 			}
 		}

@@ -21,7 +21,7 @@ module.exports = gregorian;
  * https://www.github.com/patrickfatrick/gregorian
  */
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -34,8 +34,10 @@ var reagent = require('./reagent');
 var recite = require('./recite');
 var setUTC = require('./set-utc');
 var set = require('./set');
+var getUTC = require('./get-utc');
+var get = require('./get');
 
-module.exports = (function () {
+module.exports = function () {
 	function Gregorian() {
 		_classCallCheck(this, Gregorian);
 
@@ -43,6 +45,8 @@ module.exports = (function () {
 		this.input;
 		this.to = to, this.add = add, this.subtract = subtract, this.restart = restart, this.restartUTC = restartUTC, this.reagent = reagent, this.recite = recite, this.setUTC = setUTC;
 		this.set = set;
+		this.getUTC = getUTC;
+		this.get = get;
 	}
 
 	/**
@@ -50,6 +54,7 @@ module.exports = (function () {
   * @param  {Date}   obj any date
   * @return {Object}     A Gregorian instance
   */
+
 
 	_createClass(Gregorian, [{
 		key: 'reform',
@@ -63,9 +68,9 @@ module.exports = (function () {
 	}]);
 
 	return Gregorian;
-})();
+}();
 
-},{"./add-subtract":4,"./reagent":5,"./recite":6,"./restart":9,"./restart-utc":8,"./set":11,"./set-utc":10,"./to":12}],4:[function(require,module,exports){
+},{"./add-subtract":4,"./get":6,"./get-utc":5,"./reagent":7,"./recite":8,"./restart":11,"./restart-utc":10,"./set":13,"./set-utc":12,"./to":14}],4:[function(require,module,exports){
 'use strict';
 
 /**
@@ -135,6 +140,102 @@ exports.subtract = function (n, increment) {
 },{}],5:[function(require,module,exports){
 'use strict';
 
+/**
+ * Gets the specified increment in UTC for the date
+ * @param   {String} increment 		date increment to get the value of
+ * @returns {Object} the value for that increment, in UTC
+ */
+
+function getUTC(increment) {
+	var increments = {};
+
+	increments.z = function () {
+		return 0;
+	};
+	increments.l = function (date) {
+		return date.getUTCMilliseconds();
+	};
+	increments.s = function (date) {
+		return date.getUTCSeconds();
+	};
+	increments.t = function (date) {
+		return date.getUTCMinutes();
+	};
+	increments.h = function (date) {
+		return date.getUTCHours();
+	};
+	increments.d = function (date) {
+		return date.getUTCDate();
+	};
+	increments.D = function (date) {
+		return date.getUTCDay();
+	};
+	increments.w = function (date) {
+		return Math.floor(((date - new Date(date.getUTCFullYear(), 0, 1)) / 1000 / 60 / 60 / 24 + 1) / 7);
+	};
+	increments.m = function (date) {
+		return date.getUTCMonth();
+	};
+	increments.y = function (date) {
+		return date.getUTCFullYear();
+	};
+
+	return increments[increment](this.d);
+}
+
+module.exports = getUTC;
+
+},{}],6:[function(require,module,exports){
+'use strict';
+
+/**
+ * Gets the specified increment in local time for the date
+ * @param   {String} increment 		date increment to get the value of
+ * @returns {Object} the value for that increment in local time
+ */
+
+function get(increment) {
+	var increments = {};
+
+	increments.z = function (date) {
+		return date.getTimezoneOffset() / 60;
+	};
+	increments.l = function (date) {
+		return date.getMilliseconds();
+	};
+	increments.s = function (date) {
+		return date.getSeconds();
+	};
+	increments.t = function (date) {
+		return date.getMinutes();
+	};
+	increments.h = function (date) {
+		return date.getHours();
+	};
+	increments.d = function (date) {
+		return date.getDate();
+	};
+	increments.D = function (date) {
+		return date.getDay();
+	};
+	increments.w = function (date) {
+		return Math.floor(((date - new Date(date.getFullYear(), 0, 1)) / 1000 / 60 / 60 / 24 + 1) / 7);
+	};
+	increments.m = function (date) {
+		return date.getMonth();
+	};
+	increments.y = function (date) {
+		return date.getFullYear();
+	};
+
+	return increments[increment](this.d);
+}
+
+module.exports = get;
+
+},{}],7:[function(require,module,exports){
+'use strict';
+
 /*
  * Takes a gregorian object and checks that it has a valid date.
  * @param {Object}  A gregorian object
@@ -150,7 +251,7 @@ function reagent() {
 
 module.exports = reagent;
 
-},{}],6:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 'use strict';
 
 /*
@@ -165,7 +266,7 @@ function recite() {
 
 module.exports = recite;
 
-},{}],7:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 'use strict';
 
 /**
@@ -310,8 +411,7 @@ exports.dt = function (date) {
 exports.h = function (date) {
   var hour = date.getHours();
   if (hour === 0) hour = 12;
-  if (hour < 13) hour = hour;
-  if (hour >= 13) hour = hour - 12;
+  hour = hour < 13 ? hour : hour - 12;
   return hour;
 };
 
@@ -323,8 +423,7 @@ exports.h = function (date) {
 exports.hh = function (date) {
   var hour = date.getHours();
   if (hour === 0) hour = 12;
-  if (hour < 13) hour = hour;
-  if (hour >= 13) hour = hour - 12;
+  hour = hour < 13 ? hour : hour - 12;
   hour = hour.toString();
   return hour.length < 2 ? '0' + hour : hour;
 };
@@ -354,7 +453,7 @@ exports.ll = function (date) {
       milliseconds = '0' + milliseconds;
       break;
     default:
-      milliseconds = milliseconds;
+      milliseconds = '' + milliseconds;
       break;
   }
   return milliseconds;
@@ -494,7 +593,7 @@ exports.unix = function (date) {
   return Date.parse(date);
 };
 
-},{}],8:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 'use strict';
 
 /**
@@ -542,7 +641,7 @@ function restartUTC(increment) {
 
 module.exports = restartUTC;
 
-},{}],9:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 'use strict';
 
 /**
@@ -590,7 +689,7 @@ function restart(increment) {
 
 module.exports = restart;
 
-},{}],10:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 'use strict';
 
 /**
@@ -655,7 +754,7 @@ function setUTC(value, increment) {
 
 module.exports = setUTC;
 
-},{}],11:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 'use strict';
 
 /**
@@ -720,7 +819,7 @@ function set(value, increment) {
 
 module.exports = set;
 
-},{}],12:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 'use strict';
 
 var reformat = require('./reformat');
@@ -739,6 +838,7 @@ function to(format, delimiter) {
 
 	pieces.forEach(function (piece) {
 		var re = new RegExp('\\b' + piece + '\\b', 'g');
+		var replacer = undefined;
 		if (re.test(converted)) {
 			switch (piece) {
 				case 'unix':
@@ -757,7 +857,7 @@ function to(format, delimiter) {
 					converted = reformat.iso(date);
 					break;
 				default:
-					var replacer = reformat[piece](date);
+					replacer = reformat[piece](date);
 					converted = converted.replace(re, replacer);
 			}
 		}
@@ -770,7 +870,7 @@ function to(format, delimiter) {
 
 module.exports = to;
 
-},{"./reformat":7}]},{},[1])(1)
+},{"./reformat":9}]},{},[1])(1)
 });
 
 
