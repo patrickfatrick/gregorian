@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 /*
  * Takes a gregorian object and outputs the date object
@@ -6,7 +6,7 @@
  * @return {Date} the date object it contains
  */
 function recite () {
-	return this.d;
+  return this.d
 }
 
-module.exports = recite;
+module.exports = recite

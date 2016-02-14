@@ -38,36 +38,43 @@ var getUTC = require('./get-utc');
 var get = require('./get');
 
 module.exports = function () {
-	function Gregorian() {
-		_classCallCheck(this, Gregorian);
+  function Gregorian() {
+    _classCallCheck(this, Gregorian);
 
-		this.d;
-		this.input;
-		this.to = to, this.add = add, this.subtract = subtract, this.restart = restart, this.restartUTC = restartUTC, this.reagent = reagent, this.recite = recite, this.setUTC = setUTC;
-		this.set = set;
-		this.getUTC = getUTC;
-		this.get = get;
-	}
+    this.d;
+    this.input;
+    this.to = to;
+    this.add = add;
+    this.subtract = subtract;
+    this.restart = restart;
+    this.restartUTC = restartUTC;
+    this.reagent = reagent;
+    this.recite = recite;
+    this.setUTC = setUTC;
+    this.set = set;
+    this.getUTC = getUTC;
+    this.get = get;
+  }
 
-	/**
-  * Form a date (or other object) into a Gregorian object
-  * @param  {Date}   obj any date
-  * @return {Object}     A Gregorian instance
-  */
+  /**
+   * Form a date (or other object) into a Gregorian object
+   * @param  {Date}   obj any date
+   * @return {Object}     A Gregorian instance
+   */
 
 
-	_createClass(Gregorian, [{
-		key: 'reform',
-		value: function reform(obj) {
-			obj = obj || new Date();
-			var date = new Date(obj);
-			this.d = date;
-			this.input = obj;
-			return this;
-		}
-	}]);
+  _createClass(Gregorian, [{
+    key: 'reform',
+    value: function reform(obj) {
+      obj = obj || new Date();
+      var date = new Date(obj);
+      this.d = date;
+      this.input = obj;
+      return this;
+    }
+  }]);
 
-	return Gregorian;
+  return Gregorian;
 }();
 
 },{"./add-subtract":4,"./get":6,"./get-utc":5,"./reagent":7,"./recite":8,"./restart":11,"./restart-utc":10,"./set":13,"./set-utc":12,"./to":14}],4:[function(require,module,exports){
@@ -81,60 +88,59 @@ module.exports = function () {
  */
 
 function addSubtract(obj, n, increment) {
+  var increments = {};
 
-	var increments = {};
+  increments.l = function (date) {
+    return new Date(date.setUTCMilliseconds(date.getUTCMilliseconds() + n));
+  };
+  increments.s = function (date) {
+    return new Date(date.setUTCSeconds(date.getUTCSeconds() + n));
+  };
+  increments.t = function (date) {
+    return new Date(date.setUTCMinutes(date.getUTCMinutes() + n));
+  };
+  increments.h = function (date) {
+    return new Date(date.setUTCHours(date.getUTCHours() + n));
+  };
+  increments.d = function (date) {
+    return new Date(date.setUTCDate(date.getUTCDate() + n));
+  };
+  increments.w = function (date) {
+    return new Date(date.setUTCDate(date.getUTCDate() + n * 7));
+  };
+  increments.m = function (date) {
+    var newMonth = date.getUTCMonth() + n;
+    var newYear = date.getUTCFullYear();
+    var newDate = date.getUTCDate();
 
-	increments.l = function (date) {
-		return new Date(date.setUTCMilliseconds(date.getUTCMilliseconds() + n));
-	};
-	increments.s = function (date) {
-		return new Date(date.setUTCSeconds(date.getUTCSeconds() + n));
-	};
-	increments.t = function (date) {
-		return new Date(date.setUTCMinutes(date.getUTCMinutes() + n));
-	};
-	increments.h = function (date) {
-		return new Date(date.setUTCHours(date.getUTCHours() + n));
-	};
-	increments.d = function (date) {
-		return new Date(date.setUTCDate(date.getUTCDate() + n));
-	};
-	increments.w = function (date) {
-		return new Date(date.setUTCDate(date.getUTCDate() + n * 7));
-	};
-	increments.m = function (date) {
-		var newMonth = date.getUTCMonth() + n;
-		var newYear = date.getUTCFullYear();
-		var newDate = date.getUTCDate();
+    if (newDate > new Date(date.setUTCFullYear(newYear, newMonth + 1, 0)).getUTCDate()) {
+      return new Date(date.setUTCFullYear(newYear, newMonth + 1, 0));
+    } else {
+      return new Date(date.setUTCFullYear(newYear, newMonth, newDate));
+    }
+  };
+  increments.y = function (date) {
+    var newYear = date.getUTCFullYear() + n;
+    var newMonth = date.getUTCMonth();
+    var newDate = date.getUTCDate();
 
-		if (newDate > new Date(date.setUTCFullYear(newYear, newMonth + 1, 0)).getUTCDate()) {
-			return new Date(date.setUTCFullYear(newYear, newMonth + 1, 0));
-		} else {
-			return new Date(date.setUTCFullYear(newYear, newMonth, newDate));
-		}
-	};
-	increments.y = function (date) {
-		var newYear = date.getUTCFullYear() + n;
-		var newMonth = date.getUTCMonth();
-		var newDate = date.getUTCDate();
+    if (newDate > new Date(date.setUTCFullYear(newYear, newMonth + 1, 0)).getUTCDate()) {
+      return new Date(date.setUTCFullYear(newYear, newMonth + 1, 0));
+    } else {
+      return new Date(date.setUTCFullYear(newYear, newMonth, newDate));
+    }
+  };
 
-		if (newDate > new Date(date.setUTCFullYear(newYear, newMonth + 1, 0)).getUTCDate()) {
-			return new Date(date.setUTCFullYear(newYear, newMonth + 1, 0));
-		} else {
-			return new Date(date.setUTCFullYear(newYear, newMonth, newDate));
-		}
-	};
-
-	obj.d = increments[increment](obj.d);
-	return obj;
+  obj.d = increments[increment](obj.d);
+  return obj;
 }
 
 exports.add = function (n, increment) {
-	return addSubtract(this, n * 1, increment);
+  return addSubtract(this, n * 1, increment);
 };
 
 exports.subtract = function (n, increment) {
-	return addSubtract(this, n * -1, increment);
+  return addSubtract(this, n * -1, increment);
 };
 
 },{}],5:[function(require,module,exports){
@@ -142,45 +148,45 @@ exports.subtract = function (n, increment) {
 
 /**
  * Gets the specified increment in UTC for the date
- * @param   {String} increment 		date increment to get the value of
+ * @param   {String} increment    date increment to get the value of
  * @returns {Object} the value for that increment, in UTC
  */
 
 function getUTC(increment) {
-	var increments = {};
+  var increments = {};
 
-	increments.z = function () {
-		return 0;
-	};
-	increments.l = function (date) {
-		return date.getUTCMilliseconds();
-	};
-	increments.s = function (date) {
-		return date.getUTCSeconds();
-	};
-	increments.t = function (date) {
-		return date.getUTCMinutes();
-	};
-	increments.h = function (date) {
-		return date.getUTCHours();
-	};
-	increments.d = function (date) {
-		return date.getUTCDate();
-	};
-	increments.D = function (date) {
-		return date.getUTCDay();
-	};
-	increments.w = function (date) {
-		return Math.floor(((date - new Date(date.getUTCFullYear(), 0, 1)) / 1000 / 60 / 60 / 24 + 1) / 7);
-	};
-	increments.m = function (date) {
-		return date.getUTCMonth();
-	};
-	increments.y = function (date) {
-		return date.getUTCFullYear();
-	};
+  increments.z = function () {
+    return 0;
+  };
+  increments.l = function (date) {
+    return date.getUTCMilliseconds();
+  };
+  increments.s = function (date) {
+    return date.getUTCSeconds();
+  };
+  increments.t = function (date) {
+    return date.getUTCMinutes();
+  };
+  increments.h = function (date) {
+    return date.getUTCHours();
+  };
+  increments.d = function (date) {
+    return date.getUTCDate();
+  };
+  increments.D = function (date) {
+    return date.getUTCDay();
+  };
+  increments.w = function (date) {
+    return Math.floor(((date - new Date(date.getUTCFullYear(), 0, 1)) / 1000 / 60 / 60 / 24 + 1) / 7);
+  };
+  increments.m = function (date) {
+    return date.getUTCMonth();
+  };
+  increments.y = function (date) {
+    return date.getUTCFullYear();
+  };
 
-	return increments[increment](this.d);
+  return increments[increment](this.d);
 }
 
 module.exports = getUTC;
@@ -190,45 +196,45 @@ module.exports = getUTC;
 
 /**
  * Gets the specified increment in local time for the date
- * @param   {String} increment 		date increment to get the value of
+ * @param   {String} increment    date increment to get the value of
  * @returns {Object} the value for that increment in local time
  */
 
 function get(increment) {
-	var increments = {};
+  var increments = {};
 
-	increments.z = function (date) {
-		return date.getTimezoneOffset() / 60;
-	};
-	increments.l = function (date) {
-		return date.getMilliseconds();
-	};
-	increments.s = function (date) {
-		return date.getSeconds();
-	};
-	increments.t = function (date) {
-		return date.getMinutes();
-	};
-	increments.h = function (date) {
-		return date.getHours();
-	};
-	increments.d = function (date) {
-		return date.getDate();
-	};
-	increments.D = function (date) {
-		return date.getDay();
-	};
-	increments.w = function (date) {
-		return Math.floor(((date - new Date(date.getFullYear(), 0, 1)) / 1000 / 60 / 60 / 24 + 1) / 7);
-	};
-	increments.m = function (date) {
-		return date.getMonth();
-	};
-	increments.y = function (date) {
-		return date.getFullYear();
-	};
+  increments.z = function (date) {
+    return date.getTimezoneOffset() / 60;
+  };
+  increments.l = function (date) {
+    return date.getMilliseconds();
+  };
+  increments.s = function (date) {
+    return date.getSeconds();
+  };
+  increments.t = function (date) {
+    return date.getMinutes();
+  };
+  increments.h = function (date) {
+    return date.getHours();
+  };
+  increments.d = function (date) {
+    return date.getDate();
+  };
+  increments.D = function (date) {
+    return date.getDay();
+  };
+  increments.w = function (date) {
+    return Math.floor(((date - new Date(date.getFullYear(), 0, 1)) / 1000 / 60 / 60 / 24 + 1) / 7);
+  };
+  increments.m = function (date) {
+    return date.getMonth();
+  };
+  increments.y = function (date) {
+    return date.getFullYear();
+  };
 
-	return increments[increment](this.d);
+  return increments[increment](this.d);
 }
 
 module.exports = get;
@@ -272,7 +278,7 @@ module.exports = recite;
 /**
  * Take a date object and output the capitalized 12-hour clock period (AM/PM)
  * @param   {Date}   date a date object
- * @returns {String} the capitalized 12-hour clock period 
+ * @returns {String} the capitalized 12-hour clock period
  */
 
 exports.AP = function (date) {
@@ -284,7 +290,7 @@ exports.AP = function (date) {
 /**
  * Take a date object and output the uncapitalized 12-hour clock period (AM/PM)
  * @param   {Date   date a date object
- * @returns {String} the uncapitalized 12-hour clock period 
+ * @returns {String} the uncapitalized 12-hour clock period
  */
 exports.ap = function (date) {
   var hour = date.getHours();
@@ -294,8 +300,8 @@ exports.ap = function (date) {
 
 /**
  * Take a date object and output the abreviated day of the week
- * @param {Date} 	a date object
- * @returns {String}	the abbreviated day of the week
+ * @param {Date}  a date object
+ * @returns {String}  the abbreviated day of the week
  */
 exports.D = function (date) {
   var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -305,7 +311,7 @@ exports.D = function (date) {
 
 /**
  * Take a date object and output the day of the week
- * @param {Date} 	a date object
+ * @param {Date}  a date object
  * @returns {String} the full day of the week
  */
 exports.DD = function (date) {
@@ -336,8 +342,8 @@ exports.HH = function (date) {
 
 /**
  * Take a date object and output the abbreviated month
- * @param {Date} 	a date object
- * @returns {String}	the abbreviated month
+ * @param {Date}  a date object
+ * @returns {String}  the abbreviated month
  */
 exports.M = function (date) {
   var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
@@ -347,8 +353,8 @@ exports.M = function (date) {
 
 /**
  * Take a date object and output the month
- * @param {Date} 	a date object
- * @returns {String}	the full month
+ * @param {Date}  a date object
+ * @returns {String}  the full month
  */
 exports.MM = function (date) {
   var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -358,8 +364,8 @@ exports.MM = function (date) {
 
 /**
  * Take a date object and output the date of the month with no leading zeros (1-31)
- * @param {Date} 	a date object
- * @returns {String}	the date of the month with no leading zeros
+ * @param {Date}  a date object
+ * @returns {String}  the date of the month with no leading zeros
  */
 exports.d = function (date) {
   var day = date.getDate().toString();
@@ -368,8 +374,8 @@ exports.d = function (date) {
 
 /**
  * Take a date object and output the two-digit date of the month (01-31)
- * @param {Date} 	a date object
- * @returns {String}	the two-digit date of the month
+ * @param {Date}  a date object
+ * @returns {String}  the two-digit date of the month
  */
 exports.dd = function (date) {
   var day = date.getDate().toString();
@@ -378,8 +384,8 @@ exports.dd = function (date) {
 
 /**
  * Take a date object and output the date of the month with no leading zeros but with the ordinal (1st-31st)
- * @param {Date} 	a date object
- * @returns {String}	the date with no leading zeros but with the ordinal
+ * @param {Date}  a date object
+ * @returns {String}  the date with no leading zeros but with the ordinal
  */
 exports.dt = function (date) {
   var day = date.getDate();
@@ -461,8 +467,8 @@ exports.ll = function (date) {
 
 /**
  * Take a date object and output the numeric month (1-12)
- * @param {Date} 	a date object
- * @returns {String}	the month with no leading zeros
+ * @param {Date}  a date object
+ * @returns {String}  the month with no leading zeros
  */
 exports.m = function (date) {
   var month = (date.getMonth() + 1).toString();
@@ -471,8 +477,8 @@ exports.m = function (date) {
 
 /**
  * Take a date object and output the two-digit month (01-12)
- * @param {Date} 	a date object
- * @returns {String}	the two-digit month
+ * @param {Date}  a date object
+ * @returns {String}  the two-digit month
  */
 exports.mm = function (date) {
   var month = (date.getMonth() + 1).toString();
@@ -521,8 +527,8 @@ exports.tt = function (date) {
 
 /**
  * Take a date object and output the two-digit year
- * @param {Date} 	a date object
- * @returns {String}	the two-digit year
+ * @param {Date}  a date object
+ * @returns {String}  the two-digit year
  */
 exports.yy = function (date) {
   return date.getFullYear().toString().substr(2);
@@ -530,8 +536,8 @@ exports.yy = function (date) {
 
 /**
  * Take a date object and output the four-digit year
- * @param {Date} 	a date object
- * @returns {String}	the four-digit year
+ * @param {Date}  a date object
+ * @returns {String}  the four-digit year
  */
 exports.yyyy = function (date) {
   return date.getFullYear();
@@ -540,7 +546,7 @@ exports.yyyy = function (date) {
 /**
  * Take a date object and output the timezone offset (UTC +- 01:00, etc.)
  * @param   {Date}   date a date object
- * @returns {String} the timezone offset 
+ * @returns {String} the timezone offset
  */
 exports.zz = function (date) {
   var offset = date.getTimezoneOffset() / 60 * -1;
@@ -550,12 +556,11 @@ exports.zz = function (date) {
 /**
  * Converts a date object to an ISO string
  * @param   {Date}   date   a date object
- * @param {String}		format optional 'short' to remove the time
+ * @param {String}    format optional 'short' to remove the time
  * @returns {String} ISO String including time
  */
 exports.iso = function (date, format) {
   format = format || null;
-  //console.log('iso function date: ' + date);
   if (format === 'short') return date.toISOString().split('T')[0];
   return date.toISOString();
 };
@@ -563,7 +568,7 @@ exports.iso = function (date, format) {
 /**
  * Converts a date object to a UTC string
  * @param   {Date}   date a date object
- * @param 	{String}	format optional 'shart' to remove the time from the output
+ * @param   {String}  format optional 'shart' to remove the time from the output
  * @returns {String} UTC string with or without time
  */
 
@@ -603,40 +608,40 @@ exports.unix = function (date) {
  */
 
 function restartUTC(increment) {
-	var increments = {};
+  var increments = {};
 
-	increments.s = function (date) {
-		return new Date(date.setUTCSeconds(date.getUTCSeconds(), 0));
-	};
-	increments.t = function (date) {
-		return new Date(date.setUTCMinutes(date.getUTCMinutes(), 0, 0));
-	};
-	increments.h = function (date) {
-		return new Date(date.setUTCHours(date.getUTCHours(), 0, 0, 0));
-	};
-	increments.d = function (date) {
-		date.setUTCDate(date.getUTCDate());
-		date.setUTCHours(0, 0, 0, 0);
-		return new Date(date);
-	};
-	increments.w = function (date) {
-		date.setUTCDate(date.getUTCDate() - date.getUTCDay());
-		date.setUTCHours(0, 0, 0, 0);
-		return new Date(date);
-	};
-	increments.m = function (date) {
-		date.setUTCMonth(date.getUTCMonth(), 1);
-		date.setUTCHours(0, 0, 0, 0);
-		return new Date(date);
-	};
-	increments.y = function (date) {
-		date.setUTCFullYear(date.getUTCFullYear(), 0, 1);
-		date.setUTCHours(0, 0, 0, 0);
-		return new Date(date);
-	};
+  increments.s = function (date) {
+    return new Date(date.setUTCSeconds(date.getUTCSeconds(), 0));
+  };
+  increments.t = function (date) {
+    return new Date(date.setUTCMinutes(date.getUTCMinutes(), 0, 0));
+  };
+  increments.h = function (date) {
+    return new Date(date.setUTCHours(date.getUTCHours(), 0, 0, 0));
+  };
+  increments.d = function (date) {
+    date.setUTCDate(date.getUTCDate());
+    date.setUTCHours(0, 0, 0, 0);
+    return new Date(date);
+  };
+  increments.w = function (date) {
+    date.setUTCDate(date.getUTCDate() - date.getUTCDay());
+    date.setUTCHours(0, 0, 0, 0);
+    return new Date(date);
+  };
+  increments.m = function (date) {
+    date.setUTCMonth(date.getUTCMonth(), 1);
+    date.setUTCHours(0, 0, 0, 0);
+    return new Date(date);
+  };
+  increments.y = function (date) {
+    date.setUTCFullYear(date.getUTCFullYear(), 0, 1);
+    date.setUTCHours(0, 0, 0, 0);
+    return new Date(date);
+  };
 
-	this.d = increments[increment](this.d);
-	return this;
+  this.d = increments[increment](this.d);
+  return this;
 }
 
 module.exports = restartUTC;
@@ -651,40 +656,40 @@ module.exports = restartUTC;
  */
 
 function restart(increment) {
-	var increments = {};
+  var increments = {};
 
-	increments.s = function (date) {
-		return new Date(date.setSeconds(date.getSeconds(), 0));
-	};
-	increments.t = function (date) {
-		return new Date(date.setMinutes(date.getMinutes(), 0, 0));
-	};
-	increments.h = function (date) {
-		return new Date(date.setHours(date.getHours(), 0, 0, 0));
-	};
-	increments.d = function (date) {
-		date.setDate(date.getDate());
-		date.setHours(0, 0, 0, 0);
-		return new Date(date);
-	};
-	increments.w = function (date) {
-		date.setDate(date.getDate() - date.getDay());
-		date.setHours(0, 0, 0, 0);
-		return new Date(date);
-	};
-	increments.m = function (date) {
-		date.setMonth(date.getMonth(), 1);
-		date.setHours(0, 0, 0, 0);
-		return new Date(date);
-	};
-	increments.y = function (date) {
-		date.setFullYear(date.getFullYear(), 0, 1);
-		date.setHours(0, 0, 0, 0);
-		return new Date(date);
-	};
+  increments.s = function (date) {
+    return new Date(date.setSeconds(date.getSeconds(), 0));
+  };
+  increments.t = function (date) {
+    return new Date(date.setMinutes(date.getMinutes(), 0, 0));
+  };
+  increments.h = function (date) {
+    return new Date(date.setHours(date.getHours(), 0, 0, 0));
+  };
+  increments.d = function (date) {
+    date.setDate(date.getDate());
+    date.setHours(0, 0, 0, 0);
+    return new Date(date);
+  };
+  increments.w = function (date) {
+    date.setDate(date.getDate() - date.getDay());
+    date.setHours(0, 0, 0, 0);
+    return new Date(date);
+  };
+  increments.m = function (date) {
+    date.setMonth(date.getMonth(), 1);
+    date.setHours(0, 0, 0, 0);
+    return new Date(date);
+  };
+  increments.y = function (date) {
+    date.setFullYear(date.getFullYear(), 0, 1);
+    date.setHours(0, 0, 0, 0);
+    return new Date(date);
+  };
 
-	this.d = increments[increment](this.d);
-	return this;
+  this.d = increments[increment](this.d);
+  return this;
 }
 
 module.exports = restart;
@@ -700,56 +705,56 @@ module.exports = restart;
  */
 
 function setUTC(value, increment) {
-	var increments = {};
+  var increments = {};
 
-	increments.l = function (date) {
-		return new Date(date.setUTCMilliseconds(value));
-	};
-	increments.s = function (date) {
-		return new Date(date.setUTCSeconds(value));
-	};
-	increments.t = function (date) {
-		return new Date(date.setUTCMinutes(value));
-	};
-	increments.h = function (date) {
-		return new Date(date.setUTCHours(value));
-	};
-	increments.d = function (date) {
-		return new Date(date.setUTCDate(value));
-	};
-	increments.w = function (date) {
-		var currentDay = date.getUTCDay();
-		var currentMilliseconds = date.getUTCMilliseconds();
-		date.setUTCFullYear(date.getUTCFullYear(), 0, value * 7);
-		var n = currentDay - date.getUTCDay();
-		date.setUTCDate(date.getUTCDate() + n);
-		return new Date(date.setUTCMilliseconds(currentMilliseconds));
-	};
-	increments.m = function (date) {
-		var newMonth = value - 1;
-		var newYear = date.getUTCFullYear();
-		var newDate = date.getUTCDate();
+  increments.l = function (date) {
+    return new Date(date.setUTCMilliseconds(value));
+  };
+  increments.s = function (date) {
+    return new Date(date.setUTCSeconds(value));
+  };
+  increments.t = function (date) {
+    return new Date(date.setUTCMinutes(value));
+  };
+  increments.h = function (date) {
+    return new Date(date.setUTCHours(value));
+  };
+  increments.d = function (date) {
+    return new Date(date.setUTCDate(value));
+  };
+  increments.w = function (date) {
+    var currentDay = date.getUTCDay();
+    var currentMilliseconds = date.getUTCMilliseconds();
+    date.setUTCFullYear(date.getUTCFullYear(), 0, value * 7);
+    var n = currentDay - date.getUTCDay();
+    date.setUTCDate(date.getUTCDate() + n);
+    return new Date(date.setUTCMilliseconds(currentMilliseconds));
+  };
+  increments.m = function (date) {
+    var newMonth = value - 1;
+    var newYear = date.getUTCFullYear();
+    var newDate = date.getUTCDate();
 
-		if (newDate > new Date(date.setUTCFullYear(newYear, newMonth + 1, 0)).getUTCDate()) {
-			return new Date(date.setUTCFullYear(newYear, newMonth + 1, 0));
-		} else {
-			return new Date(date.setUTCFullYear(newYear, newMonth, newDate));
-		}
-	};
-	increments.y = function (date) {
-		var newYear = value;
-		var newMonth = date.getUTCMonth();
-		var newDate = date.getUTCDate();
+    if (newDate > new Date(date.setUTCFullYear(newYear, newMonth + 1, 0)).getUTCDate()) {
+      return new Date(date.setUTCFullYear(newYear, newMonth + 1, 0));
+    } else {
+      return new Date(date.setUTCFullYear(newYear, newMonth, newDate));
+    }
+  };
+  increments.y = function (date) {
+    var newYear = value;
+    var newMonth = date.getUTCMonth();
+    var newDate = date.getUTCDate();
 
-		if (newDate > new Date(date.setUTCFullYear(newYear, newMonth + 1, 0)).getUTCDate()) {
-			return new Date(date.setUTCFullYear(newYear, newMonth + 1, 0));
-		} else {
-			return new Date(date.setUTCFullYear(newYear, newMonth, newDate));
-		}
-	};
+    if (newDate > new Date(date.setUTCFullYear(newYear, newMonth + 1, 0)).getUTCDate()) {
+      return new Date(date.setUTCFullYear(newYear, newMonth + 1, 0));
+    } else {
+      return new Date(date.setUTCFullYear(newYear, newMonth, newDate));
+    }
+  };
 
-	this.d = increments[increment](this.d);
-	return this;
+  this.d = increments[increment](this.d);
+  return this;
 }
 
 module.exports = setUTC;
@@ -765,56 +770,56 @@ module.exports = setUTC;
  */
 
 function set(value, increment) {
-	var increments = {};
+  var increments = {};
 
-	increments.l = function (date) {
-		return new Date(date.setMilliseconds(value));
-	};
-	increments.s = function (date) {
-		return new Date(date.setSeconds(value));
-	};
-	increments.t = function (date) {
-		return new Date(date.setMinutes(value));
-	};
-	increments.h = function (date) {
-		return new Date(date.setHours(value));
-	};
-	increments.d = function (date) {
-		return new Date(date.setDate(value));
-	};
-	increments.w = function (date) {
-		var currentDay = date.getDay();
-		var currentMilliseconds = date.getMilliseconds();
-		date.setFullYear(date.getFullYear(), 0, value * 7);
-		var n = currentDay - date.getDay();
-		date.setDate(date.getDate() + n);
-		return new Date(date.setMilliseconds(currentMilliseconds));
-	};
-	increments.m = function (date) {
-		var newMonth = value - 1;
-		var newYear = date.getFullYear();
-		var newDate = date.getDate();
+  increments.l = function (date) {
+    return new Date(date.setMilliseconds(value));
+  };
+  increments.s = function (date) {
+    return new Date(date.setSeconds(value));
+  };
+  increments.t = function (date) {
+    return new Date(date.setMinutes(value));
+  };
+  increments.h = function (date) {
+    return new Date(date.setHours(value));
+  };
+  increments.d = function (date) {
+    return new Date(date.setDate(value));
+  };
+  increments.w = function (date) {
+    var currentDay = date.getDay();
+    var currentMilliseconds = date.getMilliseconds();
+    date.setFullYear(date.getFullYear(), 0, value * 7);
+    var n = currentDay - date.getDay();
+    date.setDate(date.getDate() + n);
+    return new Date(date.setMilliseconds(currentMilliseconds));
+  };
+  increments.m = function (date) {
+    var newMonth = value - 1;
+    var newYear = date.getFullYear();
+    var newDate = date.getDate();
 
-		if (newDate > new Date(date.setFullYear(newYear, newMonth + 1, 0)).getDate()) {
-			return new Date(date.setFullYear(newYear, newMonth + 1, 0));
-		} else {
-			return new Date(date.setFullYear(newYear, newMonth, newDate));
-		}
-	};
-	increments.y = function (date) {
-		var newYear = value;
-		var newMonth = date.getMonth();
-		var newDate = date.getDate();
+    if (newDate > new Date(date.setFullYear(newYear, newMonth + 1, 0)).getDate()) {
+      return new Date(date.setFullYear(newYear, newMonth + 1, 0));
+    } else {
+      return new Date(date.setFullYear(newYear, newMonth, newDate));
+    }
+  };
+  increments.y = function (date) {
+    var newYear = value;
+    var newMonth = date.getMonth();
+    var newDate = date.getDate();
 
-		if (newDate > new Date(date.setFullYear(newYear, newMonth + 1, 0)).getDate()) {
-			return new Date(date.setFullYear(newYear, newMonth + 1, 0));
-		} else {
-			return new Date(date.setFullYear(newYear, newMonth, newDate));
-		}
-	};
+    if (newDate > new Date(date.setFullYear(newYear, newMonth + 1, 0)).getDate()) {
+      return new Date(date.setFullYear(newYear, newMonth + 1, 0));
+    } else {
+      return new Date(date.setFullYear(newYear, newMonth, newDate));
+    }
+  };
 
-	this.d = increments[increment](this.d);
-	return this;
+  this.d = increments[increment](this.d);
+  return this;
 }
 
 module.exports = set;
@@ -827,45 +832,47 @@ var reformat = require('./reformat');
 /**
  * Take a Gregorian object and output the reformatted string
  * See https://github.com/patrickfatrick/gregorian#accepted-formats for details
- * @param {String} 	format a string or date object (something that can be converted to a valid date)
- * @returns {String}	the date reformatted into the specified format
+ * @param {String}  format a string or date object (something that can be converted to a valid date)
+ * @returns {String}  the date reformatted into the specified format
  */
 function to(format, delimiter) {
-	delimiter = delimiter || '+';
-	var date = this.d;
-	var pieces = ['unix', 'utc-short', 'utc', 'iso-short', 'iso', 'yyyy', 'yy', 'DD', 'dd', 'dt', 'D', 'd', 'MM', 'mm', 'M', 'm', 'hh', 'h', 'HH', 'H', 'tt', 't', 'AP', 'ap', 'ss', 's', 'll', 'l', 'zz'];
-	var converted = format;
+  delimiter = delimiter || '+';
+  var date = this.d;
+  var pieces = ['unix', 'utc-short', 'utc', 'iso-short', 'iso', 'yyyy', 'yy', 'DD', 'dd', 'dt', 'D', 'd', 'MM', 'mm', 'M', 'm', 'hh', 'h', 'HH', 'H', 'tt', 't', 'AP', 'ap', 'ss', 's', 'll', 'l', 'zz'];
+  var converted = format;
 
-	pieces.forEach(function (piece) {
-		var re = new RegExp('\\b' + piece + '\\b', 'g');
-		var replacer = undefined;
-		if (re.test(converted)) {
-			switch (piece) {
-				case 'unix':
-					converted = reformat.unix(date);
-					break;
-				case 'utc-short':
-					converted = reformat.utc(date, 'short');
-					break;
-				case 'utc':
-					converted = reformat.utc(date);
-					break;
-				case 'iso-short':
-					converted = reformat.iso(date, 'short');
-					break;
-				case 'iso':
-					converted = reformat.iso(date);
-					break;
-				default:
-					replacer = reformat[piece](date);
-					converted = converted.replace(re, replacer);
-			}
-		}
-	});
-	if (typeof converted === 'string') {
-		converted = converted.replace(new RegExp('\\' + delimiter, 'g'), '');
-	}
-	return converted;
+  pieces.forEach(function (piece) {
+    var re = new RegExp('\\b' + piece + '\\b', 'g');
+    var replacer = undefined;
+    if (re.test(converted)) {
+      switch (piece) {
+        case 'unix':
+          converted = reformat.unix(date);
+          break;
+        case 'utc-short':
+          converted = reformat.utc(date, 'short');
+          break;
+        case 'utc':
+          converted = reformat.utc(date);
+          break;
+        case 'iso-short':
+          converted = reformat.iso(date, 'short');
+          break;
+        case 'iso':
+          converted = reformat.iso(date);
+          break;
+        default:
+          replacer = reformat[piece](date);
+          converted = converted.replace(re, replacer);
+      }
+    }
+  });
+
+  if (typeof converted === 'string') {
+    converted = converted.replace(new RegExp('\\' + delimiter, 'g'), '');
+  }
+
+  return converted;
 }
 
 module.exports = to;

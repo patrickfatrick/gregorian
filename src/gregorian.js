@@ -1,6 +1,6 @@
-'use strict';
+'use strict'
 
-var Gregorian = require('./modules/Gregorian');
+var Gregorian = require('./modules/Gregorian')
 
-let gregorian = new Gregorian();
-module.exports = gregorian;
+let gregorian = new Gregorian()
+module.exports = gregorian

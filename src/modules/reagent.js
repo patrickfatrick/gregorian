@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 /*
  * Takes a gregorian object and checks that it has a valid date.
@@ -6,10 +6,10 @@
  * @return {Boolean}
  */
 function reagent () {
-	if (isNaN(this.d.getTime())) {
-		return false;
-	}
-	return true;
+  if (isNaN(this.d.getTime())) {
+    return false
+  }
+  return true
 }
 
-module.exports = reagent;
+module.exports = reagent
