@@ -24,6 +24,9 @@ function set (value, increment) {
   increments.d = (date) => {
     return new Date(date.setDate(value))
   }
+  increments.D = (date) => {
+    return new Date(date.setDate(date.getDate() - date.getDay() + value))
+  }
   increments.w = (date) => {
     let currentDay = date.getDay()
     let currentMilliseconds = date.getMilliseconds()

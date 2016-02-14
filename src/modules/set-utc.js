@@ -24,6 +24,9 @@ function setUTC (value, increment) {
   increments.d = (date) => {
     return new Date(date.setUTCDate(value))
   }
+  increments.D = (date) => {
+    return new Date(date.setUTCDate(date.getUTCDate() - date.getUTCDay() + value))
+  }
   increments.w = (date) => {
     let currentDay = date.getUTCDay()
     let currentMilliseconds = date.getUTCMilliseconds()

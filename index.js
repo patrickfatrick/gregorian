@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
-var gregorian = require('./src/gregorian');
-module.exports = gregorian;
+var gregorian = require('./src/gregorian')
+module.exports = gregorian

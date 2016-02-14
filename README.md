@@ -47,6 +47,10 @@ The library is currently in English only.
 
 ## Changelog
 
+#### v1.6.2
+
+- `D` parameter added to `set()` and `setUTC()`.
+
 #### v1.6
 
 - New `get()` and `getUTC()` methods.
@@ -188,19 +192,20 @@ This will return a new gregorian object that can then be formatted into a string
 Accepted increments you can use for setting are
 
 ```javascript
-'l' // 1 millisecond
-'s' // 1 second
-'t' // 1 minute
-'h' // 1 hour
-'d' // 1 day
-'w' // 1 week
-'m' // 1 month (position will be on the same date and time of the month)
-'y' // 1 year (position will be on the date and time of the year)
+'l' // millisecond
+'s' // second
+'t' // minute
+'h' // hour
+'d' // day of the month (1-indexed)
+'D' // day of the week (0-indexed)
+'w' // week of the year (0-indexed)
+'m' // month (0-indexed; position will be on the same date and time of the month)
+'y' // year (position will be on the date and time of the year)
 ```
 
 #### Getting
 
-This will retrieve specific time increments for the Gregorian object.
+This will retrieve specific numeric time increments for the Gregorian object.
 
 ```javascript
 gregorian.reform('2015-10-31').get('d') // 31
@@ -222,9 +227,10 @@ Accepted increments you can use for getting are
 's' // the second
 't' // the minute
 'h' // the hour
-'d' // the day
-'w' // the week
-'m' // the month
+'d' // the day of the month (1-indexed)
+'D' // the day of the week (0-indexed)
+'w' // the week of the year (0-indexed)
+'m' // the month (0-indexed)
 'y' // the year
 ```
 

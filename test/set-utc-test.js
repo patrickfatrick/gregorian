@@ -12,8 +12,10 @@ describe('setUTC', () => {
   })
 
   it('sets the month to the specified month', () => {
-    gregorian.reform('April 11, 1988 00:00 UTC').setUTC(3, 'm').d.toISOString()
-      .should.equal('1988-03-11T00:00:00.000Z')
+    gregorian.reform('April 11, 1988 00:00').setUTC(3, 'm').d.toISOString()
+      .should.equal('1988-03-11T07:00:00.000Z')
+    gregorian.reform('2015-10-31T04:56:14.877Z').setUTC(3, 'm').d.toISOString()
+      .should.equal('2015-03-31T04:56:14.877Z')
   })
 
   it('sets the week to the specified week', () => {
@@ -26,14 +28,21 @@ describe('setUTC', () => {
   })
 
   it('sets the day to the specified day', () => {
-    gregorian.reform('April 11, 1988 00:00 UTC').setUTC(1, 'd').d.toISOString()
-      .should.equal('1988-04-01T00:00:00.000Z')
+    gregorian.reform('April 11, 1988 00:00').setUTC(1, 'd').d.toISOString()
+      .should.equal('1988-04-01T07:00:00.000Z')
     gregorian.reform('2015-10-31T04:56:14.877Z').setUTC(8, 'd').d.toISOString()
       .should.equal('2015-10-08T04:56:14.877Z')
   })
 
+  it('sets the day to the specified UTC day of the week', () => {
+    gregorian.reform('April 11, 1988 00:00:00').setUTC(0, 'D').d.toISOString()
+      .should.equal('1988-04-10T07:00:00.000Z')
+    gregorian.reform('2015-10-31T04:56:14.877Z').setUTC(2, 'D').d.toISOString()
+      .should.equal('2015-10-27T04:56:14.877Z')
+  })
+
   it('sets the hour to the specified hour', () => {
-    gregorian.reform('April 11, 1988 00:00 UTC').setUTC(3, 'h').d.toISOString()
+    gregorian.reform('April 11, 1988 00:00').setUTC(3, 'h').d.toISOString()
       .should.equal('1988-04-11T03:00:00.000Z')
     gregorian.reform('2015-10-31T04:56:14.877Z').setUTC(8, 'h').d.toISOString()
       .should.equal('2015-10-31T08:56:14.877Z')

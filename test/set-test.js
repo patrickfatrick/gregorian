@@ -14,6 +14,8 @@ describe('set', () => {
   it('sets the month to the specified month', () => {
     gregorian.reform('April 11, 1988 00:00:00').set(3, 'm').to('yyyy-mm-dd HH:tt:ss.ll')
       .should.equal('1988-03-11 00:00:00.000')
+    gregorian.reform('2015-10-31T04:56:14.877Z').set(3, 'm').d.toISOString()
+      .should.equal('2015-03-31T04:56:14.877Z')
   })
 
   it('sets the week to the specified week', () => {
@@ -26,15 +28,22 @@ describe('set', () => {
   })
 
   it('sets the day to the specified day', () => {
-    gregorian.reform('April 11, 1988 00:00:00').set(1, 'd').to('yyyy-mm-dd HH:tt:ss.ll')
-      .should.equal('1988-04-01 00:00:00.000')
+    gregorian.reform('April 11, 1988 00:00:00').set(1, 'd').d.toISOString()
+      .should.equal('1988-04-01T07:00:00.000Z')
     gregorian.reform('October 31, 2015 04:56:14').set(8, 'd').to('yyyy-mm-dd HH:tt:ss.ll')
       .should.equal('2015-10-08 04:56:14.000')
   })
 
+  it('sets the day to the specified day of the week', () => {
+    gregorian.reform('April 11, 1988 00:00:00').set(0, 'D').d.toISOString()
+      .should.equal('1988-04-10T07:00:00.000Z')
+    gregorian.reform('October 31, 2015 04:56:14').set(2, 'D').d.toISOString()
+      .should.equal('2015-10-27T11:56:14.000Z')
+  })
+
   it('sets the hour to the specified hour', () => {
-    gregorian.reform('April 11, 1988 00:00:00').set(3, 'h').to('yyyy-mm-dd HH:tt:ss.ll')
-      .should.equal('1988-04-11 03:00:00.000')
+    gregorian.reform('April 11, 1988 00:00:00').set(3, 'h').d.toISOString()
+      .should.equal('1988-04-11T10:00:00.000Z')
     gregorian.reform('October 31, 2015 04:56:14').set(8, 'h').to('yyyy-mm-dd HH:tt:ss.ll')
       .should.equal('2015-10-31 08:56:14.000')
   })
