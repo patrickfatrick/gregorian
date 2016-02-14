@@ -722,6 +722,9 @@ function setUTC(value, increment) {
   increments.d = function (date) {
     return new Date(date.setUTCDate(value));
   };
+  increments.D = function (date) {
+    return new Date(date.setUTCDate(date.getUTCDate() - date.getUTCDay() + value));
+  };
   increments.w = function (date) {
     var currentDay = date.getUTCDay();
     var currentMilliseconds = date.getUTCMilliseconds();
@@ -786,6 +789,9 @@ function set(value, increment) {
   };
   increments.d = function (date) {
     return new Date(date.setDate(value));
+  };
+  increments.D = function (date) {
+    return new Date(date.setDate(date.getDate() - date.getDay() + value));
   };
   increments.w = function (date) {
     var currentDay = date.getDay();

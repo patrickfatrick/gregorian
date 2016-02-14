@@ -47,7 +47,7 @@ The library is currently in English only.
 
 ## Changelog
 
-#### v1.6.2
+#### v1.6.3
 
 - `D` parameter added to `set()` and `setUTC()`.
 
