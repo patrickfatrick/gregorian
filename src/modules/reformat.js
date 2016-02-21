@@ -268,13 +268,19 @@ exports.yyyy = function (date) {
 }
 
 /**
- * Take a date object and output the timezone offset (UTC +- 01:00, etc.)
+ * Take a date object and output the timezone offset (UTC+-01:00, etc.)
  * @param   {Date}   date a date object
  * @returns {String} the timezone offset
  */
 exports.zz = function (date) {
-  const offset = date.getTimezoneOffset() / 60 * -1
-  return 'UTC ' + offset + ':00'
+  let offset = (date.getTimezoneOffset() / 60 * -1).toString()
+  offset = (/^[-]?\d$/g.test(offset))
+    ? offset.replace(/\d/, function (match, off) {
+      return '0' + offset.charAt(off)
+    })
+    : offset
+  if (!(/^[-]/g.test(offset))) offset = '+' + offset
+  return 'UTC' + offset + ':00'
 }
 
 /**

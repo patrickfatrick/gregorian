@@ -204,7 +204,7 @@ function get(increment) {
   var increments = {};
 
   increments.z = function (date) {
-    return date.getTimezoneOffset() / 60;
+    return date.getTimezoneOffset() / 60 * -1;
   };
   increments.l = function (date) {
     return date.getMilliseconds();
@@ -544,13 +544,17 @@ exports.yyyy = function (date) {
 };
 
 /**
- * Take a date object and output the timezone offset (UTC +- 01:00, etc.)
+ * Take a date object and output the timezone offset (UTC+-01:00, etc.)
  * @param   {Date}   date a date object
  * @returns {String} the timezone offset
  */
 exports.zz = function (date) {
-  var offset = date.getTimezoneOffset() / 60 * -1;
-  return 'UTC ' + offset + ':00';
+  var offset = (date.getTimezoneOffset() / 60 * -1).toString();
+  offset = /^[-]?\d$/g.test(offset) ? offset.replace(/\d/, function (match, off) {
+    return '0' + offset.charAt(off);
+  }) : offset;
+  if (!/^[-]/g.test(offset)) offset = '+' + offset;
+  return 'UTC' + offset + ':00';
 };
 
 /**
@@ -842,7 +846,7 @@ var reformat = require('./reformat');
  * @returns {String}  the date reformatted into the specified format
  */
 function to(format, delimiter) {
-  delimiter = delimiter || '+';
+  delimiter = delimiter || '|';
   var date = this.d;
   var pieces = ['unix', 'utc-short', 'utc', 'iso-short', 'iso', 'yyyy', 'yy', 'DD', 'dd', 'dt', 'D', 'd', 'MM', 'mm', 'M', 'm', 'hh', 'h', 'HH', 'H', 'tt', 't', 'AP', 'ap', 'ss', 's', 'll', 'l', 'zz'];
   var converted = format;

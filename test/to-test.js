@@ -1,24 +1,61 @@
-/* global describe it */
+/* global describe it sinon */
+
 import chai from 'chai'
 import gregorian from '../src/gregorian'
 
 chai.should()
 describe('reformTo', () => {
   it('converts a date to a string with a specified format', () => {
-    gregorian.reform('09/25/2015 00:00').to('DD, yyyy-m-d hh:tt.ll+ap')
+    gregorian.reform('09/25/2015 00:00').to('DD, yyyy-m-d hh:tt.ll|ap')
       .should.equal('Friday, 2015-9-25 12:00.000am')
-    gregorian.reform('09/25/2015 01:00').to('DD, MM yyyy-m-d hh:tt.ll+ap')
+    gregorian.reform('09/25/2015 01:00').to('DD, MM yyyy-m-d hh:tt.ll|ap')
       .should.equal('Friday, September 2015-9-25 01:00.000am')
     gregorian.reform('09/25/2015 23:59').to('DD, M yyyy-m-d H:tt:s.ll')
       .should.equal('Friday, Sept 2015-9-25 23:59:0.000')
-    gregorian.reform('09/25/2015 23:59:00').to('DD, M yyyy-m-d h:tt:s.l+AP')
+    gregorian.reform('09/25/2015 23:59:00').to('DD, M yyyy-m-d h:tt:s.l|AP')
       .should.equal('Friday, Sept 2015-9-25 11:59:0.0PM')
-    gregorian.reform('09/25/2015 23:59:00').to('DD, M yyyy-m-d hh:tt:s.ll+ap')
+    gregorian.reform('09/25/2015 23:59:00').to('DD, M yyyy-m-d hh:tt:s.ll|ap')
       .should.equal('Friday, Sept 2015-9-25 11:59:0.000pm')
     gregorian.reform('09/25/2015 01:00').to('DD, M yyyy-m-d H:tt:ss.ll')
       .should.equal('Friday, Sept 2015-9-25 1:00:00.000')
-    gregorian.reform('10/25/2015 01:00').to('DD, MM yyyy-mm-d H:tt:ss.ll')
-      .should.equal('Sunday, October 2015-10-25 1:00:00.000')
+    gregorian.reform('10/25/2015 01:00').to('DD, MM yyyy-mm-d H:tt:ss.ll zz')
+      .should.equal('Sunday, October 2015-10-25 1:00:00.000 UTC-07:00')
+  })
+
+  it('handles positive two-digit timezone offsets', () => {
+    sinon.stub(Date.prototype, 'getTimezoneOffset').returns(-840)
+
+    gregorian.reform().to('zz')
+      .should.equal('UTC+14:00')
+
+    Date.prototype.getTimezoneOffset.restore()
+  })
+
+  it('handles positive single-digit timezone offsets', () => {
+    sinon.stub(Date.prototype, 'getTimezoneOffset').returns(-420)
+
+    gregorian.reform().to('zz')
+      .should.equal('UTC+07:00')
+
+    Date.prototype.getTimezoneOffset.restore()
+  })
+
+  it('handles negative two-digit timezone offsets', () => {
+    sinon.stub(Date.prototype, 'getTimezoneOffset').returns(720)
+
+    gregorian.reform().to('zz')
+      .should.equal('UTC-12:00')
+
+    Date.prototype.getTimezoneOffset.restore()
+  })
+
+  it('handles negative single-digit timezone offsets', () => {
+    sinon.stub(Date.prototype, 'getTimezoneOffset').returns(420)
+
+    gregorian.reform().to('zz')
+      .should.equal('UTC-07:00')
+
+    Date.prototype.getTimezoneOffset.restore()
   })
 
   it('handles being mixed in with regular words', () => {

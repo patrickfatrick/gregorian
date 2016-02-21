@@ -9,7 +9,7 @@ function get (increment) {
   let increments = {}
 
   increments.z = (date) => {
-    return date.getTimezoneOffset() / 60
+    return date.getTimezoneOffset() / 60 * -1
   }
   increments.l = (date) => {
     return date.getMilliseconds()

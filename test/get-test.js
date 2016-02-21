@@ -1,4 +1,4 @@
-/* global describe it */
+/* global describe it sinon */
 import chai from 'chai'
 import gregorian from '../src/gregorian'
 
@@ -69,8 +69,19 @@ describe('get', () => {
 
   it('returns the time zone offset for the current locale, in hours', () => {
     gregorian.reform('February 29, 1988 00:00:00').get('z')
-      .should.equal(7)
+      .should.equal(-7)
     gregorian.reform('2016-01-01T00:23:14.184Z').get('z')
-      .should.equal(7)
+      .should.equal(-7)
+  })
+
+  it('returns the time zone offset for the current locale, in hours (positive)', () => {
+    sinon.stub(Date.prototype, 'getTimezoneOffset').returns(-840)
+
+    gregorian.reform('February 29, 1988 00:00:00').get('z')
+      .should.equal(14)
+    gregorian.reform('2016-01-01T00:23:14.184Z').get('z')
+      .should.equal(14)
+
+    Date.prototype.getTimezoneOffset.restore()
   })
 })

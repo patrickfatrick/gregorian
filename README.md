@@ -47,6 +47,12 @@ The library is currently in English only.
 
 ## Changelog
 
+#### v2.0
+
+- Breaking change: `+` is no longer the default delimiter in the `to()` method. It is now `|`.
+- Breaking change: `zz` in the `to()` method now returns something like `UTC+07:00` or `UTC-07:00`. Hence why the default delimiter was changed.
+- Breaking change: `get('z')` will now return the negative of what it formerly did. UTC-07:00 will now return a more sensible `-7`.
+
 #### v1.6.3
 
 - `D` parameter added to `set()` and `setUTC()`.
@@ -98,7 +104,7 @@ The following are plug-n-play formats that are simply wrappers for existing Java
 'iso-short'
 ```
 
-The following are components you can use to construct a format string like `'mm/dd/yyyy'` or `'DD, MM yyyy-mm-dd hh:tt.ll+ap zz'`. 
+The following are components you can use to construct a format string like `'mm/dd/yyyy'` or `'DD, MM yyyy-mm-dd hh:tt.ll|ap zz'`. 
 
 ```javascript
 'yyyy' // four-digit year (2015)
@@ -126,14 +132,14 @@ The following are components you can use to construct a format string like `'mm/
 'l' // milliseconds with no leading zeros (0-999)
 'zz' // timezone offset from UTC (UTC -6:00)
 ```
-**NOTE:** Any format strings directly touching each other should be separated with a `'+'` or else with an optional punctuation delimiter. This delimiter will be removed from the final string.
+**NOTE:** Any format strings directly touching each other should be separated with a `'|'` or else with an optional punctuation delimiter. This delimiter will be removed from the final string.
 
 Some examples:
 
 ```javascript
-gregorian.reform('09/25/2015 00:00 UTC -06:00').to('DD, yyyy-m-d hh:tt.ll+ap zz') // 'Friday, 2015-9-25 12:00.000am UTC -6:00'
+gregorian.reform('09/25/2015 00:00 UTC -06:00').to('DD, yyyy-m-d hh:tt.ll|ap zz') // 'Friday, 2015-9-25 12:00.000am UTC -6:00'
 gregorian.reform('09/25/2015 UTC -06:00').to('D, yy-mm-dd h:t.l#AP zz', '#') // 'Fri, 15-09-25 12:0.0AM UTC -6:00'
-gregorian.reform('09/25/2015 UTC -06:00').to('DD, MM yyyy-m-d hh:tt.ll+ap zz') // 'Friday, September 2015-9-25 12:00.000am UTC -6:00'
+gregorian.reform('09/25/2015 UTC -06:00').to('DD, MM yyyy-m-d hh:tt.ll|ap zz') // 'Friday, September 2015-9-25 12:00.000am UTC -6:00'
 gregorian.reform('09/25/2015 UTC -06:00').to('DD, M yyyy-m-d hh:tt.ll?ap zz', '?') // 'Friday, Sept 2015-9-25 12:00.000am UTC -6:00'
 gregorian.reform('09/25/2015 23:59 UTC').to('DD, M yyyy-m-d H:tt:s.ll zz') // 'Friday, Sept 2015-9-25 17:59:0.000 UTC -6:00'
 gregorian.reform('09/25/2015 01:00 UTC').to('DD, M yyyy-m-d H:tt:ss.ll zz') // 'Thursday, Sept 2015-9-24 19:00:00.000 UTC -6:00'
