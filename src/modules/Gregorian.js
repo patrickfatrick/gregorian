@@ -18,8 +18,8 @@ var set = require('./set')
 var getUTC = require('./get-utc')
 var get = require('./get')
 
-module.exports = class Gregorian {
-  constructor () {
+var Gregorian = {
+  init () {
     this.d
     this.input
     this.to = to
@@ -33,7 +33,7 @@ module.exports = class Gregorian {
     this.set = set
     this.getUTC = getUTC
     this.get = get
-  }
+  },
 
   /**
    * Form a date (or other object) into a Gregorian object
@@ -48,3 +48,6 @@ module.exports = class Gregorian {
     return this
   }
 }
+
+module.exports = Gregorian
+
