@@ -1,5 +1,4 @@
-# Dependency directory
-# https://docs.npmjs.com/misc/faq#should-i-check-my-node-modules-folder-into-git
+# Dependencies
 node_modules
 
 #DS_Store
@@ -8,5 +7,6 @@ node_modules
 #debug
 npm-debug.log
 
-#coverage
+#code coverage output
 coverage
+.nyc_output
