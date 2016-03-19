@@ -2,6 +2,7 @@
 'use strict';
 
 var gregorian = require('./src/gregorian');
+
 module.exports = gregorian;
 
 },{"./src/gregorian":2}],2:[function(require,module,exports){
@@ -9,7 +10,9 @@ module.exports = gregorian;
 
 var Gregorian = require('./modules/Gregorian');
 
-var gregorian = new Gregorian();
+var gregorian = Object.create(Gregorian);
+gregorian.init();
+
 module.exports = gregorian;
 
 },{"./modules/Gregorian":3}],3:[function(require,module,exports){
@@ -20,10 +23,6 @@ module.exports = gregorian;
  * Author: Patrick Fricano
  * https://www.github.com/patrickfatrick/gregorian
  */
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var to = require('./to');
 var add = require('./add-subtract').add;
@@ -37,10 +36,8 @@ var set = require('./set');
 var getUTC = require('./get-utc');
 var get = require('./get');
 
-module.exports = function () {
-  function Gregorian() {
-    _classCallCheck(this, Gregorian);
-
+var Gregorian = {
+  init: function init() {
     this.d;
     this.input;
     this.to = to;
@@ -54,28 +51,24 @@ module.exports = function () {
     this.set = set;
     this.getUTC = getUTC;
     this.get = get;
-  }
+  },
+
 
   /**
    * Form a date (or other object) into a Gregorian object
    * @param  {Date}   obj any date
    * @return {Object}     A Gregorian instance
    */
+  reform: function reform(obj) {
+    obj = obj || new Date();
+    var date = new Date(obj);
+    this.d = date;
+    this.input = obj;
+    return this;
+  }
+};
 
-
-  _createClass(Gregorian, [{
-    key: 'reform',
-    value: function reform(obj) {
-      obj = obj || new Date();
-      var date = new Date(obj);
-      this.d = date;
-      this.input = obj;
-      return this;
-    }
-  }]);
-
-  return Gregorian;
-}();
+module.exports = Gregorian;
 
 },{"./add-subtract":4,"./get":6,"./get-utc":5,"./reagent":7,"./recite":8,"./restart":11,"./restart-utc":10,"./set":13,"./set-utc":12,"./to":14}],4:[function(require,module,exports){
 'use strict';
@@ -853,7 +846,7 @@ function to(format, delimiter) {
 
   pieces.forEach(function (piece) {
     var re = new RegExp('\\b' + piece + '\\b', 'g');
-    var replacer = undefined;
+    var replacer = void 0;
     if (re.test(converted)) {
       switch (piece) {
         case 'unix':
