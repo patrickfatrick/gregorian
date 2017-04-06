@@ -1,6 +1,5 @@
 var gulp = require('gulp')
 var gutil = require('gulp-util')
-var sourcemaps = require('gulp-sourcemaps')
 var browserify = require('browserify')
 var buffer = require('vinyl-buffer')
 var source = require('vinyl-source-stream')
@@ -17,8 +16,6 @@ function bundle () {
   .on('error', gutil.log.bind(gutil, 'Browserify Error'))
   .pipe(source(config.outputName))
   .pipe(buffer())
-  .pipe(sourcemaps.init({loadMaps: true}))
   .pipe(uglify())
-  .pipe(sourcemaps.write('./'))
   .pipe(gulp.dest(config.dest))
 }

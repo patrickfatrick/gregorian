@@ -20,8 +20,8 @@ var get = require('./get')
 
 var Gregorian = {
   init () {
-    this.d
-    this.input
+    this.d = null
+    this.input = null
     this.to = to
     this.add = add
     this.subtract = subtract
@@ -50,4 +50,3 @@ var Gregorian = {
 }
 
 module.exports = Gregorian
-
