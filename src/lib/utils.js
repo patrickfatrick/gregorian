@@ -5,9 +5,9 @@ import isDate from '../modules/is-date'
  * @param   {Date}      date  a date object
  * @return  {Boolean}         true if validated
  */
-export function validateDate (date, fnName) {
+export function validateDate (date) {
   if (isDate(date)) return true
-  throw new TypeError(`Invalid date passed to ${fnName}`)
+  throw new TypeError('Invalid date')
 }
 
 /**

@@ -284,9 +284,9 @@ function isDate(date) {
  * @param   {Date}      date  a date object
  * @return  {Boolean}         true if validated
  */
-function validateDate(date, fnName) {
+function validateDate(date) {
   if (isDate(date)) return true;
-  throw new TypeError('Invalid date passed to ' + fnName);
+  throw new TypeError('Invalid date');
 }
 
 /**
