@@ -25,11 +25,11 @@ test('sets the date/time to the start of the month', (t) => {
 })
 
 test('sets the date/time to the start of the week', (t) => {
-  t.is(resetLocal('w')(t.context.date).toISOString(), '1988-04-10T06:00:00.000Z')
+  t.is(resetLocal('w')(t.context.date).toISOString(), '1988-04-10T07:00:00.000Z')
 })
 
 test('sets the date/time to the start of the day', (t) => {
-  t.is(resetLocal('d')(t.context.date).toISOString(), '1988-04-11T06:00:00.000Z')
+  t.is(resetLocal('d')(t.context.date).toISOString(), '1988-04-11T07:00:00.000Z')
 })
 
 test('sets the date/time to the start of the hour', (t) => {

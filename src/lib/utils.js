@@ -1,11 +1,13 @@
+import isDate from '../modules/is-date'
+
 /**
  * Checks that the date object passed in is a valid Date instance, or throw a TypeError
  * @param   {Date}      date  a date object
  * @return  {Boolean}         true if validated
  */
-export function validateDate (date) {
-  if (date instanceof Date && !Number.isNaN(Date.parse(date))) return true
-  throw new TypeError('Invalid date')
+export function validateDate (date, fnName) {
+  if (isDate(date)) return true
+  throw new TypeError(`Invalid date passed to ${fnName}`)
 }
 
 /**

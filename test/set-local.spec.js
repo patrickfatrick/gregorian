@@ -21,7 +21,7 @@ test('sets the year to the specified year', (t) => {
 })
 
 test('sets the month to the specified month', (t) => {
-  t.is(setLocal('m', 3)(t.context.date).toISOString(), '1988-03-11T01:00:00.000Z')
+  t.is(setLocal('m', 3)(t.context.date).toISOString(), '1988-03-11T00:00:00.000Z')
 })
 
 test('sets the week to the specified week', (t) => {
@@ -29,7 +29,7 @@ test('sets the week to the specified week', (t) => {
 })
 
 test('sets the date to the specified date', (t) => {
-  t.is(setLocal('d', 1)(t.context.date).toISOString(), '1988-04-02T01:00:00.000Z')
+  t.is(setLocal('d', 1)(t.context.date).toISOString(), '1988-04-02T00:00:00.000Z')
 })
 
 test('sets the day to the specified day of the week', (t) => {
@@ -37,7 +37,7 @@ test('sets the day to the specified day of the week', (t) => {
 })
 
 test('sets the hour to the specified hour', (t) => {
-  t.is(setLocal('h', 3)(t.context.date).toISOString(), '1988-04-10T09:00:00.000Z')
+  t.is(setLocal('h', 3)(t.context.date).toISOString(), '1988-04-10T10:00:00.000Z')
 })
 
 test('sets the minute to the specified minute', (t) => {
@@ -75,9 +75,9 @@ test('can handle leap years', (t) => {
 })
 
 test('can handle arguments of varying lengths', (t) => {
-  t.is(setLocal('m', 2)(t.context.date).toISOString(), '1988-02-11T01:00:00.000Z')
+  t.is(setLocal('m', 2)(t.context.date).toISOString(), '1988-02-11T00:00:00.000Z')
 })
 
 test('is is timezone-agnostic', (t) => {
-  t.is(setLocal('h', 3)(t.context.date).toISOString(), '1988-04-10T09:00:00.000Z')
+  t.is(setLocal('h', 3)(t.context.date).toISOString(), '1988-04-10T10:00:00.000Z')
 })

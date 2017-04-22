@@ -41,7 +41,7 @@ test('returns the day of the week for the specified date', (t) => {
 })
 
 test('returns the hour for the specified date', (t) => {
-  t.is(getLocal('h')(t.context.date), 18)
+  t.is(getLocal('h')(t.context.date), 17)
 })
 
 test('returns the minute for the specified date', (t) => {
@@ -57,7 +57,7 @@ test('returns the millisecond for the specified date', (t) => {
 })
 
 test('returns the time zone offset for the current locale, in hours', (t) => {
-  t.is(getLocal('z')(t.context.date), -6)
+  t.is(getLocal('z')(t.context.date), -7)
 })
 
 test('returns the time zone offset for the current locale, in hours (positive)', (t) => {

@@ -18,7 +18,7 @@ import { validateDate, curry } from '../lib/utils'
  * @param     {Date}    date        a date object
  * @returns   {Object}              a new gregorian object
  */
-export default function setLocalOrSetUTC (increment, value, date, utc = '') {
+function setLocalOrSetUTC (increment, value, date, utc = '') {
   const incrementHandlers = {
     [MILLISECOND] (date) {
       return new Date(date[`set${utc}Milliseconds`](value))

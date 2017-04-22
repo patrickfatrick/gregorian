@@ -5,7 +5,7 @@ machine:
     YARN_VERSION: 0.22.0
     PATH: "${PATH}:${HOME}/.yarn/bin:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
   timezone:
-    America/Phoenix
+    MST
 dependencies:
   pre:
     - |

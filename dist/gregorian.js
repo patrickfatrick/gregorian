@@ -275,14 +275,18 @@ var reformHandlers = (_PERIOD_UPPERCASE$PER = {}, defineProperty(_PERIOD_UPPERCA
   return Date.parse(date);
 }), _PERIOD_UPPERCASE$PER);
 
+function isDate(date) {
+  return date instanceof Date && !Number.isNaN(Date.parse(date));
+}
+
 /**
  * Checks that the date object passed in is a valid Date instance, or throw a TypeError
  * @param   {Date}      date  a date object
  * @return  {Boolean}         true if validated
  */
-function validateDate(date) {
-  if (date instanceof Date && !Number.isNaN(Date.parse(date))) return true;
-  throw new TypeError('Invalid date');
+function validateDate(date, fnName) {
+  if (isDate(date)) return true;
+  throw new TypeError('Invalid date passed to ' + fnName);
 }
 
 /**
@@ -637,4 +641,4 @@ var getLocalGroup = curry(function (increments, date) {
  * https://www.github.com/patrickfatrick/gregorian
  */
 
-export { reform, addTime, addTimeSequence, subtractTime, subtractTimeSequence, resetLocal, resetUTC, setLocal, setLocalGroup, setUTC, setUTCGroup, getLocal, getLocalGroup, getUTC, getUTCGroup };
+export { reform, isDate, addTime, addTimeSequence, subtractTime, subtractTimeSequence, resetLocal, resetUTC, setLocal, setLocalGroup, setUTC, setUTCGroup, getLocal, getLocalGroup, getUTC, getUTCGroup };

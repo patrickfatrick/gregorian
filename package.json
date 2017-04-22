@@ -1,6 +1,6 @@
 {
   "name": "gregorian",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "A Javascript micro library for converting and displaying dates",
   "main": "dist/gregorian.umd.js",
   "module": "dist/gregorian.js",
@@ -9,7 +9,7 @@
     "node": ">= 4.0.0"
   },
   "scripts": {
-    "test": "TZ=MST BABEL_ENV=development standard './src/**/*.js' './test/**/*.js' | snazzy && nyc --reporter=lcov --reporter=text ava --verbose",
+    "test": "standard './src/**/*.js' './test/**/*.js' | snazzy && BABEL_ENV=development TZ=MST nyc --reporter=lcov --reporter=text ava --verbose",
     "report": "nyc report",
     "build": "standard './src/**/*.js' | snazzy && yarn run base && yarn run min && yarn run umd",
     "base": "BABEL_ENV=production rollup -c 'rollup.config.base.js'",
