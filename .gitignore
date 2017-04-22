@@ -1,12 +1,7 @@
-# Dependencies
 node_modules
-
-#DS_Store
 .DS_Store
-
-#debug
 npm-debug.log
-
-#code coverage output
+yarn-error.log
 coverage
 .nyc_output
+.vscode

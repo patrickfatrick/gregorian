@@ -1,3 +1,9 @@
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+	typeof define === 'function' && define.amd ? define(['exports'], factory) :
+	(factory((global.gregorian = global.gregorian || {})));
+}(this, (function (exports) { 'use strict';
+
 /**
  * We declare the string replacements (for reformat) here in one place so
  * we don't have to keep track of them elsewhere
@@ -637,4 +643,22 @@ var getLocalGroup = curry(function (increments, date) {
  * https://www.github.com/patrickfatrick/gregorian
  */
 
-export { reform, addTime, addTimeSequence, subtractTime, subtractTimeSequence, resetLocal, resetUTC, setLocal, setLocalGroup, setUTC, setUTCGroup, getLocal, getLocalGroup, getUTC, getUTCGroup };
+exports.reform = reform;
+exports.addTime = addTime;
+exports.addTimeSequence = addTimeSequence;
+exports.subtractTime = subtractTime;
+exports.subtractTimeSequence = subtractTimeSequence;
+exports.resetLocal = resetLocal;
+exports.resetUTC = resetUTC;
+exports.setLocal = setLocal;
+exports.setLocalGroup = setLocalGroup;
+exports.setUTC = setUTC;
+exports.setUTCGroup = setUTCGroup;
+exports.getLocal = getLocal;
+exports.getLocalGroup = getLocalGroup;
+exports.getUTC = getUTC;
+exports.getUTCGroup = getUTCGroup;
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+})));

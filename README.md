@@ -12,15 +12,11 @@ _A Javascript micro library for converting and displaying dates._
 
 ![Gregorian Page](./images/gregorian-page.jpg)
 
->reform |riˈfôrm|  
->verb [ with obj. ]  
->_1 make changes in (something, typically a social, political, or economic institution or practice) in order to improve it: an opportunity to reform and restructure an antiquated schooling model._
-
-Gregorian is named after the calendar introduced in 1582 by under Pope Gregory XIII's papacy, the calendar we currently use today. It was a **reform** of the Julian calendar to make the year 0.002% shorter and also slightly changed the leap year schedule to omit 3 leap days every 400 years.
+Gregorian is named after the calendar introduced in 1582 by under Pope Gregory XIII's papacy, the calendar we currently use today. It was a reform of the Julian calendar to make the year 0.002% shorter and also slightly changed the leap year schedule to omit 3 leap days every 400 years.
 
 ## What does it do?
 
-Gregorian is a wrapper for the native Javascript `Date` object that allows you to customize how to display and write dates pretty minutely. It also allows you to do some basic date manipulation (See section 'Manipulation' below). It has no dependencies and can be run either in the browser as a global or as a module. Each release is linted with ESLint and tested with Mocha Chai to minimize errors.
+Gregorian is a set of functions that allows you to customize how to display and write dates pretty minutely. It also allows you to do some basic date manipulation (See section 'Manipulation' below). It has no dependencies and can be run either in the browser as a global or as a module.
 
 You can take the same date object and express it like:
 
@@ -34,147 +30,182 @@ You can take the same date object and express it like:
 '1988-04-11T00:00:00.000Z' // ISO string
 'Mon, 11 Apr 1988 00:00:00 GMT' // UTC string
 576720000000 // UNIX time
-and more!
+// and more!
 ```
 
 ## What doesn't it do?
 
-This does not accept native language input. For instance `gregorian.reform('next Tuesday')` will evaluate to false when using the built in `reagent()` method to check if it's a date.
+It does not extend the native `Date` object, nor does it accept anything other than a `Date` object as input (stings are not automatically converted to a `Date`). It does not come with timezone and locale support, and is in English only. 
 
-It accepts anything Javascript natively accepts when creating a date object. `gregorian.reform('April 11, 1988 00:00 UTC')` is valid as is `gregorian.reform('04/11/1988')` is as valid as `gregorian.reform(new Date('04/11/1988'))` is as valid as `gregorian.reform(576741600000)`.
+It also does not export a monolithic library, so you can use any functions without having to bring the unused code into your bundle.
 
-The library is currently in English only.
-
-## Changelog
-
-#### v2.0
-
-- Breaking change: `+` is no longer the default delimiter in the `to()` method. It is now `|`.
-- Breaking change: `zz` in the `to()` method now returns something like `UTC+07:00` or `UTC-07:00`. Hence why the default delimiter was changed.
-- Breaking change: `get('z')` will now return the negative of what it formerly did. UTC-07:00 will now return a more sensible `-7`.
-
-#### v1.6.3
-
-- `D` parameter added to `set()` and `setUTC()`.
-
-#### v1.6
-
-- New `get()` and `getUTC()` methods.
-
-#### v1.5
-
-- New UTC-based manipulation functions where it makes sense (`setUTC()`, `restartUTC()`).
-- Converted the module setup to CommonJS to work with Node out of the box. Sorry ES6 modules :(
-- Testing has been improved with many more descriptions that indicate what's being tested.
+It also does not manipulate the input `Date`; these functions always return a new object.
 
 ## Install
 
 ```bash
-npm install gregorian --save
-jspm install npm:gregorian
-bower install gregorian
-git clone git@github.com:patrickfatrick/gregorian.git
+$ npm install gregorian --save
+$ yarn add gregorian
+$ jspm install npm:gregorian
+$ bower install gregorian
+$ git clone git@github.com:patrickfatrick/gregorian.git
 ```
 
 You can install it into your site using `<script src="./gregorian/dist/gregorian.min.js"></script>` as usual, or you can include it as a module using `require('./node_modules/gregorian')` or `import gregorian from 'gregorian'`, etc., with your favorite module loader.
 
-To run the tests, `npm test`.
+To run the tests, `$ yarn test`.
 
-## Usage
+## Basic Usage
 
-To create a gregorian object, call `gregorian.reform()` with either a date object or a date-string. For instance 
+Each function in Gregorian can be imported and used individually to save you a few kilobytes in your javascript bundle.
 
 ```javascript
-gregorian.reform('2015-10-31')
-gregorian.reform(new Date()) // Current date and time
-gregorian.reform() // Current date and time
+import { reform } from 'gregorian'
 ```
 
-But that's kind of boring. To do stuff with it, chain a `.to()` method to it, passing a string for the format you'd like to use. For instance `gregorian.reform('2015-10-31').to('unix')` or `gregorian.reform('2015-10-31').to('iso')`. This will return the converted string or else the number of milliseconds passed since January 1, 1970 in the case of `'unix'`.
+Each function has a similar signature. For instance, `reform(/* Arguments */)(/* Date Object */)`. This makes all of the functions composable, allowing you to basically create a custom function that can be run with different dates very easily.
+
+```javascript
+const reformFnUS = reform('M/D/Y')
+const reformFnEurope = reformFn('D/M/Y')
+const string1 = reformFnUS(new Date('1988-04-11T12:45:00.000Z')) // 04/11/1988
+const string2 = reformFnEurope(new Date('1988-04-11T12:45:00.000Z')) // 11/04/1988 
+```
+
+But you can also run each function with all arguments
+
+```javascript
+addTime('y', 1, new Date('1988-04-11T12:45:00.000Z')) // 1989-04-11T12:45:00.000Z
+```
+
+Or any combination in between
+
+```javascript
+const addYearFn = addTime('y')
+addYearFn(1, new Date('1988-04-11T12:45:00.000Z')) // 1989-04-11T12:45:00.000Z
+const addOneYearFn = addYearFn(1)
+addOneYearFn(new Date('1988-04-11T12:45:00.000Z')) // 1989-04-11T12:45:00.000Z
+```
+
+By default if no date is passed, these functions will use the current time via `new Date()`. You should always run the function or pass in null though, like this:
+
+```javascript
+addTime('y')(1)() // Correct
+addTime('y', 1, null) // Correct
+addTime('y', 1) // Wrong, this will return a function
+addTime('y')(1) // Wrong, this will return a function
+```
+
+## Outputting a formatted date for display
+
+To create a pretty date string, use the `reform` function with a format strange as the only argument. This returns a function that can then be called on a Date object.
+
+```javascript
+reform('M/D/Y')(new Date('1988-04-11T12:45:00.000Z')) // 04/11/1988
+```
 
 ### Accepted formats
 
-The following are plug-n-play formats that are simply wrappers for existing Javascript Date methods and should not be used with any other formats. The `-short` methods extend the existing methods by removing the time from the output.
+The following are plug-n-play formats that are simply wrappers for existing Javascript `Date` methods and should not be used with any other formats. The `-short` methods extend the existing methods by removing the time from the output.
 
 ```javascript
-'unix'
-'utc'
-'utc-short'
-'iso'
-'iso-short'
+// Given the date 1988-04-11T12:45:00.000Z, assuming a locale in Eastern Standard Time:
+
+'unix' // 576747900000
+'utc-short' // Mon, 11 Apr 1988
+'utc' // Mon, 11 Apr 1988 12:45:00 GMT
+'iso-short' // 1988-04-11
+'iso' // 1988-04-11T12:45:00.000Z
 ```
 
-The following are components you can use to construct a format string like `'mm/dd/yyyy'` or `'DD, MM yyyy-mm-dd hh:tt.ll|ap zz'`. 
+The following are components you can use to construct a format string like `'M/D/Y'` or `'E, N o, Y G:T:S.L|P'`. 
 
 ```javascript
-'yyyy' // four-digit year (2015)
-'yy' // two-digit year (15)
-'DD' // full day of the week (Sunday-Saturday)
-'D' // abbreviated day of the week (Sun-Sat)
-'dd' // two-digit date of the month (01-31)
-'d' // date of the month with no leading zeros (1-31)
-'dt' // date of the month with no leading zeros but with the ordinal (1st-31st)
-'MM' // full month (January-December)
-'M' // abbreviated month (Jan-Dec)
-'mm' // two-digit month (01-12)
-'m' // month with no leading zeros (1-12)
-'hh' // two-digit hours (00-12)
-'h' // hour with no leading zeros (0-12)
-'HH' // two-digit 24-hour clock hours (00-23)
-'H' // 24-hour clock hour with no leading zeros (0-23)
-'tt' // two-digit minutes (00-59)
-'t' // minutes with no leading zeros (0-59)
-'AP' // uppercase 12-hour clock period (AM or PM)
-'ap', // lowercase 12-hour clock period (am or pm)
-'ss' // two-digit seconds (00-59)
-'s' // seconds with no leading zeros (0-59)
-'ll' // milliseconds (000-999)
-'l' // milliseconds with no leading zeros (0-999)
-'zz' // timezone offset from UTC (UTC -6:00)
+// Given the date 1988-04-11T12:45:00.000Z, assuming a locale in Eastern Standard Time:
+
+'Y' // full year: 1988
+'y' // abbreviated year: 88
+'E' // full day of the week: Monday
+'e' // abbreviated date of the week: Mon
+'o' // date of the month with ordinal: 11th
+'D' // date of the month: 11 (adds leading zeros)
+'d' // date f the month: 11
+'N' // month name: April
+'n' // abbreviated month name: Apr
+'M' // month: 04 (adds leading zeros)
+'m' // month: 4
+'G' // hour: 07 (12-hour clock; adds leading zeros)
+'g' // hour: 7 (12-hour clock)
+'H' // hour: 07 (24-hour clock; adds leading zeros)
+'h' // hour: 7 (24-hour clock)
+'T' // minute: 45 (adds leading zeros)
+'t' // minute: 45
+'P' // period: AM
+'p' // period: am
+'S' // second: 00 (adds leading zeros)
+'s' // second: 0
+'L' // millisecond: 000 (adds leading zeros)
+'l' // millisecond: 0
+'z' // timezone offset: UTC-05:00
+'w' // week of the year: 14
 ```
-**NOTE:** Any format strings directly touching each other should be separated with a `'|'` or else with an optional punctuation delimiter. This delimiter will be removed from the final string.
+**NOTE:** Any format strings directly touching each other should be separated with a `|` character. This delimiter will be removed from the final string. This allows us to do some extra fancy things like mix in real words with the format strings without conflicts.
 
 Some examples:
 
 ```javascript
-gregorian.reform('09/25/2015 00:00 UTC -06:00').to('DD, yyyy-m-d hh:tt.ll|ap zz') // 'Friday, 2015-9-25 12:00.000am UTC -6:00'
-gregorian.reform('09/25/2015 UTC -06:00').to('D, yy-mm-dd h:t.l#AP zz', '#') // 'Fri, 15-09-25 12:0.0AM UTC -6:00'
-gregorian.reform('09/25/2015 UTC -06:00').to('DD, MM yyyy-m-d hh:tt.ll|ap zz') // 'Friday, September 2015-9-25 12:00.000am UTC -6:00'
-gregorian.reform('09/25/2015 UTC -06:00').to('DD, M yyyy-m-d hh:tt.ll?ap zz', '?') // 'Friday, Sept 2015-9-25 12:00.000am UTC -6:00'
-gregorian.reform('09/25/2015 23:59 UTC').to('DD, M yyyy-m-d H:tt:s.ll zz') // 'Friday, Sept 2015-9-25 17:59:0.000 UTC -6:00'
-gregorian.reform('09/25/2015 01:00 UTC').to('DD, M yyyy-m-d H:tt:ss.ll zz') // 'Thursday, Sept 2015-9-24 19:00:00.000 UTC -6:00'
+reform('E, the o of N, Y')(new Date('04/01/1988')) // 'Friday, the 1st of April, 1988'
+reform('E, Y-m-d H:T.L|p z')(new Date('09/25/2015 00:00 UTC -06:00')) // 'Friday, 2015-9-25 12:00.000am UTC -6:00'
+reform('e, y-M-D h:t.l|P z')(new Date('09/25/2015 UTC -06:00')) // 'Fri, 15-09-25 12:0.0AM UTC -6:00'
+reform('E, N Y-m-d H:T.L|p z')(new Date('09/25/2015 UTC -06:00')) // 'Friday, September 2015-9-25 12:00.000am UTC -6:00'
+reform('E, n Y-m-d H:T:s.L z')(new Date('09/25/2015 23:59 UTC')) // 'Friday, Sept 2015-9-25 17:59:0.000 UTC -6:00'
+reform('E, n Y-m-d H:T:ss.L z')(new Date('09/25/2015 01:00 UTC')) // 'Thursday, Sept 2015-9-24 19:00:00.000 UTC -6:00'
 ```
 
-**NOTE:** Due to how RegEx handles underscores we will need to get a little crazier with the delimiting if you want to output underscores in your formatted date string.
-
-```javascript
-gregorian.reform('09/25/2015 UTC -06:00').to('D#_#yy#_#mm#_#dd#_#h:t.l#AP#_#zz', '#') // 'Fri_15_09_25_12:0.0AM_UTC -6:00'
-```
+**NOTE:** Since `reform` is primarily intended for display, it currently only supports local time, not UTC.
 
 ## Manipulation
 
 #### Adding and subtracting
 
-You can manipulate the gregorian object like 
+You can manipulate dates like 
 
 ```javascript
-gregorian.reform('2015-10-31').add(5, 'd') // 2015-11-05
-gregorian.reform('2015-10-31').subtract(7, 'm') // 2015-03-31
+addTime('d')(5)(new Date('2015-10-31')) // 2015-11-05
+subtractTime('m')(7)(new Date('2015-10-31')) // 2015-03-31
 ```
 
-This will return a new gregorian object that can then be formatted into a string as usual `gregorian.reform('2015-10-31').subtract(1, 'm').to('iso')`
+There's also methods for combining multiple add and subtract operations:
+
+```javascript
+addTimeSequence([
+  [ 'y', 1 ],
+  [ 'm', 3 ],
+  [ 'd', -1 ]
+])(new Date('2015-10-31')) // 2017-02-01
+
+subtractTimeSequence([
+  [ 'y', 1 ],
+  [ 'm', 3 ],
+  [ 'y', 1 ]
+])(new Date('2015-10-31')) // 2013-07-31
+```
+
+This accepts an array or arrays
+
+All of these methods return a new `Date` object.
 
 Accepted increments you can use for additions and subtractions are
 
 ```javascript
-'l' // 1 millisecond
-'s' // 1 second
-'t' // 1 minute
-'h' // 1 hour
-'d' // 1 day
-'w' // 1 week
-'m' // 1 month (position will be on the same date and time of the month)
-'y' // 1 year (position will be on the date and time of the year)
+'l' // millisecond
+'s' // second
+'t' // minute
+'h' // hour
+'d' // day
+'w' // week
+'m' // month (position will be on the same date and time of the month)
+'y' // year (position will be on the same date and time of the year)
 ```
 
 #### Setting
@@ -182,18 +213,28 @@ Accepted increments you can use for additions and subtractions are
 Setting specific values for different time increments is much like adding and subtracting
 
 ```javascript
-gregorian.reform('2015-10-31').set(5, 'd') // 2015-10-05
-gregorian.reform('2015-10-31').set(7, 'm') // 2015-07-31
+// Let's say your user is in New York...
+setLocal('d')(5)(new Date('2015-10-31')) // 2015-10-05 05:00:00.000 UTC
+setLocal('m')(7)(new Date('2015-10-31')) // 2015-07-31 05:00:00.000 UTC
 ```
 
-There is also a method for setting with UTC.
+There is also a method for setting with UTC time.
 
 ```javascript
-gregorian.reform('2015-10-31T00:00:000Z').setUTC(5, 'd') // 2015-10-05 00:00:000 UTC
-gregorian.reform('2015-10-31T00:00:000Z').setUTC(7, 'm') // 2015-07-31 00:00:000 UTC
+setUTC('d')(5)(new Date('2015-10-31')) // 2015-10-05 00:00:000 UTC
+setUTC('m')(7)(new Date('2015-10-31')) // 2015-07-31 00:00:000 UTC
 ```
 
-This will return a new gregorian object that can then be formatted into a string as usual `gregorian.reform('2015-10-31').subtract(1, 'm').to('iso')`
+But wait, there's more! You can also run multiple set operations with one function call like so
+
+```javascript
+setUTCGroup({ y: 1985, m: 5, d: 22 })(new Date('2015-10-31')) // 1985-05-22
+setLocalGroup({ y: 1985, m: 5, d: 22 }, new Date('2015-10-31')) // 1985-05-21
+```
+
+This accepts an object where the keys correspond to the increments below.
+
+This will return a new `Date` object.
 
 Accepted increments you can use for setting are
 
@@ -203,9 +244,9 @@ Accepted increments you can use for setting are
 't' // minute
 'h' // hour
 'd' // day of the month (1-indexed)
-'D' // day of the week (0-indexed)
-'w' // week of the year (0-indexed)
-'m' // month (0-indexed; position will be on the same date and time of the month)
+'e' // day of the week (1-indexed)
+'w' // week of the year (1-indexed)
+'m' // month (1-indexed; position will be on the same date and time of the month)
 'y' // year (position will be on the date and time of the year)
 ```
 
@@ -214,16 +255,26 @@ Accepted increments you can use for setting are
 This will retrieve specific numeric time increments for the Gregorian object.
 
 ```javascript
-gregorian.reform('2015-10-31').get('d') // 31
-gregorian.reform('2015-10-31').get('m') // 9
+// Let's say your user is in mainland Europe...
+getLocal('h')(new Date('2015-10-31T00:00:00.000Z')) // 1
+getLocal('m')(new Date('2015-10-31T00:00:00.000Z')) // 10
 ```
 
 There is also a method for getting the UTC value.
 
 ```javascript
-gregorian.reform('2015-10-31T00:00:000Z').getUTC('d') // 31
-gregorian.reform('2015-10-31T00:00:000Z').getUTC('m') // 9
+getUTC('h')(new Date('2015-10-31T00:00:00.000Z')) // 0
+getUTC('m')(new Date('2015-10-31T00:00:00.000Z')) // 9
 ```
+
+And you can also get multiple increments at the same time, like so:
+
+```javascript
+getUTCGroup([ 'h', 'y', 'm' ])(new Date('2015-10-31T00:00:00.000Z')) // [ 0, 2015, 10 ]
+getLocalGroup([ 'm', 'd' ])(new Date('2015-10-31T00:00:00.000Z')) // [ 10, 30 ]
+```
+
+This accepts an array of increments, and returns the corresponding values as an array.
 
 Accepted increments you can use for getting are
 
@@ -234,59 +285,42 @@ Accepted increments you can use for getting are
 't' // the minute
 'h' // the hour
 'd' // the day of the month (1-indexed)
-'D' // the day of the week (0-indexed)
+'e' // the day of the week (0-indexed)
 'w' // the week of the year (0-indexed)
 'm' // the month (0-indexed)
 'y' // the year
 ```
 
-#### Restart
+#### Reset
 
 You can set the date or time to the start of the increment specified in local time. For instance,
 
 ```javascript
-gregorian.reform('April 11, 1988 8:23:15.123').restart('s') // '1988-04-11 08:23:15'
-gregorian.reform('April 11, 1988 8:23:15.123').restart('t') // '1988-04-11 08:23:00'
-gregorian.reform('April 11, 1988 8:23:15.123').restart('h') // '1988-04-11 08:00:00'
-gregorian.reform('April 11, 1988 8:23:15.123').restart('d') // '1988-04-11 00:00:00'
-gregorian.reform('April 11, 1988 8:23:15.123').restart('w') // '1988-04-10 00:00:00'
-gregorian.reform('April 11, 1988 8:23:15.123').restart('m') // '1988-04-01 00:00:00'
-gregorian.reform('April 11, 1988 8:23:15.123').restart('y') // '1988-01-01 00:00:00'
+// Let's say your user is in New York...
+resetLocal('s')(new Date('April 11, 1988 8:23:15.123')) // '1988-04-11 13:23:15 UTC'
+resetLocal('t')(new Date('April 11, 1988 8:23:15.123')) // '1988-04-11 13:23:00 UTC'
+resetLocal('h')(new Date('April 11, 1988 8:23:15.123')) // '1988-04-11 13:00:00 UTC'
+resetLocal('d')(new Date('April 11, 1988 8:23:15.123')) // '1988-04-11 05:00:00 UTC'
+resetLocal('w')(new Date('April 11, 1988 8:23:15.123')) // '1988-04-10 05:00:00 UTC'
+resetLocal('m')(new Date('April 11, 1988 8:23:15.123')) // '1988-04-01 05:00:00 UTC'
+resetLocal('y')(new Date('April 11, 1988 8:23:15.123')) // '1988-01-01 05:00:00 UTC'
 ```
 
-There is also a method for restart in UTC.
+There is also a method for reset in UTC.
 
 ```javascript
-gregorian.reform('2015-10-31T03:42:877Z').restartUTC('d') // 2015-10-31 00:00:000 UTC
-gregorian.reform('2015-10-31T03:42:877Z').restartUTC('m') // 2015-10-01 00:00:000 UTC
+resetUTC('d')(new Date('2015-10-31T03:42:877Z')) // 2015-10-31 00:00:000 UTC
+resetUTC('m')(new Date('2015-10-31T03:42:877Z')) // 2015-10-01 00:00:000 UTC
 // etc.
 ```
 
-#### Reagent
+## Why not use MomentJS or date-fns?
 
-As of v1.3 gregorian no longer throws a TypeError when constructing an object with an invalid date. Instead, gregorian now has a method `reagent()` which outputs `true` or `false` depending on the validity of the date it contains. Use this to check the dates that are passed through.
+[Moment](http://momentjs.com/) is awesome but is also much bigger in scope. It also forces you to use a special `moment` object which is mutable. Gregorian works with native dates and outputs new dates each time. Because Gregorian uses individual functions you get to import only what you need and nothing more.
 
-```javascript
-reform().reagent() // true
-reform('next Tuesday').reagent() // false
-```
+[date-fns](https://date-fns.org) is also awesome and much more in line with Gregorian's intentions at this point. That said it's also larger in scope, but like Gregorian you can import individual functions to reduce overhead. The main benefit to Gregorian is that if you're using the library the traditional way by adding it to the global scope via `<script>`, the entire library for Gregorian is much, much smaller, totaling out to less than 10KB compared with date-fns at over 60KB for a lot of functions you won't be using. date-fns also continues the unfortunate tradition of mixing zero-indexed with one-indexed methods in ways that don't make much practical sense, and which Gregorian does not, but that may be a benefit or a hindrance depending on your use case. Lastly, the functions in date-fns are not designed with composability in mind. So if you'd like to store custom functions to run on different dates, you would be out of luck with date-fns.
 
-#### Recite
-
-New to v1.3, `recite()` will simply return the date object that the gregorian object has at that point.
-
-```javascript
-reform('04/11/1988 00:00 UTC').add(1, 'd').recite() // 1988-04-12T00:00:00.000Z
-reform('October 15, 2015 00:00 UTC').add(1, 'y').subtract(5, 'd').subtract(5, 't').restart('h').recite() // 2016-10-09T23:00:00.000Z
-```
-
-## With Date.JS
-
-You can combine Gregorian with [Date.JS](http://matthewmueller.github.io/date/) to allow for human-readable date input. `gregorian.reform(date('next Tuesday'))` is valid. But do keep in mind that Date.JS is pretty forgiving. `gregorian.reform(date('not a date'))` is also valid and will return a gregorian object for the current date and time. Meanwhile `gregorian.reform(date('next Tuesday'))` will also return the current date and time if the function is run on Tuesday.
-
-## Why not use MomentJS?
-
-[Moment](http://momentjs.com/) is awesome and I personally use it in a lot of projects. This is not intended to replace Moment by any means, it's simply intended to provide a more focused set of features at a fraction of the weight. Gregorian's minified .js filesize is a fraction of Moment's.
+Both of the above libraries were clearly intended to be widely used and so represent many use cases. Gregorian is something I came up with for my personal projects, with a more focused set of features. You absolutely should use Moment or date-fns if it makes sense.
 
 ## License
 
@@ -295,10 +329,6 @@ Gregorian is freely distributable under the terms of the [MIT license](./LICENSE
 [license-image]: http://img.shields.io/badge/license-MIT-blue.svg?style=flat
 [license-url]: LICENSE
 
-## What's the plan?
-
-- Add ability to make a translation with a config, as well as direct translations for some common languages.
-
-_Each Gregorian release is linted with standard and tested with a combination of Karma, Mocha, Chai, and Isparta._
+_Each Gregorian release is linted and tested._
 
 ![Gregorian Calendar](./images/gregorian-calendar.jpg)

@@ -1,11 +1,25 @@
 {
-	"presets": [ "env" ],
+  "presets": [
+    [
+      "env",
+      {
+        "targets": { "browsers": [ "last 2 versions", "> 5%" ] },
+        "modules": false
+      }
+    ]
+  ],
+  "plugins": [ "external-helpers" ],
   "env": {
-    "test": {
+    "development": {
+      "sourceMaps": "inline",
+      "plugins": [ "transform-runtime" ],
       "presets": [
-        [ "env", {
-          "targets": { "browsers": [ "last 2 versions", "> 5%" ] }
-        }]
+        [
+          "env",
+          {
+            "modules": "commonjs"
+          }
+        ]
       ]
     }
   }
