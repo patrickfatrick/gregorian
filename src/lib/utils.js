@@ -4,7 +4,7 @@
  * @return  {Boolean}         true if validated
  */
 export function validateDate (date) {
-  if (date instanceof Date) return true
+  if (date instanceof Date && !Number.isNaN(Date.parse(date))) return true
   throw new TypeError('Invalid date')
 }
 

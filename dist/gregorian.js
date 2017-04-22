@@ -281,7 +281,7 @@ var reformHandlers = (_PERIOD_UPPERCASE$PER = {}, defineProperty(_PERIOD_UPPERCA
  * @return  {Boolean}         true if validated
  */
 function validateDate(date) {
-  if (date instanceof Date) return true;
+  if (date instanceof Date && !Number.isNaN(Date.parse(date))) return true;
   throw new TypeError('Invalid date');
 }
 
