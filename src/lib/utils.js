@@ -7,7 +7,7 @@ import isDate from '../modules/is-date'
  */
 export function validateDate (date) {
   if (isDate(date)) return true
-  throw new TypeError('Invalid date')
+  throw new TypeError(`Invalid date: ${date}`)
 }
 
 /**

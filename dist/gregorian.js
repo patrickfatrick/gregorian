@@ -286,7 +286,7 @@ function isDate(date) {
  */
 function validateDate(date) {
   if (isDate(date)) return true;
-  throw new TypeError('Invalid date');
+  throw new TypeError('Invalid date: ' + date);
 }
 
 /**
