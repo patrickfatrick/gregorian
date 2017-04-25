@@ -27,3 +27,13 @@ test('sequence', (t) => {
     [ 'h', -6 ]
   ])(t.context.date).toISOString(), '1987-05-06T06:00:00.000Z')
 })
+
+test('can be quasi-chained', (t) => {
+  const subtractTimeSequenceFn = subtractTimeSequence([
+    [ 'm', 11 ]
+  ])(subtractTimeSequence([
+    [ 'd', 5 ],
+    [ 'h', -6 ]
+  ]))
+  t.is(subtractTimeSequenceFn(t.context.date).toISOString(), '1987-05-06T06:00:00.000Z')
+})

@@ -27,3 +27,13 @@ test('runs a set of add operations', (t) => {
     [ 'h', -6 ]
   ])(t.context.date).toISOString(), '1989-03-15T18:00:00.000Z')
 })
+
+test('can be quasi-nested', (t) => {
+  const addTimeSequenceFn = addTimeSequence([
+    [ 'm', 11 ]
+  ])(addTimeSequence([
+    [ 'd', 5 ],
+    [ 'h', -6 ]
+  ]))
+  t.is(addTimeSequenceFn(t.context.date).toISOString(), '1989-03-15T18:00:00.000Z')
+})

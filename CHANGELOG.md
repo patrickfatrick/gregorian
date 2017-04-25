@@ -1,5 +1,9 @@
 ## Changelog
 
+#### v3.1
+
+The functions are even more composable, since you can combine functions together without supplying a date, allowing you to create highly customized functions that can be applied to many dates easily. See the "Usage" section of the readme for details.
+
 #### v3.0
 
 This is a huge rewrite of Gregorian. It honestly might be best to look at the readme to see what all changed. The gist of it is that now Gregorian outputs individual curried functions instead of an object wrapper. This means the function names have changed to be less generic and prevent collisions with any functions you might be using, and it also means several APIs have been removed entirely: `reagent` (no longer needed because the validite of the date is checked in the function), `recite` (no longer needed because the functions return a new `Date` where it makes sense. `reform` still exists but it provides the same functionality `to` did previously.

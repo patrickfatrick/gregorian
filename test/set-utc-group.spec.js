@@ -23,3 +23,8 @@ test('uses the current time by default', (t) => {
 test('applies multiple set operations', (t) => {
   t.is(setUTCGroup({ y: 1985, m: 5, d: 22 })(t.context.date).toISOString(), '1985-05-22T00:00:00.000Z')
 })
+
+test('can be quasi-chained', (t) => {
+  const setUTCGroupFn = setUTCGroup({ y: 1985 })(setUTCGroup({ m: 5, d: 22 }))
+  t.is(setUTCGroupFn(t.context.date).toISOString(), '1985-05-22T00:00:00.000Z')
+})

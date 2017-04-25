@@ -56,6 +56,11 @@ test('can be nested', (t) => {
   t.is(setLocal('d', 5)(setLocal('m', 10)(t.context.date)).toISOString(), '1988-10-06T00:00:00.000Z')
 })
 
+test('can be quasi-chained', (t) => {
+  const setLocalFn = setLocal('d', 5)(setLocal('m', 10))
+  t.is(setLocalFn(t.context.date).toISOString(), '1988-10-06T00:00:00.000Z')
+})
+
 test('can be composed', (t) => {
   const setLocalYearFn = setLocal('y')
   const setLocal1989Fn = setLocalYearFn(1989)

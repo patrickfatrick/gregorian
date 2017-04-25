@@ -319,6 +319,17 @@ function curry(fn) {
 }
 
 /**
+ * Returns the result of calling the second function with the result of the first function
+ * @param {Function}  fn1  a function
+ * @param {Function}  fn2  a function
+ */
+function wrap(fn1, fn2) {
+  return function (arg) {
+    return fn2(fn1(arg));
+  };
+}
+
+/**
  * Take a Date object and output the reformatted string
  * See ../lib/constants.js for details
  * @param     {String}  format    a string or date object (something that can be converted to a valid date)
@@ -406,32 +417,40 @@ function addTimeOrSubtractTime(increment, n, date) {
   return incrementHandlers[increment](date);
 }
 
-var addTime = curry(function (increment, n, date) {
-  date = date || new Date();
-  validateDate(date);
-  return addTimeOrSubtractTime(increment, n * 1, date);
+var addTime = curry(function (increment, n, thing) {
+  if (thing instanceof Function) return wrap(addTime(increment, n), thing);
+
+  thing = thing || new Date();
+  validateDate(thing);
+  return addTimeOrSubtractTime(increment, n * 1, thing);
 });
 
-var subtractTime = curry(function (increment, n, date) {
-  date = date || new Date();
-  validateDate(date);
-  return addTimeOrSubtractTime(increment, n * -1, date);
+var subtractTime = curry(function (increment, n, thing) {
+  if (thing instanceof Function) return wrap(subtractTime(increment, n), thing);
+
+  thing = thing || new Date();
+  validateDate(thing);
+  return addTimeOrSubtractTime(increment, n * -1, thing);
 });
 
-var addTimeSequence = curry(function (sequence, date) {
-  date = date || new Date();
-  validateDate(date);
+var addTimeSequence = curry(function (sequence, thing) {
+  if (thing instanceof Function) return wrap(addTimeSequence(sequence), thing);
+
+  thing = thing || new Date();
+  validateDate(thing);
   return sequence.reduce(function (acc, cur) {
     return addTimeOrSubtractTime(cur[0], cur[1] * 1, acc);
-  }, date);
+  }, thing);
 });
 
-var subtractTimeSequence = curry(function (sequence, date) {
-  date = date || new Date();
-  validateDate(date);
+var subtractTimeSequence = curry(function (sequence, thing) {
+  if (thing instanceof Function) return wrap(subtractTimeSequence(sequence), thing);
+
+  thing = thing || new Date();
+  validateDate(thing);
   return sequence.reduce(function (acc, cur) {
     return addTimeOrSubtractTime(cur[0], cur[1] * -1, acc);
-  }, date);
+  }, thing);
 });
 
 /**
@@ -474,16 +493,20 @@ function resetLocalOrResetUTC(increment, date, utc) {
   return incrementHandlers[increment](date);
 }
 
-var resetUTC = curry(function (increment, date) {
-  date = date || new Date();
-  validateDate(date);
-  return resetLocalOrResetUTC(increment, date, 'UTC');
+var resetUTC = curry(function (increment, thing) {
+  if (thing instanceof Function) return wrap(resetUTC(increment), thing);
+
+  thing = thing || new Date();
+  validateDate(thing);
+  return resetLocalOrResetUTC(increment, thing, 'UTC');
 });
 
-var resetLocal = curry(function (increment, date) {
-  date = date || new Date();
-  validateDate(date);
-  return resetLocalOrResetUTC(increment, date, '');
+var resetLocal = curry(function (increment, thing) {
+  if (thing instanceof Function) return wrap(resetLocal(increment), thing);
+
+  thing = thing || new Date();
+  validateDate(thing);
+  return resetLocalOrResetUTC(increment, thing, '');
 });
 
 /**
@@ -548,32 +571,40 @@ function setLocalOrSetUTC(increment, value, date) {
   return incrementHandlers[increment](date);
 }
 
-var setUTC = curry(function (increment, value, date) {
-  date = date || new Date();
-  validateDate(date);
-  return setLocalOrSetUTC(increment, value, date, 'UTC');
+var setUTC = curry(function (increment, value, thing) {
+  if (thing instanceof Function) return wrap(setUTC(increment, value), thing);
+
+  thing = thing || new Date();
+  validateDate(thing);
+  return setLocalOrSetUTC(increment, value, thing, 'UTC');
 });
 
-var setLocal = curry(function (increment, value, date) {
-  date = date || new Date();
-  validateDate(date);
-  return setLocalOrSetUTC(increment, value, date);
+var setLocal = curry(function (increment, value, thing) {
+  if (thing instanceof Function) return wrap(setLocal(increment, value), thing);
+
+  thing = thing || new Date();
+  validateDate(thing);
+  return setLocalOrSetUTC(increment, value, thing);
 });
 
-var setLocalGroup = curry(function (group, date) {
-  date = date || new Date();
-  validateDate(date);
+var setLocalGroup = curry(function (group, thing) {
+  if (thing instanceof Function) return wrap(setLocalGroup(group), thing);
+
+  thing = thing || new Date();
+  validateDate(thing);
   return Object.keys(group).reduce(function (acc, cur) {
-    return setLocalOrSetUTC(cur, group[cur], date);
-  }, date);
+    return setLocalOrSetUTC(cur, group[cur], thing);
+  }, thing);
 });
 
-var setUTCGroup = curry(function (group, date) {
-  date = date || new Date();
-  validateDate(date);
+var setUTCGroup = curry(function (group, thing) {
+  if (thing instanceof Function) return wrap(setUTCGroup(group), thing);
+
+  thing = thing || new Date();
+  validateDate(thing);
   return Object.keys(group).reduce(function (acc, cur) {
-    return setLocalOrSetUTC(cur, group[cur], date, 'UTC');
-  }, date);
+    return setLocalOrSetUTC(cur, group[cur], thing, 'UTC');
+  }, thing);
 });
 
 /**

@@ -49,6 +49,7 @@ test('can be composed', (t) => {
   t.is(resetUTCYearFn(t.context.date).toISOString(), '1988-01-01T00:00:00.000Z')
 })
 
-test('can be composed', (t) => {
-  t.is(resetUTC('y', t.context.date).toISOString(), '1988-01-01T00:00:00.000Z')
+test('can be quasi-chained', (t) => {
+  const resetUTCFn = resetUTC('y')(resetUTC('h'))
+  t.is(resetUTCFn(t.context.date).toISOString(), '1988-01-01T00:00:00.000Z')
 })

@@ -26,3 +26,14 @@ export function curry (fn) {
     }
   })()
 }
+
+/**
+ * Returns the result of calling the second function with the result of the first function
+ * @param {Function}  fn1  a function
+ * @param {Function}  fn2  a function
+ */
+export function wrap (fn1, fn2) {
+  return function (arg) {
+    return fn2(fn1(arg))
+  }
+}

@@ -56,6 +56,11 @@ test('can be nested', (t) => {
   t.is(subtractTime('m')(1)(subtractTime('d')(1)(t.context.date)).toISOString(), '1988-03-10T00:00:00.000Z')
 })
 
+test('can be quasi-chained', (t) => {
+  const subtractFn = subtractTime('m')(1)(subtractTime('d')(1))
+  t.is(subtractFn(t.context.date).toISOString(), '1988-03-10T00:00:00.000Z')
+})
+
 test('can be composed', (t) => {
   const subtractYearFn = subtractTime('y')
   const subtractOneYearFn = subtractYearFn(1)

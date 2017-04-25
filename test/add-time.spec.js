@@ -56,6 +56,11 @@ test('can be nested', (t) => {
   t.is(addTime('d')(5)(addTime('m')(11)(t.context.date)).toISOString(), '1989-03-16T00:00:00.000Z')
 })
 
+test('can be pseudo-chained', (t) => {
+  const addFn = addTime('y')(1)(addTime('h')(5))
+  t.is(addFn(t.context.date).toISOString(), '1989-04-11T05:00:00.000Z')
+})
+
 test('can be composed', (t) => {
   const addYearFn = addTime('y')
   const addOneYearFn = addYearFn(1)

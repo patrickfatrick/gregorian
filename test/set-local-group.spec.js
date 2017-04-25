@@ -23,3 +23,8 @@ test('uses the current time by default', (t) => {
 test('applies multiple set operations', (t) => {
   t.is(setLocalGroup({ y: 1985, m: 5, d: 22 })(t.context.date).toISOString(), '1985-05-23T00:00:00.000Z')
 })
+
+test('can be quasi-chained', (t) => {
+  const setLocalGroupFn = setLocalGroup({ y: 1985 })(setLocalGroup({ m: 5, d: 22 }))
+  t.is(setLocalGroupFn(t.context.date).toISOString(), '1985-05-23T00:00:00.000Z')
+})

@@ -56,6 +56,11 @@ test('can be nested', (t) => {
   t.is(setUTC('d')(5)(setUTC('m')(11)(t.context.date)).toISOString(), '1988-11-05T00:00:00.000Z')
 })
 
+test('can be quasi-chained', (t) => {
+  const setUTCFn = setUTC('d')(5)(setUTC('m')(11))
+  t.is(setUTCFn(t.context.date).toISOString(), '1988-11-05T00:00:00.000Z')
+})
+
 test('can be composed', (t) => {
   const setUTCYearFn = setUTC('y')
   const setUTC1989Fn = setUTCYearFn(1989)

@@ -7,7 +7,7 @@ import {
   MONTH,
   YEAR
 } from '../lib/constants'
-import { validateDate, curry } from '../lib/utils'
+import { validateDate, curry, wrap } from '../lib/utils'
 
 /**
  * Sets the date or time to the start of the specified increment
@@ -61,14 +61,18 @@ function resetLocalOrResetUTC (increment, date, utc) {
   return incrementHandlers[increment](date)
 }
 
-export const resetUTC = curry((increment, date) => {
-  date = date || new Date()
-  validateDate(date)
-  return resetLocalOrResetUTC(increment, date, 'UTC')
+export const resetUTC = curry((increment, thing) => {
+  if (thing instanceof Function) return wrap(resetUTC(increment), thing)
+
+  thing = thing || new Date()
+  validateDate(thing)
+  return resetLocalOrResetUTC(increment, thing, 'UTC')
 })
 
-export const resetLocal = curry((increment, date) => {
-  date = date || new Date()
-  validateDate(date)
-  return resetLocalOrResetUTC(increment, date, '')
+export const resetLocal = curry((increment, thing) => {
+  if (thing instanceof Function) return wrap(resetLocal(increment), thing)
+
+  thing = thing || new Date()
+  validateDate(thing)
+  return resetLocalOrResetUTC(increment, thing, '')
 })

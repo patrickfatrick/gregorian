@@ -8,7 +8,7 @@ import {
   MONTH,
   YEAR
 } from '../lib/constants'
-import { validateDate, curry } from '../lib/utils'
+import { validateDate, curry, wrap } from '../lib/utils'
 
 /**
  * Adds or subtracts specified increments to or from a date object
@@ -71,26 +71,34 @@ function addTimeOrSubtractTime (increment, n, date) {
   return incrementHandlers[increment](date)
 }
 
-export const addTime = curry((increment, n, date) => {
-  date = date || new Date()
-  validateDate(date)
-  return addTimeOrSubtractTime(increment, n * 1, date)
+export const addTime = curry((increment, n, thing) => {
+  if (thing instanceof Function) return wrap(addTime(increment, n), thing)
+
+  thing = thing || new Date()
+  validateDate(thing)
+  return addTimeOrSubtractTime(increment, n * 1, thing)
 })
 
-export const subtractTime = curry((increment, n, date) => {
-  date = date || new Date()
-  validateDate(date)
-  return addTimeOrSubtractTime(increment, n * -1, date)
+export const subtractTime = curry((increment, n, thing) => {
+  if (thing instanceof Function) return wrap(subtractTime(increment, n), thing)
+
+  thing = thing || new Date()
+  validateDate(thing)
+  return addTimeOrSubtractTime(increment, n * -1, thing)
 })
 
-export const addTimeSequence = curry((sequence, date) => {
-  date = date || new Date()
-  validateDate(date)
-  return sequence.reduce((acc, cur) => addTimeOrSubtractTime(cur[0], cur[1] * 1, acc), date)
+export const addTimeSequence = curry((sequence, thing) => {
+  if (thing instanceof Function) return wrap(addTimeSequence(sequence), thing)
+
+  thing = thing || new Date()
+  validateDate(thing)
+  return sequence.reduce((acc, cur) => addTimeOrSubtractTime(cur[0], cur[1] * 1, acc), thing)
 })
 
-export const subtractTimeSequence = curry((sequence, date) => {
-  date = date || new Date()
-  validateDate(date)
-  return sequence.reduce((acc, cur) => addTimeOrSubtractTime(cur[0], cur[1] * -1, acc), date)
+export const subtractTimeSequence = curry((sequence, thing) => {
+  if (thing instanceof Function) return wrap(subtractTimeSequence(sequence), thing)
+
+  thing = thing || new Date()
+  validateDate(thing)
+  return sequence.reduce((acc, cur) => addTimeOrSubtractTime(cur[0], cur[1] * -1, acc), thing)
 })

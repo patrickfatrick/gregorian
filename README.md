@@ -1,6 +1,6 @@
 #Gregorian
 
-_A Javascript micro library for converting and displaying dates._
+_The tiny, composable, modular date library._
 
 [![Circle CI](https://circleci.com/gh/patrickfatrick/gregorian.svg?style=shield)](https://circleci.com/gh/patrickfatrick/gregorian)
 [![codecov.io](https://codecov.io/github/patrickfatrick/gregorian/coverage.svg?branch=master)](https://codecov.io/github/patrickfatrick/gregorian?branch=master)
@@ -35,11 +35,11 @@ You can take the same date object and express it like:
 
 ## What doesn't it do?
 
-It does not extend the native `Date` object, nor does it accept anything other than a `Date` object as input (stings are not automatically converted to a `Date`). It does not come with timezone and locale support, and is in English only. 
+It does not extend the native `Date` object, nor does it accept anything other than a Date object as input (strings are not automatically converted to a Date). It does not come with timezone and locale support, and is in English only. 
 
 It also does not export a monolithic library, so you can use any functions without having to bring the unused code into your bundle.
 
-It also does not manipulate the input `Date`; these functions always return a new object.
+It also does not manipulate the input Date; these functions always return a new Date instance.
 
 ## Install
 
@@ -51,7 +51,7 @@ $ bower install gregorian
 $ git clone git@github.com:patrickfatrick/gregorian.git
 ```
 
-You can install it into your site using `<script src="./gregorian/dist/gregorian.min.js"></script>` as usual, or you can include it as a module using `require('./node_modules/gregorian')` or `import gregorian from 'gregorian'`, etc., with your favorite module loader.
+You can install it into your site using `<script src="./gregorian/dist/gregorian.min.js"></script>` as usual, or you can include it as a module using `require('gregorian').reform` or `import { reform } from 'gregorian'`, etc., with your favorite module loader.
 
 To run the tests, `$ yarn test`.
 
@@ -94,6 +94,13 @@ addTime('y')(1)() // Correct
 addTime('y', 1, null) // Correct
 addTime('y', 1) // Wrong, this will return a function
 addTime('y')(1) // Wrong, this will return a function
+```
+
+For even greater flexibility you can also pass another function as the last argument rather than a date. This allows you to compose seriously custom functions that can be applied to any number of Date objects easily. Please note that the functions are called in a left-right manner, so in the following example `setUTC` would be called before `resetUTC`.
+
+```javascript
+const setTimeTo6am = setUTC('h', 6)(resetUTC('h'))
+setTimetTo6am(new Date('1988-04-11T12:45:00.000Z')) // 1988-04-11T06:00:00.000Z
 ```
 
 ## Outputting a formatted date for display

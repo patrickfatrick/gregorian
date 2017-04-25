@@ -49,6 +49,7 @@ test('can be composed', (t) => {
   t.is(resetLocalYearFn(t.context.date).toISOString(), '1988-01-01T07:00:00.000Z')
 })
 
-test('can be composed', (t) => {
-  t.is(resetLocal('y', t.context.date).toISOString(), '1988-01-01T07:00:00.000Z')
+test('can be quasi-chained', (t) => {
+  const resetLocalFn = resetLocal('y')(resetLocal('h'))
+  t.is(resetLocalFn(t.context.date).toISOString(), '1988-01-01T07:00:00.000Z')
 })
