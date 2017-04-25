@@ -1,4 +1,4 @@
-#Gregorian
+# Gregorian
 
 _The tiny, composable, modular date library._
 
@@ -259,7 +259,7 @@ Accepted increments you can use for setting are
 
 #### Getting
 
-This will retrieve specific numeric time increments for the Gregorian object.
+This will retrieve specific numeric time increments for the Date.
 
 ```javascript
 // Let's say your user is in mainland Europe...
