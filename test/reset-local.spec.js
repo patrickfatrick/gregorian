@@ -1,6 +1,6 @@
 import test from 'ava'
 import sinon from 'sinon'
-import { resetLocal } from '../src/modules/reset-local-or-reset-utc'
+import { resetLocal } from '../src'
 
 test.beforeEach((t) => {
   t.context.date = new Date('1988-04-11T08:23:15.347Z')

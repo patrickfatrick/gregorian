@@ -71,34 +71,34 @@ function addTimeOrSubtractTime (increment, n, date) {
   return incrementHandlers[increment](date)
 }
 
-export const addTime = curry((increment, n, thing) => {
-  if (thing instanceof Function) return wrap(addTime(increment, n), thing)
+export const addTime = curry((increment, n, input) => {
+  if (input instanceof Function) return wrap(addTime(increment, n), input)
 
-  thing = thing || new Date()
-  validateDate(thing)
-  return addTimeOrSubtractTime(increment, n * 1, thing)
+  input = input || new Date()
+  validateDate(input)
+  return addTimeOrSubtractTime(increment, n * 1, input)
 })
 
-export const subtractTime = curry((increment, n, thing) => {
-  if (thing instanceof Function) return wrap(subtractTime(increment, n), thing)
+export const subtractTime = curry((increment, n, input) => {
+  if (input instanceof Function) return wrap(subtractTime(increment, n), input)
 
-  thing = thing || new Date()
-  validateDate(thing)
-  return addTimeOrSubtractTime(increment, n * -1, thing)
+  input = input || new Date()
+  validateDate(input)
+  return addTimeOrSubtractTime(increment, n * -1, input)
 })
 
-export const addTimeSequence = curry((sequence, thing) => {
-  if (thing instanceof Function) return wrap(addTimeSequence(sequence), thing)
+export const addTimeSequence = curry((sequence, input) => {
+  if (input instanceof Function) return wrap(addTimeSequence(sequence), input)
 
-  thing = thing || new Date()
-  validateDate(thing)
-  return sequence.reduce((acc, cur) => addTimeOrSubtractTime(cur[0], cur[1] * 1, acc), thing)
+  input = input || new Date()
+  validateDate(input)
+  return sequence.reduce((acc, cur) => addTimeOrSubtractTime(cur[0], cur[1] * 1, acc), input)
 })
 
-export const subtractTimeSequence = curry((sequence, thing) => {
-  if (thing instanceof Function) return wrap(subtractTimeSequence(sequence), thing)
+export const subtractTimeSequence = curry((sequence, input) => {
+  if (input instanceof Function) return wrap(subtractTimeSequence(sequence), input)
 
-  thing = thing || new Date()
-  validateDate(thing)
-  return sequence.reduce((acc, cur) => addTimeOrSubtractTime(cur[0], cur[1] * -1, acc), thing)
+  input = input || new Date()
+  validateDate(input)
+  return sequence.reduce((acc, cur) => addTimeOrSubtractTime(cur[0], cur[1] * -1, acc), input)
 })

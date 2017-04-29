@@ -67,7 +67,7 @@ Each function has a similar signature. For instance, `reform(/* Arguments */)(/*
 
 ```javascript
 const reformFnUS = reform('M/D/Y')
-const reformFnEurope = reformFn('D/M/Y')
+const reformFnEurope = reform('D/M/Y')
 const string1 = reformFnUS(new Date('1988-04-11T12:45:00.000Z')) // 04/11/1988
 const string2 = reformFnEurope(new Date('1988-04-11T12:45:00.000Z')) // 11/04/1988 
 ```

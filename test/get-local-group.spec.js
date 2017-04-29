@@ -1,6 +1,6 @@
 import test from 'ava'
 import sinon from 'sinon'
-import { getLocalGroup } from '../src/modules/get-local-or-get-utc'
+import { getLocalGroup } from '../src'
 
 test.beforeEach((t) => {
   t.context.date = new Date('1988-04-11T00:00:00.000Z')

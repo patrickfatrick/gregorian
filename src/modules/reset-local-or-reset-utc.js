@@ -61,18 +61,18 @@ function resetLocalOrResetUTC (increment, date, utc) {
   return incrementHandlers[increment](date)
 }
 
-export const resetUTC = curry((increment, thing) => {
-  if (thing instanceof Function) return wrap(resetUTC(increment), thing)
+export const resetUTC = curry((increment, input) => {
+  if (input instanceof Function) return wrap(resetUTC(increment), input)
 
-  thing = thing || new Date()
-  validateDate(thing)
-  return resetLocalOrResetUTC(increment, thing, 'UTC')
+  input = input || new Date()
+  validateDate(input)
+  return resetLocalOrResetUTC(increment, input, 'UTC')
 })
 
-export const resetLocal = curry((increment, thing) => {
-  if (thing instanceof Function) return wrap(resetLocal(increment), thing)
+export const resetLocal = curry((increment, input) => {
+  if (input instanceof Function) return wrap(resetLocal(increment), input)
 
-  thing = thing || new Date()
-  validateDate(thing)
-  return resetLocalOrResetUTC(increment, thing, '')
+  input = input || new Date()
+  validateDate(input)
+  return resetLocalOrResetUTC(increment, input, '')
 })

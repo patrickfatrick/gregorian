@@ -1,7 +1,8 @@
 {
 	"name": "gregorian",
-	"main": "index.js",
-	"version": "3.1.0",
+	"main": "dist/gregorian.umd.js",
+  "module": "dist/gregorian.js",
+	"version": "3.1.1",
 	"authors": [
 		"patrickfatrick <patrick.fricano@icloud.com>"
 	],

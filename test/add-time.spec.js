@@ -1,6 +1,6 @@
 import test from 'ava'
 import sinon from 'sinon'
-import { addTime } from '../src/modules/add-time-or-subtract-time'
+import { addTime } from '../src'
 
 test.beforeEach((t) => {
   t.context.date = new Date('1988-04-11T00:00:00.000Z')
@@ -56,7 +56,7 @@ test('can be nested', (t) => {
   t.is(addTime('d')(5)(addTime('m')(11)(t.context.date)).toISOString(), '1989-03-16T00:00:00.000Z')
 })
 
-test('can be pseudo-chained', (t) => {
+test('can be quasi-chained', (t) => {
   const addFn = addTime('y')(1)(addTime('h')(5))
   t.is(addFn(t.context.date).toISOString(), '1989-04-11T05:00:00.000Z')
 })

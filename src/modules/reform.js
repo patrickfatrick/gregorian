@@ -5,7 +5,7 @@ import { validateDate, curry } from '../lib/utils'
 /**
  * Take a Date object and output the reformatted string
  * See ../lib/constants.js for details
- * @param     {String}  format    a string or date object (something that can be converted to a valid date)
+ * @param     {String}  format    a string describing the format the date should take
  * @param     {Date}    date      a date object
  * @returns   {String}            the date formatted into the specified format
  */

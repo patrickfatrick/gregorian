@@ -1,6 +1,6 @@
 import test from 'ava'
 import sinon from 'sinon'
-import { addTimeSequence } from '../src/modules/add-time-or-subtract-time'
+import { addTimeSequence } from '../src'
 
 test.beforeEach((t) => {
   t.context.date = new Date('1988-04-11T00:00:00.000Z')

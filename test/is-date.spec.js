@@ -1,5 +1,5 @@
 import test from 'ava'
-import isDate from '../src/modules/is-date'
+import { isDate } from '../src'
 
 test('returns false if string passed', (t) => {
   t.false(isDate('invalid'))

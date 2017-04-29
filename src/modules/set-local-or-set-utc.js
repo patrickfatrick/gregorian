@@ -87,34 +87,34 @@ function setLocalOrSetUTC (increment, value, date, utc = '') {
   return incrementHandlers[increment](date)
 }
 
-export const setUTC = curry((increment, value, thing) => {
-  if (thing instanceof Function) return wrap(setUTC(increment, value), thing)
+export const setUTC = curry((increment, value, input) => {
+  if (input instanceof Function) return wrap(setUTC(increment, value), input)
 
-  thing = thing || new Date()
-  validateDate(thing)
-  return setLocalOrSetUTC(increment, value, thing, 'UTC')
+  input = input || new Date()
+  validateDate(input)
+  return setLocalOrSetUTC(increment, value, input, 'UTC')
 })
 
-export const setLocal = curry((increment, value, thing) => {
-  if (thing instanceof Function) return wrap(setLocal(increment, value), thing)
+export const setLocal = curry((increment, value, input) => {
+  if (input instanceof Function) return wrap(setLocal(increment, value), input)
 
-  thing = thing || new Date()
-  validateDate(thing)
-  return setLocalOrSetUTC(increment, value, thing)
+  input = input || new Date()
+  validateDate(input)
+  return setLocalOrSetUTC(increment, value, input)
 })
 
-export const setLocalGroup = curry((group, thing) => {
-  if (thing instanceof Function) return wrap(setLocalGroup(group), thing)
+export const setLocalGroup = curry((group, input) => {
+  if (input instanceof Function) return wrap(setLocalGroup(group), input)
 
-  thing = thing || new Date()
-  validateDate(thing)
-  return Object.keys(group).reduce((acc, cur) => setLocalOrSetUTC(cur, group[cur], thing), thing)
+  input = input || new Date()
+  validateDate(input)
+  return Object.keys(group).reduce((acc, cur) => setLocalOrSetUTC(cur, group[cur], input), input)
 })
 
-export const setUTCGroup = curry((group, thing) => {
-  if (thing instanceof Function) return wrap(setUTCGroup(group), thing)
+export const setUTCGroup = curry((group, input) => {
+  if (input instanceof Function) return wrap(setUTCGroup(group), input)
 
-  thing = thing || new Date()
-  validateDate(thing)
-  return Object.keys(group).reduce((acc, cur) => setLocalOrSetUTC(cur, group[cur], thing, 'UTC'), thing)
+  input = input || new Date()
+  validateDate(input)
+  return Object.keys(group).reduce((acc, cur) => setLocalOrSetUTC(cur, group[cur], input, 'UTC'), input)
 })
