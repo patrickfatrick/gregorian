@@ -190,7 +190,7 @@ const overrides = {
   delimiter: '*' // a string indicating a delimiter to use instead of the default pipe character ('|')
 }
 
-reformWithOverrides(overrides)('E, N o, Y')('2015-10-31T00:00:00.000Z') // 'Samedi, Octobre 1er, 2015'
+reformWithOverrides(overrides)('E, N o, Y')('2015-10-01T00:00:00.000Z') // 'Jeudi, Octobre 1er, 2015'
 ```
 
 **NOTE:** You do not have to provide a full override object; you can provide only the options you want to override, otherwise the default English will be used.

@@ -296,6 +296,15 @@ export default {
   /**
    * Converts a date object to an ISO string
    * @param   {Date}    date    a date object
+   * @returns {String}          ISO String without time
+   */
+  [ISO_SHORT] (date) {
+    return this[ISO](date, 'short')
+  },
+
+  /**
+   * Converts a date object to an ISO string
+   * @param   {Date}    date    a date object
    * @param   {String}  format  optional 'short' to remove the time
    * @returns {String}          ISO String with or without time
    */
@@ -305,12 +314,12 @@ export default {
   },
 
   /**
-   * Converts a date object to an ISO string
+   * Converts a date object to a UTC string
    * @param   {Date}    date    a date object
-   * @returns {String}          ISO String without time
+   * @returns {String}          UTC string without time
    */
-  [ISO_SHORT] (date) {
-    return this[ISO](date, 'short')
+  [UTC_SHORT] (date) {
+    return this[UTC](date, 'short')
   },
 
   /**
@@ -332,15 +341,6 @@ export default {
       return newArr.join(' ')
     }
     return utc
-  },
-
-  /**
-   * Converts a date object to a UTC string
-   * @param   {Date}    date    a date object
-   * @returns {String}          UTC string without time
-   */
-  [UTC_SHORT] (date) {
-    return this[UTC](date, 'short')
   },
 
   /**

@@ -45,39 +45,6 @@ var MILLISECOND = 'l'; // 0
 var TIMEZONE_OFFSET = 'z'; // UTC-05:00
 var WEEK = 'w'; // 14
 
-var constants = Object.freeze({
-	UNIX: UNIX,
-	UTC_SHORT: UTC_SHORT,
-	UTC: UTC,
-	ISO_SHORT: ISO_SHORT,
-	ISO: ISO,
-	YEAR_FULL: YEAR_FULL,
-	YEAR: YEAR,
-	DAY_FULL: DAY_FULL,
-	DAY: DAY,
-	DATE_ORDINAL: DATE_ORDINAL,
-	DATE_FULL: DATE_FULL,
-	DATE: DATE,
-	MONTH_NAME_FULL: MONTH_NAME_FULL,
-	MONTH_NAME: MONTH_NAME,
-	MONTH_FULL: MONTH_FULL,
-	MONTH: MONTH,
-	HOUR_PERIOD_FULL: HOUR_PERIOD_FULL,
-	HOUR_PERIOD: HOUR_PERIOD,
-	HOUR_FULL: HOUR_FULL,
-	HOUR: HOUR,
-	MINUTE_FULL: MINUTE_FULL,
-	MINUTE: MINUTE,
-	PERIOD_UPPERCASE: PERIOD_UPPERCASE,
-	PERIOD_LOWERCASE: PERIOD_LOWERCASE,
-	SECOND_FULL: SECOND_FULL,
-	SECOND: SECOND,
-	MILLISECOND_FULL: MILLISECOND_FULL,
-	MILLISECOND: MILLISECOND,
-	TIMEZONE_OFFSET: TIMEZONE_OFFSET,
-	WEEK: WEEK
-});
-
 var defineProperty = function (obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -247,13 +214,15 @@ var reformHandlers = (_PERIOD_UPPERCASE$PER = {}, defineProperty(_PERIOD_UPPERCA
   }) : offset;
   if (!/^[-]/g.test(offset)) offset = '+' + offset;
   return utc + offset + ':00';
+}), defineProperty(_PERIOD_UPPERCASE$PER, ISO_SHORT, function (date) {
+  return this[ISO](date, 'short');
 }), defineProperty(_PERIOD_UPPERCASE$PER, ISO, function (date) {
   var format = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
 
   if (format === 'short') return date.toISOString().split('T')[0];
   return date.toISOString();
-}), defineProperty(_PERIOD_UPPERCASE$PER, ISO_SHORT, function (date) {
-  return this[ISO](date, 'short');
+}), defineProperty(_PERIOD_UPPERCASE$PER, UTC_SHORT, function (date) {
+  return this[UTC](date, 'short');
 }), defineProperty(_PERIOD_UPPERCASE$PER, UTC, function (date) {
   var format = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
 
@@ -269,8 +238,6 @@ var reformHandlers = (_PERIOD_UPPERCASE$PER = {}, defineProperty(_PERIOD_UPPERCA
     return newArr.join(' ');
   }
   return utc;
-}), defineProperty(_PERIOD_UPPERCASE$PER, UTC_SHORT, function (date) {
-  return this[UTC](date, 'short');
 }), defineProperty(_PERIOD_UPPERCASE$PER, UNIX, function (date) {
   return Date.parse(date);
 }), _PERIOD_UPPERCASE$PER);
@@ -344,8 +311,8 @@ function wrap(fn1, fn2) {
 }
 
 function formatDate(format, date, translation) {
-  return Object.values(constants).reduce(function (acc, cur) {
-    return reformHandlers.hasOwnProperty(cur) ? acc.replace(new RegExp('\\b' + cur + '\\b', 'g'), reformHandlers[cur](date, translation)) : acc;
+  return Object.keys(reformHandlers).reduce(function (acc, cur) {
+    return acc.replace(new RegExp('\\b' + cur + '\\b', 'g'), reformHandlers[cur](date, translation));
   }, format).replace(translation.delimiter, '');
 }
 

@@ -1,14 +1,11 @@
 import reformHandlers from '../lib/reform-handlers'
-import * as constants from '../lib/constants'
 import defaultTranslation from '../lib/default-translation'
 import { validateDate, curry } from '../lib/utils'
 
 function formatDate (format, date, translation) {
-  return Object.values(constants)
+  return Object.keys(reformHandlers)
   .reduce((acc, cur) => (
-    (reformHandlers.hasOwnProperty(cur))
-    ? acc.replace(new RegExp(`\\b${cur}\\b`, 'g'), reformHandlers[cur](date, translation))
-    : acc
+    acc.replace(new RegExp(`\\b${cur}\\b`, 'g'), reformHandlers[cur](date, translation))
   ), format)
   .replace(translation.delimiter, '')
 }
