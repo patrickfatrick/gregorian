@@ -1,8 +1,8 @@
 machine:
   node:
-    version: 5
+    version: 4
   environment:
-    YARN_VERSION: 0.22.0
+    YARN_VERSION: 0.23.2
     PATH: "${PATH}:${HOME}/.yarn/bin:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
   timezone:
     MST

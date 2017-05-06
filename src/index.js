@@ -4,7 +4,7 @@
  * https://www.github.com/patrickfatrick/gregorian
  */
 
-import reform from './modules/reform'
+import { reform, reformWithOverrides } from './modules/reform'
 import isDate from './modules/is-date'
 import { addTime, addTimeSequence, subtractTime, subtractTimeSequence } from './modules/add-time-or-subtract-time'
 import { resetLocal, resetUTC } from './modules/reset-local-or-reset-utc'
@@ -13,6 +13,7 @@ import { getLocal, getLocalGroup, getUTC, getUTCGroup } from './modules/get-loca
 
 export {
   reform,
+  reformWithOverrides,
   isDate,
   addTime,
   addTimeSequence,

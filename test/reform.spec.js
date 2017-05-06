@@ -65,14 +65,8 @@ test('handles being mixed in with regular words', (t) => {
   t.is(reform('E, the o of N, Y')(new Date('10/25/2015')), 'Sunday, the 25th of October, 2015')
 })
 
-test.skip('allows for the customization of the delimiter used', (t) => {
-  t.is(reform('e, y-M#d g:t.l#P', '#')(new Date('09/25/2015')), 'Fri, 15-0925 12:0.0AM')
-  t.is(reform('e#_#y#_#M#_#d#_#g:t.l#P#', '#')(new Date('09/25/2015')), 'Fri_15_09_25_12:0.0AM')
-  t.is(reform('E, n Y-m-d H:T.L?p', '?')(new Date('09/25/2015')), 'Friday, Sept 2015-9-25 00:00.000am')
-})
-
 test('converts a date to a unix timestamp', (t) => {
-  t.is(reform('unix')(new Date('April 11, 1988 07:45 UTC')), 576747900000)
+  t.is(reform('unix')(new Date('April 11, 1988 07:45 UTC')), '576747900000')
 })
 
 test('converts a date to an ISO string', (t) => {
@@ -80,8 +74,8 @@ test('converts a date to an ISO string', (t) => {
   t.is(reform('iso-short')(new Date('April 11, 1988 00:00 UTC')), '1988-04-11')
 })
 
-test('ignores everything after the first plug-n-play format', (t) => {
-  t.is(reform('utc iso')(new Date('April 11, 1988 07:45 UTC')), 'Mon, 11 Apr 1988 07:45:00 GMT')
+test('works with multiply plug-n-play formats', (t) => {
+  t.is(reform('utc iso')(new Date('April 11, 1988 07:45 UTC')), 'Mon, 11 Apr 1988 07:45:00 GMT 1988-04-11T07:45:00.000Z')
 })
 
 test('converts a date to an ISO string', (t) => {
@@ -90,10 +84,6 @@ test('converts a date to an ISO string', (t) => {
 
 test('converts a date to a shortened ISO string', (t) => {
   t.is(reform('iso-short')(new Date('April 11, 1988 00:00 UTC')), '1988-04-11')
-})
-
-test('converts a date to a unix timestamp', (t) => {
-  t.is(reform('unix')(new Date('April 11, 1988 07:45 UTC')), 576747900000)
 })
 
 test('converts a date to a UTC string', (t) => {

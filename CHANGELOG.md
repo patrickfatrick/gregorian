@@ -1,5 +1,16 @@
 ## Changelog
 
+#### v4.0
+
+Breaking changes:
+
+- reform('unix') now exports a string instead of a number.
+- reform('iso'), reform('iso-short'), reform('utc'), reform('utc-short'), reform('unix') behave like other format strings, they can be combined with other format strings. Not sure why you would, but there you go.
+
+Fun stuff:
+
+New function, `reformWithOverrides`, which allows you to translate the words used in reform, or use whatever you want. See the readme for details.
+
 #### v3.1
 
 The functions are even more composable, since you can combine functions together without supplying a date, allowing you to create highly customized functions that can be applied to many dates easily. See the "Usage" section of the readme for details.

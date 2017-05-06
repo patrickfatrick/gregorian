@@ -1,6 +1,17 @@
 import reformHandlers from '../lib/reform-handlers'
 import * as constants from '../lib/constants'
+import defaultTranslation from '../lib/default-translation'
 import { validateDate, curry } from '../lib/utils'
+
+function formatDate (format, date, translation) {
+  return Object.values(constants)
+  .reduce((acc, cur) => (
+    (reformHandlers.hasOwnProperty(cur))
+    ? acc.replace(new RegExp(`\\b${cur}\\b`, 'g'), reformHandlers[cur](date, translation))
+    : acc
+  ), format)
+  .replace(translation.delimiter, '')
+}
 
 /**
  * Take a Date object and output the reformatted string
@@ -9,36 +20,26 @@ import { validateDate, curry } from '../lib/utils'
  * @param     {Date}    date      a date object
  * @returns   {String}            the date formatted into the specified format
  */
-export default curry((format, date) => {
+export const reform = curry((format, date) => {
   date = date || new Date()
+  const names = defaultTranslation
   validateDate(date)
-  const pieces = Object.values(constants)
-  let converted = format
 
-  pieces.forEach((piece) => {
-    const re = new RegExp('\\b' + piece + '\\b', 'g')
-    let replacer
-    if (re.test(converted)) {
-      switch (piece) {
-        case 'unix':
-        case 'utc-short':
-        case 'utc':
-        case 'iso-short':
-        case 'iso':
-          converted = reformHandlers[piece](date)
-          break
-        default:
-          replacer = reformHandlers[piece](date)
-          converted = converted.replace(re, replacer)
-          break
-      }
-    }
-  })
+  return formatDate(format, date, names)
+})
 
-  // Remove the delimiter from the string after conversion
-  if (typeof converted === 'string') {
-    converted = converted.replace(/\|/g, '')
-  }
+/**
+ * Take a Date object and output the reformatted string using user-provided names
+ * See ../lib/constants.js for details
+ * @param     {Object}  overrides object consisting of whole or partial name overrides, see ../lib/default-names
+ * @param     {String}  format    a string describing the format the date should take
+ * @param     {Date}    date      a date object
+ * @returns   {String}            the date formatted into the specified format
+ */
+export const reformWithOverrides = curry((overrides, format, date) => {
+  date = date || new Date()
+  const names = Object.assign({}, defaultTranslation, overrides)
+  validateDate(date)
 
-  return converted
+  return formatDate(format, date, names)
 })

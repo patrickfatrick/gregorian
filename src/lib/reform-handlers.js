@@ -36,9 +36,9 @@ export default {
    * @param   {Date}   date   a date object
    * @returns {String}        the capitalized 12-hour clock period
    */
-  [PERIOD_UPPERCASE] (date) {
+  [PERIOD_UPPERCASE] (date, { periods }) {
     const hour = date.getHours()
-    const ampm = (hour < 12) ? 'AM' : 'PM'
+    const ampm = (hour < 12) ? periods[0].toUpperCase() : periods[1].toUpperCase()
     return ampm
   },
 
@@ -47,9 +47,9 @@ export default {
    * @param   {Date}    date   a date object
    * @returns {String}         the uncapitalized 12-hour clock period
    */
-  [PERIOD_LOWERCASE] (date) {
+  [PERIOD_LOWERCASE] (date, { periods }) {
     const hour = date.getHours()
-    const ampm = (hour < 12) ? 'am' : 'pm'
+    const ampm = (hour < 12) ? periods[0].toLowerCase() : periods[1].toLowerCase()
     return ampm
   },
 
@@ -58,10 +58,9 @@ export default {
    * @param {Date}      date  a date object
    * @returns {String}        the abbreviated day of the week
    */
-  [DAY] (date) {
-    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+  [DAY] (date, { daysShort }) {
     const dayOfWeek = date.getDay()
-    return days[dayOfWeek]
+    return daysShort[dayOfWeek]
   },
 
   /**
@@ -69,10 +68,9 @@ export default {
    * @param {Date}      date  a date object
    * @returns {String}        the full day of the week
    */
-  [DAY_FULL] (date) {
-    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+  [DAY_FULL] (date, { daysLong }) {
     const dayOfWeek = date.getDay()
-    return days[dayOfWeek]
+    return daysLong[dayOfWeek]
   },
 
   /**
@@ -100,10 +98,9 @@ export default {
    * @param   {Date}      date  a date object
    * @returns {String}          the abbreviated month
    */
-  [MONTH_NAME] (date) {
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
+  [MONTH_NAME] (date, { monthsShort }) {
     const month = date.getMonth()
-    return months[month]
+    return monthsShort[month]
   },
 
   /**
@@ -111,10 +108,9 @@ export default {
    * @param   {Date}    date   a date object
    * @returns {String}         the full month
    */
-  [MONTH_NAME_FULL] (date) {
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+  [MONTH_NAME_FULL] (date, { monthsLong }) {
     const month = date.getMonth()
-    return months[month]
+    return monthsLong[month]
   },
 
   /**
@@ -142,26 +138,9 @@ export default {
    * @param   {Date}    date  a date object
    * @returns {String}        the date with no leading zeros but with the ordinal
    */
-  [DATE_ORDINAL] (date) {
-    let day = date.getDate()
-    switch (day) {
-      case 1:
-      case 21:
-      case 31:
-        day += 'st'
-        break
-      case 2:
-      case 22:
-        day += 'nd'
-        break
-      case 3:
-      case 23:
-        day += 'rd'
-        break
-      default:
-        day += 'th'
-    }
-    return day
+  [DATE_ORDINAL] (date, { ordinals }) {
+    const day = date.getDate()
+    return day + (ordinals[day] || ordinals.default)
   },
 
   /**
@@ -303,7 +282,7 @@ export default {
    * @param   {Date}   date   a date object
    * @returns {String}        the timezone offset
    */
-  [TIMEZONE_OFFSET] (date) {
+  [TIMEZONE_OFFSET] (date, { utc }) {
     let offset = (date.getTimezoneOffset() / 60 * -1).toString()
     offset = (/^[-]?\d$/g.test(offset))
       ? offset.replace(/\d/, function (match, off) {
@@ -311,7 +290,7 @@ export default {
       })
       : offset
     if (!(/^[-]/g.test(offset))) offset = '+' + offset
-    return 'UTC' + offset + ':00'
+    return utc + offset + ':00'
   },
 
   /**

@@ -5,10 +5,9 @@
 }(this, (function (exports) { 'use strict';
 
 /**
- * We declare the string replacements (for reformat) here in one place so
- * we don't have to keep track of them elsewhere
+ * Strings used in various functions to indicate different aspects of the date
  *
- * Note: Month and Day methods are 1-indexed rather than 0-indexed as they would be with native methods
+ * Note: Month and Day getter/setter methods are 1-indexed rather than 0-indexed as they would be with native methods
  * This was a tough decision but ultimately I think consistency within the library is more important than
  * consistency with the native Date methods
  *
@@ -140,62 +139,55 @@ var toConsumableArray = function (arr) {
 
 var _PERIOD_UPPERCASE$PER;
 
-var reformHandlers = (_PERIOD_UPPERCASE$PER = {}, defineProperty(_PERIOD_UPPERCASE$PER, PERIOD_UPPERCASE, function (date) {
+var reformHandlers = (_PERIOD_UPPERCASE$PER = {}, defineProperty(_PERIOD_UPPERCASE$PER, PERIOD_UPPERCASE, function (date, _ref) {
+  var periods = _ref.periods;
+
   var hour = date.getHours();
-  var ampm = hour < 12 ? 'AM' : 'PM';
+  var ampm = hour < 12 ? periods[0].toUpperCase() : periods[1].toUpperCase();
   return ampm;
-}), defineProperty(_PERIOD_UPPERCASE$PER, PERIOD_LOWERCASE, function (date) {
+}), defineProperty(_PERIOD_UPPERCASE$PER, PERIOD_LOWERCASE, function (date, _ref2) {
+  var periods = _ref2.periods;
+
   var hour = date.getHours();
-  var ampm = hour < 12 ? 'am' : 'pm';
+  var ampm = hour < 12 ? periods[0].toLowerCase() : periods[1].toLowerCase();
   return ampm;
-}), defineProperty(_PERIOD_UPPERCASE$PER, DAY, function (date) {
-  var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+}), defineProperty(_PERIOD_UPPERCASE$PER, DAY, function (date, _ref3) {
+  var daysShort = _ref3.daysShort;
+
   var dayOfWeek = date.getDay();
-  return days[dayOfWeek];
-}), defineProperty(_PERIOD_UPPERCASE$PER, DAY_FULL, function (date) {
-  var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  return daysShort[dayOfWeek];
+}), defineProperty(_PERIOD_UPPERCASE$PER, DAY_FULL, function (date, _ref4) {
+  var daysLong = _ref4.daysLong;
+
   var dayOfWeek = date.getDay();
-  return days[dayOfWeek];
+  return daysLong[dayOfWeek];
 }), defineProperty(_PERIOD_UPPERCASE$PER, HOUR, function (date) {
   var hour = date.getHours();
   return hour;
 }), defineProperty(_PERIOD_UPPERCASE$PER, HOUR_FULL, function (date) {
   var hour = date.getHours().toString();
   return hour.length < 2 ? '0' + hour : hour;
-}), defineProperty(_PERIOD_UPPERCASE$PER, MONTH_NAME, function (date) {
-  var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+}), defineProperty(_PERIOD_UPPERCASE$PER, MONTH_NAME, function (date, _ref5) {
+  var monthsShort = _ref5.monthsShort;
+
   var month = date.getMonth();
-  return months[month];
-}), defineProperty(_PERIOD_UPPERCASE$PER, MONTH_NAME_FULL, function (date) {
-  var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  return monthsShort[month];
+}), defineProperty(_PERIOD_UPPERCASE$PER, MONTH_NAME_FULL, function (date, _ref6) {
+  var monthsLong = _ref6.monthsLong;
+
   var month = date.getMonth();
-  return months[month];
+  return monthsLong[month];
 }), defineProperty(_PERIOD_UPPERCASE$PER, DATE, function (date) {
   var day = date.getDate().toString();
   return day;
 }), defineProperty(_PERIOD_UPPERCASE$PER, DATE_FULL, function (date) {
   var day = date.getDate().toString();
   return day.length < 2 ? '0' + day : day;
-}), defineProperty(_PERIOD_UPPERCASE$PER, DATE_ORDINAL, function (date) {
+}), defineProperty(_PERIOD_UPPERCASE$PER, DATE_ORDINAL, function (date, _ref7) {
+  var ordinals = _ref7.ordinals;
+
   var day = date.getDate();
-  switch (day) {
-    case 1:
-    case 21:
-    case 31:
-      day += 'st';
-      break;
-    case 2:
-    case 22:
-      day += 'nd';
-      break;
-    case 3:
-    case 23:
-      day += 'rd';
-      break;
-    default:
-      day += 'th';
-  }
-  return day;
+  return day + (ordinals[day] || ordinals.default);
 }), defineProperty(_PERIOD_UPPERCASE$PER, HOUR_PERIOD, function (date) {
   var hour = date.getHours();
   if (hour === 0) hour = 12;
@@ -246,13 +238,15 @@ var reformHandlers = (_PERIOD_UPPERCASE$PER = {}, defineProperty(_PERIOD_UPPERCA
   return date.getFullYear().toString().substr(2);
 }), defineProperty(_PERIOD_UPPERCASE$PER, YEAR_FULL, function (date) {
   return date.getFullYear();
-}), defineProperty(_PERIOD_UPPERCASE$PER, TIMEZONE_OFFSET, function (date) {
+}), defineProperty(_PERIOD_UPPERCASE$PER, TIMEZONE_OFFSET, function (date, _ref8) {
+  var utc = _ref8.utc;
+
   var offset = (date.getTimezoneOffset() / 60 * -1).toString();
   offset = /^[-]?\d$/g.test(offset) ? offset.replace(/\d/, function (match, off) {
     return '0' + offset.charAt(off);
   }) : offset;
   if (!/^[-]/g.test(offset)) offset = '+' + offset;
-  return 'UTC' + offset + ':00';
+  return utc + offset + ':00';
 }), defineProperty(_PERIOD_UPPERCASE$PER, ISO, function (date) {
   var format = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
 
@@ -280,6 +274,26 @@ var reformHandlers = (_PERIOD_UPPERCASE$PER = {}, defineProperty(_PERIOD_UPPERCA
 }), defineProperty(_PERIOD_UPPERCASE$PER, UNIX, function (date) {
   return Date.parse(date);
 }), _PERIOD_UPPERCASE$PER);
+
+var defaultNames = {
+  daysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+  daysLong: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+  monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
+  monthsLong: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+  ordinals: {
+    1: 'st',
+    2: 'nd',
+    3: 'rd',
+    21: 'st',
+    22: 'nd',
+    23: 'rd',
+    31: 'st',
+    default: 'th'
+  },
+  periods: ['am', 'pm'],
+  utc: 'UTC',
+  delimiter: '|'
+};
 
 function isDate(date) {
   return date instanceof Date && !Number.isNaN(Date.parse(date));
@@ -329,6 +343,12 @@ function wrap(fn1, fn2) {
   };
 }
 
+function formatDate(format, date, translation) {
+  return Object.values(constants).reduce(function (acc, cur) {
+    return reformHandlers.hasOwnProperty(cur) ? acc.replace(new RegExp('\\b' + cur + '\\b', 'g'), reformHandlers[cur](date, translation)) : acc;
+  }, format).replace(translation.delimiter, '');
+}
+
 /**
  * Take a Date object and output the reformatted string
  * See ../lib/constants.js for details
@@ -338,36 +358,26 @@ function wrap(fn1, fn2) {
  */
 var reform = curry(function (format, date) {
   date = date || new Date();
+  var names = defaultNames;
   validateDate(date);
-  var pieces = Object.values(constants);
-  var converted = format;
 
-  pieces.forEach(function (piece) {
-    var re = new RegExp('\\b' + piece + '\\b', 'g');
-    var replacer = void 0;
-    if (re.test(converted)) {
-      switch (piece) {
-        case 'unix':
-        case 'utc-short':
-        case 'utc':
-        case 'iso-short':
-        case 'iso':
-          converted = reformHandlers[piece](date);
-          break;
-        default:
-          replacer = reformHandlers[piece](date);
-          converted = converted.replace(re, replacer);
-          break;
-      }
-    }
-  });
+  return formatDate(format, date, names);
+});
 
-  // Remove the delimiter from the string after conversion
-  if (typeof converted === 'string') {
-    converted = converted.replace(/\|/g, '');
-  }
+/**
+ * Take a Date object and output the reformatted string using user-provided names
+ * See ../lib/constants.js for details
+ * @param     {Object}  overrides object consisting of whole or partial name overrides, see ../lib/default-names
+ * @param     {String}  format    a string describing the format the date should take
+ * @param     {Date}    date      a date object
+ * @returns   {String}            the date formatted into the specified format
+ */
+var reformWithOverrides = curry(function (overrides, format, date) {
+  date = date || new Date();
+  var names = Object.assign({}, defaultNames, overrides);
+  validateDate(date);
 
-  return converted;
+  return formatDate(format, date, names);
 });
 
 /**
@@ -679,6 +689,7 @@ var getLocalGroup = curry(function (increments, date) {
  */
 
 exports.reform = reform;
+exports.reformWithOverrides = reformWithOverrides;
 exports.isDate = isDate;
 exports.addTime = addTime;
 exports.addTimeSequence = addTimeSequence;

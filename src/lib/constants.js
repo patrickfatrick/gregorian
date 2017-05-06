@@ -1,8 +1,7 @@
 /**
- * We declare the string replacements (for reformat) here in one place so
- * we don't have to keep track of them elsewhere
+ * Strings used in various functions to indicate different aspects of the date
  *
- * Note: Month and Day methods are 1-indexed rather than 0-indexed as they would be with native methods
+ * Note: Month and Day getter/setter methods are 1-indexed rather than 0-indexed as they would be with native methods
  * This was a tough decision but ultimately I think consistency within the library is more important than
  * consistency with the native Date methods
  *

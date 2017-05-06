@@ -113,12 +113,12 @@ reform('M/D/Y')(new Date('1988-04-11T12:45:00.000Z')) // 04/11/1988
 
 ### Accepted formats
 
-The following are plug-n-play formats that are simply wrappers for existing Javascript `Date` methods and should not be used with any other formats. The `-short` methods extend the existing methods by removing the time from the output.
+The following are plug-n-play formats that are more or less wrappers for existing Javascript `Date` methods. The `-short` methods extend the existing methods by removing the time from the output.
 
 ```javascript
 // Given the date 1988-04-11T12:45:00.000Z, assuming a locale in Eastern Standard Time:
 
-'unix' // 576747900000
+'unix' // 576747900000 as a string, not a number
 'utc-short' // Mon, 11 Apr 1988
 'utc' // Mon, 11 Apr 1988 12:45:00 GMT
 'iso-short' // 1988-04-11
@@ -156,7 +156,7 @@ The following are components you can use to construct a format string like `'M/D
 'z' // timezone offset: UTC-05:00
 'w' // week of the year: 14
 ```
-**NOTE:** Any format strings directly touching each other should be separated with a `|` character. This delimiter will be removed from the final string. This allows us to do some extra fancy things like mix in real words with the format strings without conflicts.
+**NOTE:** Any format strings directly touching anything besides for punctuation and whitespace should be separated with a `|` character. This delimiter will be removed from the final string. This allows us to do some extra fancy things like mix in real words with the format strings without conflicts.
 
 Some examples:
 
@@ -170,6 +170,30 @@ reform('E, n Y-m-d H:T:ss.L z')(new Date('09/25/2015 01:00 UTC')) // 'Thursday, 
 ```
 
 **NOTE:** Since `reform` is primarily intended for display, it currently only supports local time, not UTC.
+
+### Translating and delimiter customization
+
+Say you don't like English generally, you can provide your own words to use with a plain object passed as the first argument to an alternative function called reformWithOverrides
+
+```javascript
+const overrides = {
+  daysShort: [ /* an array from 0-6, like [ 'di', 'lun', ... 'sam' ] */ ],
+  daysLong: [ /* an array from 0-6, like [ 'dimanche', 'lundi', ... 'samedi' ] */ ],
+  monthsShort: [ /* an array from 0-11, like [ 'jan', 'fév', ... 'déc' ] */ ],
+  monthsLong: [ /* an array from 0-11, like [ 'janvier', 'février', ... 'décembre' ] */ ],
+  ordinals: {
+    1: 'er', // specify each date of the month that has a non-default ordinal, like 'er' for '1er'
+    default: 'e' // the default to use for any numbers not directly passed in as a key, like 'e' for '2e'
+  },
+  periods: [ /* an array from 0-1 of case-insensitive period names, like [ 'am', 'pm' ] */ ],
+  utc: 'UTC', // a string to specify what the UTC timezone is called, like 'UTC'
+  delimiter: '*' // a string indicating a delimiter to use instead of the default pipe character ('|')
+}
+
+reformWithOverrides(overrides)('E, N o, Y')('2015-10-31T00:00:00.000Z') // 'Samedi, Octobre 1er, 2015'
+```
+
+**NOTE:** You do not have to provide a full override object; you can provide only the options you want to override, otherwise the default English will be used.
 
 ## Manipulation
 
@@ -198,7 +222,7 @@ subtractTimeSequence([
 ])(new Date('2015-10-31')) // 2013-07-31
 ```
 
-This accepts an array or arrays
+This accepts an array of arrays
 
 All of these methods return a new `Date` object.
 
