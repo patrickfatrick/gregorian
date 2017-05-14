@@ -11,6 +11,16 @@ export function validateDate (date) {
 }
 
 /**
+ * Returns the difference between two date objects
+ * @param   {Date}    date1 a date object
+ * @param   {Date}    date2 a date object
+ * @return  {Number}        difference between the dates
+ */
+export function diff (date1, date2) {
+  return Date.parse(date2) - Date.parse(date1)
+}
+
+/**
  * Takes a function with args and returns a curried version of it
  * @param   {Function}  fn  A function to curry
  * @returns {Function}      A curried version of the original function

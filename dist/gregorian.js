@@ -271,6 +271,16 @@ function validateDate(date) {
 }
 
 /**
+ * Returns the difference between two date objects
+ * @param   {Date}    date1 a date object
+ * @param   {Date}    date2 a date object
+ * @return  {Number}        difference between the dates
+ */
+function diff(date1, date2) {
+  return Date.parse(date2) - Date.parse(date1);
+}
+
+/**
  * Takes a function with args and returns a curried version of it
  * @param   {Function}  fn  A function to curry
  * @returns {Function}      A curried version of the original function
@@ -644,9 +654,64 @@ var getLocalGroup = curry(function (increments, date) {
 });
 
 /**
+ * Adds or subtracts specified increments to or from a date object
+ * @param   {String}  increment   an increment to add
+ * @param   {Number}  date1       date object
+ * @param   {Date}    date2       date object
+ * @returns {Number}              numeric difference between the dates in the specific increment
+ */
+function diffIt(increment, date1, date2) {
+  var _incrementHandlers;
+
+  var incrementHandlers = (_incrementHandlers = {}, defineProperty(_incrementHandlers, MILLISECOND, function (date1, date2) {
+    return diff(date1, date2);
+  }), defineProperty(_incrementHandlers, SECOND, function (date1, date2) {
+    return diff(date1, date2) / 1000;
+  }), defineProperty(_incrementHandlers, MINUTE, function (date1, date2) {
+    return this[SECOND](date1, date2) / 60;
+  }), defineProperty(_incrementHandlers, HOUR, function (date1, date2) {
+    return this[MINUTE](date1, date2) / 60;
+  }), defineProperty(_incrementHandlers, DATE, function (date1, date2) {
+    return this[HOUR](date1, date2) / 24;
+  }), defineProperty(_incrementHandlers, WEEK, function (date1, date2) {
+    return this[DATE](date1, date2) / 7;
+  }), defineProperty(_incrementHandlers, MONTH, function (date) {
+    return this[DATE](date1, date2) / 30.44; // 365.25 / 12
+  }), defineProperty(_incrementHandlers, YEAR, function (date) {
+    return this[DATE](date1, date2) / 365.25; // Leap-year friendly
+  }), _incrementHandlers);
+
+  return incrementHandlers[increment](date1, date2);
+}
+
+var diffTime = curry(function (increment, input1, input2) {
+  input1 = input1 || new Date();
+  input2 = input2 || new Date();
+  validateDate(input1);
+  validateDate(input2);
+  return diffIt(increment, input1, input2);
+});
+
+/**
+ * Adds or subtracts specified increments to or from a date object
+ * @param   {Date}  input1   date object
+ * @param   {Date}  input2   date object
+ * @returns {Number}         1 if input2 is greater, -1 if input1 is greated, 0 if they are the same
+ */
+var compareTime = curry(function (input1, input2) {
+  input1 = input1 || new Date();
+  input2 = input2 || new Date();
+  validateDate(input1);
+  validateDate(input2);
+
+  var difference = diff(input1, input2);
+  if (difference === 0) return 0;else if (difference < 0) return -1;else return 1;
+});
+
+/**
  * Gregorian
  * Author: Patrick Fricano
  * https://www.github.com/patrickfatrick/gregorian
  */
 
-export { reform, reformWithOverrides, isDate, addTime, addTimeSequence, subtractTime, subtractTimeSequence, resetLocal, resetUTC, setLocal, setLocalGroup, setUTC, setUTCGroup, getLocal, getLocalGroup, getUTC, getUTCGroup };
+export { reform, reformWithOverrides, isDate, addTime, addTimeSequence, subtractTime, subtractTimeSequence, resetLocal, resetUTC, setLocal, setLocalGroup, setUTC, setUTCGroup, getLocal, getLocalGroup, getUTC, getUTCGroup, diffTime, compareTime };

@@ -345,6 +345,46 @@ resetUTC('m')(new Date('2015-10-31T03:42:877Z')) // 2015-10-01 00:00:000 UTC
 // etc.
 ```
 
+## Utility Functions
+
+### diffTime
+
+This returns the numeric difference between two dates expressed in terms of the provided time increment. The difference will be positive if the second date is greater, and negative if the first date is great, and 0 if they are the same date. All the same increments allowed in the manipulation functions are allowed here as well.
+
+```javascript
+diffTime('s')(new Date('1988-04-11T07:45:00.000Z'))(new Date('1989-04-11T07:45:00.000Z')) // 31536000
+diffTime('d')(new Date('1988-04-11T07:45:00.000Z'))(new Date('1989-04-11T07:45:00.000Z')) // 365
+```
+
+For months and years, a year that 365.25 days long is assumed, and a month is assumed to be 1/12th of that. Which is why you won't always get a nice clean integer when you think you should.
+
+```javascript
+diffTime('m')(new Date('1988-04-11T07:45:00.000Z'))(new Date('1989-04-11T07:45:00.000Z')) // 11.990801576872535
+diffTime('y')(new Date('1988-04-11T07:45:00.000Z'))(new Date('1989-04-11T07:45:00.000Z')) // 0.999315537303217
+```
+
+### compareTime
+
+This compares two dates to see which is greater. If the second date is greater, 1 is returned. If the first date is greater, -1 is returned. And if they are the same date and time, 0 is returned. Examples:
+
+```javascript
+compareTime(new Date('1988-04-11T00:00:00.000Z'))(new Date('1989-04-11T00:00:00.000Z')) // 1
+compareTime(new Date('1989-04-11T00:00:00.000Z'))(new Date('1988-04-11T00:00:00.000Z')) // -1
+compareTime(new Date('1988-04-11T00:00:00.000Z'))(new Date('1988-04-11T00:00:00.000Z')) // 0
+```
+
+### isDate
+
+This can be used to validate a date object (for instance before passing it into another function where it will error out). Returns true if the input is an instance of Date and if it also is a valid date (since not all Date objects are valid dates). Examples:
+
+```javascript
+isDate(new Date('1988-04-11T00:00:00.000Z')) // true
+isDate(new Date()) // true
+isDate('1988-04-11T00:00:00.000Z') // false
+isDate(new Date('invalid date')) // false
+```
+
+
 ## Why not use MomentJS or date-fns?
 
 [Moment](http://momentjs.com/) is awesome but is also much bigger in scope. It also forces you to use a special `moment` object which is mutable. Gregorian works with native dates and outputs new dates each time. Because Gregorian uses individual functions you get to import only what you need and nothing more.

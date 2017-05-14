@@ -1,5 +1,14 @@
 ## Changelog
 
+#### v4.1
+
+New things:
+
+- diffTime
+- compareTime
+
+See the readme for how they work.
+
 #### v4.0
 
 Breaking changes:

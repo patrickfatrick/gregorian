@@ -10,6 +10,8 @@ import { addTime, addTimeSequence, subtractTime, subtractTimeSequence } from './
 import { resetLocal, resetUTC } from './modules/reset-local-or-reset-utc'
 import { setLocal, setLocalGroup, setUTC, setUTCGroup } from './modules/set-local-or-set-utc'
 import { getLocal, getLocalGroup, getUTC, getUTCGroup } from './modules/get-local-or-get-utc'
+import { diffTime } from './modules/diff-time'
+import { compareTime } from './modules/compare-time'
 
 export {
   reform,
@@ -28,5 +30,7 @@ export {
   getLocal,
   getLocalGroup,
   getUTC,
-  getUTCGroup
+  getUTCGroup,
+  diffTime,
+  compareTime
 }
