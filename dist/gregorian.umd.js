@@ -262,8 +262,13 @@ var defaultNames = {
   delimiter: '|'
 };
 
-function isDate(date) {
-  return date instanceof Date && !Number.isNaN(Date.parse(date));
+/**
+ * Determines if an input is a Date instance with a valid date
+ * @param   {Object}  input   anything, but preferably a Date object
+ * @returns {Boolean}         whether or not the input is a valid Date
+ */
+function isDate(input) {
+  return input instanceof Date && !Number.isNaN(Date.parse(input));
 }
 
 /**
@@ -273,7 +278,7 @@ function isDate(date) {
  */
 function validateDate(date) {
   if (isDate(date)) return true;
-  throw new TypeError('Invalid date: ' + date);
+  throw new TypeError("Invalid date: " + date);
 }
 
 /**

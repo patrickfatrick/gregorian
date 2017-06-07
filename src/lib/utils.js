@@ -1,4 +1,11 @@
-import isDate from '../modules/is-date'
+/**
+ * Determines if an input is a Date instance with a valid date
+ * @param   {Object}  input   anything, but preferably a Date object
+ * @returns {Boolean}         whether or not the input is a valid Date
+ */
+export function isDate (input) {
+  return input instanceof Date && !Number.isNaN(Date.parse(input))
+}
 
 /**
  * Checks that the date object passed in is a valid Date instance, or throw a TypeError

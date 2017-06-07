@@ -2,7 +2,7 @@
 	"name": "gregorian",
 	"main": "dist/gregorian.umd.js",
   "module": "dist/gregorian.js",
-	"version": "4.1.0",
+	"version": "4.1.1",
 	"authors": [
 		"patrickfatrick <patrick.fricano@icloud.com>"
 	],
