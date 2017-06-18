@@ -338,7 +338,7 @@ var reform = curry(function (format, date) {
   validateDate(date);
 
   return formatDate(format, date, names);
-});
+}
 
 /**
  * Take a Date object and output the reformatted string using user-provided names
@@ -348,7 +348,7 @@ var reform = curry(function (format, date) {
  * @param     {Date}    date      a date object
  * @returns   {String}            the date formatted into the specified format
  */
-var reformWithOverrides = curry(function (overrides, format, date) {
+);var reformWithOverrides = curry(function (overrides, format, date) {
   date = date || new Date();
   var names = Object.assign({}, defaultNames, overrides);
   validateDate(date);
