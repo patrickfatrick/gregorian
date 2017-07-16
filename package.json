@@ -9,12 +9,13 @@
     "node": ">= 4.0.0"
   },
   "scripts": {
-    "test": "standard './src/**/*.js' './test/**/*.js' | snazzy && BABEL_ENV=development TZ=MST nyc --reporter=lcov --reporter=text ava --verbose",
+    "test": "eslint './src/**/*.js' './test/**/*.js' && BABEL_ENV=development TZ=MST nyc --reporter=lcov --reporter=text ava --verbose",
     "report": "nyc report",
-    "build": "standard './src/**/*.js' | snazzy && yarn run base && yarn run min && yarn run umd",
+    "build": "eslint './src/**/*.js' && npm run base && npm run min && npm run umd",
     "base": "BABEL_ENV=production rollup -c 'rollup.config.base.js'",
     "umd": "BABEL_ENV=production rollup -c 'rollup.config.umd.js'",
-    "min": "BABEL_ENV=production rollup -c 'rollup.config.min.js'"
+    "min": "BABEL_ENV=production rollup -c 'rollup.config.min.js'",
+    "prettier": "prettier --write --single-quote --print-width 100 --trailing-comma all '{src,test}/**/*.js'"
   },
   "repository": {
     "type": "git",
@@ -29,17 +30,20 @@
   "devDependencies": {
     "ava": "^0.19.0",
     "babel-core": "^6.24.0",
+    "babel-eslint": "^7.2.3",
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.4.0",
     "codecov": "^2.1.0",
+    "eslint": "^4.2.0",
+    "eslint-config-prettier": "^2.3.0",
+    "eslint-plugin-prettier": "^2.1.2",
     "nyc": "^10.2.0",
+    "prettier": "^1.5.3",
     "rollup": "^0.41.6",
     "rollup-plugin-babel": "^2.7.1",
     "rollup-plugin-uglify": "^1.0.1",
-    "sinon": "^2.1.0",
-    "snazzy": "^6.0.0",
-    "standard": "^10.0.0"
+    "sinon": "^2.1.0"
   },
   "ava": {
     "babel": "inherit",

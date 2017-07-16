@@ -7,8 +7,7 @@ _The tiny, composable, modular date library._
 [![bitHound Score](https://www.bithound.io/github/patrickfatrick/gregorian/badges/score.svg)](https://www.bithound.io/github/patrickfatrick/gregorian)
 [![bitHound Dependencies](https://www.bithound.io/github/patrickfatrick/gregorian/badges/dependencies.svg)](https://www.bithound.io/github/patrickfatrick/gregorian/master/dependencies/npm)
 [![MIT License][license-image]][license-url]
-
-[![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
+[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](#badge)
 
 ![Gregorian Page](./images/gregorian-page.jpg)
 

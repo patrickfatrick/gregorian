@@ -31,7 +31,7 @@ var HOUR = 'h'; // 7 (24-hour clock)
 var MINUTE_FULL = 'T'; // 45 (adds leading zeros)
 var MINUTE = 't'; // 45
 var PERIOD_UPPERCASE = 'P'; // AM
-var PERIOD_LOWERCASE = 'p'; // am
+var PERIOD_LOWERCASE = 'p'; // Am
 var SECOND_FULL = 'S'; // 00 (adds leading zeros)
 var SECOND = 's'; // 0
 var MILLISECOND_FULL = 'L'; // 000 (adds leading zeros)
@@ -151,12 +151,16 @@ var reformHandlers = (_PERIOD_UPPERCASE$PER = {}, defineProperty(_PERIOD_UPPERCA
   return day + (ordinals[day] || ordinals.default);
 }), defineProperty(_PERIOD_UPPERCASE$PER, HOUR_PERIOD, function (date) {
   var hour = date.getHours();
-  if (hour === 0) hour = 12;
+  if (hour === 0) {
+    hour = 12;
+  }
   hour = hour < 13 ? hour : hour - 12;
   return hour;
 }), defineProperty(_PERIOD_UPPERCASE$PER, HOUR_PERIOD_FULL, function (date) {
   var hour = date.getHours();
-  if (hour === 0) hour = 12;
+  if (hour === 0) {
+    hour = 12;
+  }
   hour = hour < 13 ? hour : hour - 12;
   hour = hour.toString();
   return hour.length < 2 ? '0' + hour : hour;
@@ -173,7 +177,7 @@ var reformHandlers = (_PERIOD_UPPERCASE$PER = {}, defineProperty(_PERIOD_UPPERCA
       milliseconds = '0' + milliseconds;
       break;
     default:
-      milliseconds = '' + milliseconds;
+      milliseconds = String(milliseconds);
       break;
   }
   return milliseconds;
@@ -206,14 +210,18 @@ var reformHandlers = (_PERIOD_UPPERCASE$PER = {}, defineProperty(_PERIOD_UPPERCA
   offset = /^[-]?\d$/g.test(offset) ? offset.replace(/\d/, function (match, off) {
     return '0' + offset.charAt(off);
   }) : offset;
-  if (!/^[-]/g.test(offset)) offset = '+' + offset;
+  if (!/^[-]/g.test(offset)) {
+    offset = '+' + offset;
+  }
   return utc + offset + ':00';
 }), defineProperty(_PERIOD_UPPERCASE$PER, ISO_SHORT, function (date) {
   return this[ISO](date, 'short');
 }), defineProperty(_PERIOD_UPPERCASE$PER, ISO, function (date) {
   var format = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
 
-  if (format === 'short') return date.toISOString().split('T')[0];
+  if (format === 'short') {
+    return date.toISOString().split('T')[0];
+  }
   return date.toISOString();
 }), defineProperty(_PERIOD_UPPERCASE$PER, UTC_SHORT, function (date) {
   return this[UTC](date, 'short');
@@ -236,7 +244,7 @@ var reformHandlers = (_PERIOD_UPPERCASE$PER = {}, defineProperty(_PERIOD_UPPERCA
   return Date.parse(date);
 }), _PERIOD_UPPERCASE$PER);
 
-var defaultNames = {
+var en = {
   daysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
   daysLong: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
   monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
@@ -256,6 +264,102 @@ var defaultNames = {
   delimiter: '|'
 };
 
+var fr = {
+  daysShort: ['di', 'lun', 'mar', 'mer', 'jeu', 'ven', 'sam'],
+  daysLong: ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'],
+  monthsShort: ['janv', 'févr', 'mars', 'avril', 'mai', 'juin', 'juil', 'août', 'sept', 'oct', 'nov', 'déc'],
+  monthsLong: ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'],
+  ordinals: {
+    1: 'er',
+    default: 'e'
+  },
+  periods: ['am', 'pm'],
+  utc: 'UTC',
+  delimiter: '|'
+};
+
+var it = {
+  daysShort: ['do', 'lun', 'martedì', 'mer', 'gio', 'ven', 'sab'],
+  daysLong: ['domenica', 'lunedì', 'martedì', 'mercoledì', 'giovedì', 'venerdì', 'sabato'],
+  monthsShort: ['genn', 'febbr', 'mar', 'apr', 'magg', 'giugno', 'luglio', 'ag', 'sett', 'ott', 'nov', 'dic'],
+  monthsLong: ['gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno', 'luglio', 'agosto', 'settembre', 'ottobre', 'novembre', 'dicembre'],
+  ordinals: {
+    default: 'o'
+  },
+  periods: ['am', 'pm'],
+  utc: 'UTC',
+  delimiter: '|'
+};
+
+var de = {
+  daysShort: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
+  daysLong: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+  monthsShort: ['Jan', 'Feb', 'März', 'April', 'Mai', 'Juni', 'Juli', 'Aug', 'Sept', 'Okt', 'Nov', 'Dez'],
+  monthsLong: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+  ordinals: {
+    1: 'st',
+    2: 'nd',
+    3: 'rd',
+    21: 'st',
+    22: 'nd',
+    23: 'rd',
+    31: 'st',
+    default: 'th'
+  },
+  periods: ['am', 'pm'],
+  utc: 'UTC',
+  delimiter: '|'
+};
+
+var es = {
+  daysShort: ['do', 'lu', 'ma', 'mi', 'ju', 'vi', 'sa'],
+  daysLong: ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'],
+  monthsShort: ['enero', 'Feb', 'marzo', 'abr', 'mayo', 'jun', 'jul', 'agosto', 'sept', 'oct', 'nov', 'dic'],
+  monthsLong: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
+  ordinals: {
+    default: 'o'
+  },
+  periods: ['am', 'pm'],
+  utc: 'UTC',
+  delimiter: '|'
+};
+
+var nl = {
+  daysShort: ['zo', 'mo', 'di', 'wo', 'do', 'vr', 'za'],
+  daysLong: ['zondag', 'maandag', 'dinsdag', 'woensdag', 'donderdag', 'vrijdag', 'zaterdag'],
+  monthsShort: ['jan', 'feb', 'maart', 'apr', 'mei', 'juni', 'juli', 'aug', 'sept', 'okt', 'nov', 'dez'],
+  monthsLong: ['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december'],
+  ordinals: {
+    default: 'e'
+  },
+  periods: ['am', 'pm'],
+  utc: 'UTC',
+  delimiter: '|'
+};
+
+var pt = {
+  daysShort: ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sab'],
+  daysLong: ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'],
+  monthsShort: ['jan', 'fev', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'set', 'out', 'nov', 'dez'],
+  monthsLong: ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'],
+  ordinals: {
+    default: 'a'
+  },
+  periods: ['am', 'pm'],
+  utc: 'UTC',
+  delimiter: '|'
+};
+
+var translations = Object.freeze({
+	en: en,
+	fr: fr,
+	it: it,
+	de: de,
+	es: es,
+	nl: nl,
+	pt: pt
+});
+
 /**
  * Determines if an input is a Date instance with a valid date
  * @param   {Object}  input   anything, but preferably a Date object
@@ -271,7 +375,9 @@ function isDate(input) {
  * @return  {Boolean}         true if validated
  */
 function validateDate(date) {
-  if (isDate(date)) return true;
+  if (isDate(date)) {
+    return true;
+  }
   throw new TypeError("Invalid date: " + date);
 }
 
@@ -334,11 +440,10 @@ function formatDate(format, date, translation) {
  */
 var reform = curry(function (format, date) {
   date = date || new Date();
-  var names = defaultNames;
   validateDate(date);
 
-  return formatDate(format, date, names);
-}
+  return formatDate(format, date, en);
+});
 
 /**
  * Take a Date object and output the reformatted string using user-provided names
@@ -348,12 +453,27 @@ var reform = curry(function (format, date) {
  * @param     {Date}    date      a date object
  * @returns   {String}            the date formatted into the specified format
  */
-);var reformWithOverrides = curry(function (overrides, format, date) {
+var reformWithOverrides = curry(function (overrides, format, date) {
   date = date || new Date();
-  var names = Object.assign({}, defaultNames, overrides);
+  var names = Object.assign({}, en, overrides);
   validateDate(date);
 
   return formatDate(format, date, names);
+});
+
+/**
+ * Take a Date object and output the reformatted string using user-provided names
+ * See ../lib/constants.js for details
+ * @param     {String}  locale    string correlating with one of the exports from lib/translations
+ * @param     {String}  format    a string describing the format the date should take
+ * @param     {Date}    date      a date object
+ * @returns   {String}            the date formatted into the specified format
+ */
+var reformWithLocale = curry(function (locale, format, date) {
+  date = date || new Date();
+  validateDate(date);
+
+  return formatDate(format, date, translations[locale] || en);
 });
 
 /**
@@ -385,9 +505,8 @@ function addTimeOrSubtractTime(increment, n, date) {
 
     if (newDate > new Date(date.setUTCFullYear(newYear, newMonth + 1, 0)).getUTCDate()) {
       return new Date(date.setUTCFullYear(newYear, newMonth + 1, 0));
-    } else {
-      return new Date(date.setUTCFullYear(newYear, newMonth, newDate));
     }
+    return new Date(date.setUTCFullYear(newYear, newMonth, newDate));
   }), defineProperty(_incrementHandlers, YEAR, function (date) {
     var newYear = date.getUTCFullYear() + n;
     var newMonth = date.getUTCMonth();
@@ -395,24 +514,27 @@ function addTimeOrSubtractTime(increment, n, date) {
 
     if (newDate > new Date(date.setUTCFullYear(newYear, newMonth + 1, 0)).getUTCDate()) {
       return new Date(date.setUTCFullYear(newYear, newMonth + 1, 0));
-    } else {
-      return new Date(date.setUTCFullYear(newYear, newMonth, newDate));
     }
+    return new Date(date.setUTCFullYear(newYear, newMonth, newDate));
   }), _incrementHandlers);
 
   return incrementHandlers[increment](date);
 }
 
 var addTime = curry(function (increment, n, input) {
-  if (input instanceof Function) return wrap(addTime(increment, n), input);
+  if (input instanceof Function) {
+    return wrap(addTime(increment, n), input);
+  }
 
   input = input || new Date();
   validateDate(input);
-  return addTimeOrSubtractTime(increment, n * 1, input);
+  return addTimeOrSubtractTime(increment, Number(n), input);
 });
 
 var subtractTime = curry(function (increment, n, input) {
-  if (input instanceof Function) return wrap(subtractTime(increment, n), input);
+  if (input instanceof Function) {
+    return wrap(subtractTime(increment, n), input);
+  }
 
   input = input || new Date();
   validateDate(input);
@@ -420,17 +542,21 @@ var subtractTime = curry(function (increment, n, input) {
 });
 
 var addTimeSequence = curry(function (sequence, input) {
-  if (input instanceof Function) return wrap(addTimeSequence(sequence), input);
+  if (input instanceof Function) {
+    return wrap(addTimeSequence(sequence), input);
+  }
 
   input = input || new Date();
   validateDate(input);
   return sequence.reduce(function (acc, cur) {
-    return addTimeOrSubtractTime(cur[0], cur[1] * 1, acc);
+    return addTimeOrSubtractTime(cur[0], Number(cur[1]), acc);
   }, input);
 });
 
 var subtractTimeSequence = curry(function (sequence, input) {
-  if (input instanceof Function) return wrap(subtractTimeSequence(sequence), input);
+  if (input instanceof Function) {
+    return wrap(subtractTimeSequence(sequence), input);
+  }
 
   input = input || new Date();
   validateDate(input);
@@ -480,7 +606,9 @@ function resetLocalOrResetUTC(increment, date, utc) {
 }
 
 var resetUTC = curry(function (increment, input) {
-  if (input instanceof Function) return wrap(resetUTC(increment), input);
+  if (input instanceof Function) {
+    return wrap(resetUTC(increment), input);
+  }
 
   input = input || new Date();
   validateDate(input);
@@ -488,7 +616,9 @@ var resetUTC = curry(function (increment, input) {
 });
 
 var resetLocal = curry(function (increment, input) {
-  if (input instanceof Function) return wrap(resetLocal(increment), input);
+  if (input instanceof Function) {
+    return wrap(resetLocal(increment), input);
+  }
 
   input = input || new Date();
   validateDate(input);
@@ -680,9 +810,9 @@ function diffIt(increment, date1, date2) {
     return this[HOUR](date1, date2) / 24;
   }), defineProperty(_incrementHandlers, WEEK, function (date1, date2) {
     return this[DATE](date1, date2) / 7;
-  }), defineProperty(_incrementHandlers, MONTH, function (date) {
+  }), defineProperty(_incrementHandlers, MONTH, function (date1, date2) {
     return this[DATE](date1, date2) / 30.44; // 365.25 / 12
-  }), defineProperty(_incrementHandlers, YEAR, function (date) {
+  }), defineProperty(_incrementHandlers, YEAR, function (date1, date2) {
     return this[DATE](date1, date2) / 365.25; // Leap-year friendly
   }), _incrementHandlers);
 
@@ -710,7 +840,12 @@ var compareTime = curry(function (input1, input2) {
   validateDate(input2);
 
   var difference = diff(input1, input2);
-  if (difference === 0) return 0;else if (difference < 0) return -1;else return 1;
+  if (difference === 0) {
+    return 0;
+  } else if (difference < 0) {
+    return -1;
+  }
+  return 1;
 });
 
 /**
@@ -719,4 +854,4 @@ var compareTime = curry(function (input1, input2) {
  * https://www.github.com/patrickfatrick/gregorian
  */
 
-export { reform, reformWithOverrides, isDate, addTime, addTimeSequence, subtractTime, subtractTimeSequence, resetLocal, resetUTC, setLocal, setLocalGroup, setUTC, setUTCGroup, getLocal, getLocalGroup, getUTC, getUTCGroup, diffTime, compareTime };
+export { reform, reformWithOverrides, reformWithLocale, isDate, addTime, addTimeSequence, subtractTime, subtractTimeSequence, resetLocal, resetUTC, setLocal, setLocalGroup, setUTC, setUTCGroup, getLocal, getLocalGroup, getUTC, getUTCGroup, diffTime, compareTime };

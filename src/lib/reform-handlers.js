@@ -27,8 +27,8 @@ import {
   SECOND,
   MILLISECOND_FULL,
   MILLISECOND,
-  TIMEZONE_OFFSET
-} from './constants'
+  TIMEZONE_OFFSET,
+} from './constants';
 
 export default {
   /**
@@ -36,10 +36,10 @@ export default {
    * @param   {Date}   date   a date object
    * @returns {String}        the capitalized 12-hour clock period
    */
-  [PERIOD_UPPERCASE] (date, { periods }) {
-    const hour = date.getHours()
-    const ampm = (hour < 12) ? periods[0].toUpperCase() : periods[1].toUpperCase()
-    return ampm
+  [PERIOD_UPPERCASE](date, { periods }) {
+    const hour = date.getHours();
+    const ampm = hour < 12 ? periods[0].toUpperCase() : periods[1].toUpperCase();
+    return ampm;
   },
 
   /**
@@ -47,10 +47,10 @@ export default {
    * @param   {Date}    date   a date object
    * @returns {String}         the uncapitalized 12-hour clock period
    */
-  [PERIOD_LOWERCASE] (date, { periods }) {
-    const hour = date.getHours()
-    const ampm = (hour < 12) ? periods[0].toLowerCase() : periods[1].toLowerCase()
-    return ampm
+  [PERIOD_LOWERCASE](date, { periods }) {
+    const hour = date.getHours();
+    const ampm = hour < 12 ? periods[0].toLowerCase() : periods[1].toLowerCase();
+    return ampm;
   },
 
   /**
@@ -58,9 +58,9 @@ export default {
    * @param {Date}      date  a date object
    * @returns {String}        the abbreviated day of the week
    */
-  [DAY] (date, { daysShort }) {
-    const dayOfWeek = date.getDay()
-    return daysShort[dayOfWeek]
+  [DAY](date, { daysShort }) {
+    const dayOfWeek = date.getDay();
+    return daysShort[dayOfWeek];
   },
 
   /**
@@ -68,9 +68,9 @@ export default {
    * @param {Date}      date  a date object
    * @returns {String}        the full day of the week
    */
-  [DAY_FULL] (date, { daysLong }) {
-    const dayOfWeek = date.getDay()
-    return daysLong[dayOfWeek]
+  [DAY_FULL](date, { daysLong }) {
+    const dayOfWeek = date.getDay();
+    return daysLong[dayOfWeek];
   },
 
   /**
@@ -78,9 +78,9 @@ export default {
    * @param   {Date}    date   a date object
    * @returns {String}         the hour with no leading zeros
    */
-  [HOUR] (date) {
-    const hour = date.getHours()
-    return hour
+  [HOUR](date) {
+    const hour = date.getHours();
+    return hour;
   },
 
   /**
@@ -88,9 +88,9 @@ export default {
    * @param   {Date}    date    a date object
    * @returns {String}          the hour with no leading zeros
    */
-  [HOUR_FULL] (date) {
-    const hour = date.getHours().toString()
-    return (hour.length < 2) ? '0' + hour : hour
+  [HOUR_FULL](date) {
+    const hour = date.getHours().toString();
+    return hour.length < 2 ? '0' + hour : hour;
   },
 
   /**
@@ -98,9 +98,9 @@ export default {
    * @param   {Date}      date  a date object
    * @returns {String}          the abbreviated month
    */
-  [MONTH_NAME] (date, { monthsShort }) {
-    const month = date.getMonth()
-    return monthsShort[month]
+  [MONTH_NAME](date, { monthsShort }) {
+    const month = date.getMonth();
+    return monthsShort[month];
   },
 
   /**
@@ -108,9 +108,9 @@ export default {
    * @param   {Date}    date   a date object
    * @returns {String}         the full month
    */
-  [MONTH_NAME_FULL] (date, { monthsLong }) {
-    const month = date.getMonth()
-    return monthsLong[month]
+  [MONTH_NAME_FULL](date, { monthsLong }) {
+    const month = date.getMonth();
+    return monthsLong[month];
   },
 
   /**
@@ -118,9 +118,9 @@ export default {
    * @param   {Date}    date  a date object
    * @returns {String}        the date of the month with no leading zeros
    */
-  [DATE] (date) {
-    const day = date.getDate().toString()
-    return day
+  [DATE](date) {
+    const day = date.getDate().toString();
+    return day;
   },
 
   /**
@@ -128,9 +128,9 @@ export default {
    * @param   {Date}    date  a date object
    * @returns {String}        the two-digit date of the month
    */
-  [DATE_FULL] (date) {
-    const day = date.getDate().toString()
-    return (day.length < 2) ? '0' + day : day
+  [DATE_FULL](date) {
+    const day = date.getDate().toString();
+    return day.length < 2 ? '0' + day : day;
   },
 
   /**
@@ -138,9 +138,9 @@ export default {
    * @param   {Date}    date  a date object
    * @returns {String}        the date with no leading zeros but with the ordinal
    */
-  [DATE_ORDINAL] (date, { ordinals }) {
-    const day = date.getDate()
-    return day + (ordinals[day] || ordinals.default)
+  [DATE_ORDINAL](date, { ordinals }) {
+    const day = date.getDate();
+    return day + (ordinals[day] || ordinals.default);
   },
 
   /**
@@ -148,11 +148,13 @@ export default {
    * @param   {Date}    date  a date object
    * @returns {String}        the hour with no leading zeros
    */
-  [HOUR_PERIOD] (date) {
-    let hour = date.getHours()
-    if (hour === 0) hour = 12
-    hour = (hour < 13) ? hour : hour - 12
-    return hour
+  [HOUR_PERIOD](date) {
+    let hour = date.getHours();
+    if (hour === 0) {
+      hour = 12;
+    }
+    hour = hour < 13 ? hour : hour - 12;
+    return hour;
   },
 
   /**
@@ -160,12 +162,14 @@ export default {
    * @param   {Date}    date  a date object
    * @returns {String}        the two-digit hour
    */
-  [HOUR_PERIOD_FULL] (date) {
-    let hour = date.getHours()
-    if (hour === 0) hour = 12
-    hour = (hour < 13) ? hour : hour - 12
-    hour = hour.toString()
-    return (hour.length < 2) ? '0' + hour : hour
+  [HOUR_PERIOD_FULL](date) {
+    let hour = date.getHours();
+    if (hour === 0) {
+      hour = 12;
+    }
+    hour = hour < 13 ? hour : hour - 12;
+    hour = hour.toString();
+    return hour.length < 2 ? '0' + hour : hour;
   },
 
   /**
@@ -173,9 +177,9 @@ export default {
    * @param   {Date}    date  a date object
    * @returns {String}        the number of milliseconds
    */
-  [MILLISECOND] (date) {
-    const milliseconds = date.getMilliseconds().toString()
-    return milliseconds
+  [MILLISECOND](date) {
+    const milliseconds = date.getMilliseconds().toString();
+    return milliseconds;
   },
 
   /**
@@ -183,20 +187,20 @@ export default {
    * @param   {Date}    date  a date object
    * @returns {String}        the number of milliseconds
    */
-  [MILLISECOND_FULL] (date) {
-    let milliseconds = date.getMilliseconds().toString()
+  [MILLISECOND_FULL](date) {
+    let milliseconds = date.getMilliseconds().toString();
     switch (milliseconds.length) {
       case 1:
-        milliseconds = '00' + milliseconds
-        break
+        milliseconds = '00' + milliseconds;
+        break;
       case 2:
-        milliseconds = '0' + milliseconds
-        break
+        milliseconds = '0' + milliseconds;
+        break;
       default:
-        milliseconds = '' + milliseconds
-        break
+        milliseconds = String(milliseconds);
+        break;
     }
-    return milliseconds
+    return milliseconds;
   },
 
   /**
@@ -204,9 +208,9 @@ export default {
    * @param   {Date}    date  a date object
    * @returns {String}        the month with no leading zeros
    */
-  [MONTH] (date) {
-    const month = (date.getMonth() + 1).toString()
-    return month
+  [MONTH](date) {
+    const month = (date.getMonth() + 1).toString();
+    return month;
   },
 
   /**
@@ -214,9 +218,9 @@ export default {
    * @param {Date}      date  a date object
    * @returns {String}        the two-digit month
    */
-  [MONTH_FULL] (date) {
-    let month = (date.getMonth() + 1).toString()
-    return (month.length < 2) ? '0' + month : month
+  [MONTH_FULL](date) {
+    const month = (date.getMonth() + 1).toString();
+    return month.length < 2 ? '0' + month : month;
   },
 
   /**
@@ -224,9 +228,9 @@ export default {
    * @param   {Date}    date  a date object
    * @returns {String}        the seconds with no leading zeros
    */
-  [SECOND] (date) {
-    const second = date.getSeconds()
-    return second
+  [SECOND](date) {
+    const second = date.getSeconds();
+    return second;
   },
 
   /**
@@ -234,9 +238,9 @@ export default {
    * @param   {Date}    date  a date object
    * @returns {String}        the two-digit seconds
    */
-  [SECOND_FULL] (date) {
-    let second = date.getSeconds().toString()
-    return (second.length < 2) ? '0' + second : second
+  [SECOND_FULL](date) {
+    const second = date.getSeconds().toString();
+    return second.length < 2 ? '0' + second : second;
   },
 
   /**
@@ -244,9 +248,9 @@ export default {
    * @param   {Date}    date  a date object
    * @returns {String}        the minutes with no leading zeros
    */
-  [MINUTE] (date) {
-    const minute = date.getMinutes().toString()
-    return minute
+  [MINUTE](date) {
+    const minute = date.getMinutes().toString();
+    return minute;
   },
 
   /**
@@ -254,9 +258,9 @@ export default {
    * @param   {Date}   date   a date object
    * @returns {String}        the two-digit minutes
    */
-  [MINUTE_FULL] (date) {
-    let minute = date.getMinutes().toString()
-    return (minute.length < 2) ? '0' + minute : minute
+  [MINUTE_FULL](date) {
+    const minute = date.getMinutes().toString();
+    return minute.length < 2 ? '0' + minute : minute;
   },
 
   /**
@@ -264,8 +268,8 @@ export default {
    * @param {Date}      date  a date object
    * @returns {String}        the two-digit year
    */
-  [YEAR] (date) {
-    return date.getFullYear().toString().substr(2)
+  [YEAR](date) {
+    return date.getFullYear().toString().substr(2);
   },
 
   /**
@@ -273,8 +277,8 @@ export default {
    * @param   {Date}    date  a date object
    * @returns {String}        the four-digit year
    */
-  [YEAR_FULL] (date) {
-    return date.getFullYear()
+  [YEAR_FULL](date) {
+    return date.getFullYear();
   },
 
   /**
@@ -282,15 +286,17 @@ export default {
    * @param   {Date}   date   a date object
    * @returns {String}        the timezone offset
    */
-  [TIMEZONE_OFFSET] (date, { utc }) {
-    let offset = (date.getTimezoneOffset() / 60 * -1).toString()
-    offset = (/^[-]?\d$/g.test(offset))
-      ? offset.replace(/\d/, function (match, off) {
-        return '0' + offset.charAt(off)
-      })
-      : offset
-    if (!(/^[-]/g.test(offset))) offset = '+' + offset
-    return utc + offset + ':00'
+  [TIMEZONE_OFFSET](date, { utc }) {
+    let offset = (date.getTimezoneOffset() / 60 * -1).toString();
+    offset = /^[-]?\d$/g.test(offset)
+      ? offset.replace(/\d/, (match, off) => {
+          return '0' + offset.charAt(off);
+        })
+      : offset;
+    if (!/^[-]/g.test(offset)) {
+      offset = '+' + offset;
+    }
+    return utc + offset + ':00';
   },
 
   /**
@@ -298,8 +304,8 @@ export default {
    * @param   {Date}    date    a date object
    * @returns {String}          ISO String without time
    */
-  [ISO_SHORT] (date) {
-    return this[ISO](date, 'short')
+  [ISO_SHORT](date) {
+    return this[ISO](date, 'short');
   },
 
   /**
@@ -308,9 +314,11 @@ export default {
    * @param   {String}  format  optional 'short' to remove the time
    * @returns {String}          ISO String with or without time
    */
-  [ISO] (date, format = '') {
-    if (format === 'short') return date.toISOString().split('T')[0]
-    return date.toISOString()
+  [ISO](date, format = '') {
+    if (format === 'short') {
+      return date.toISOString().split('T')[0];
+    }
+    return date.toISOString();
   },
 
   /**
@@ -318,8 +326,8 @@ export default {
    * @param   {Date}    date    a date object
    * @returns {String}          UTC string without time
    */
-  [UTC_SHORT] (date) {
-    return this[UTC](date, 'short')
+  [UTC_SHORT](date) {
+    return this[UTC](date, 'short');
   },
 
   /**
@@ -328,19 +336,19 @@ export default {
    * @param   {String}  format  optional 'shart' to remove the time from the output
    * @returns {String}          UTC string with or without time
    */
-  [UTC] (date, format = '') {
-    const utc = date.toUTCString()
+  [UTC](date, format = '') {
+    const utc = date.toUTCString();
     if (format === 'short') {
-      const arr = utc.split(' ')
-      let newArr = []
+      const arr = utc.split(' ');
+      const newArr = [];
 
       for (let i = 0; i < 4; i++) {
-        newArr.push(arr[i])
+        newArr.push(arr[i]);
       }
 
-      return newArr.join(' ')
+      return newArr.join(' ');
     }
-    return utc
+    return utc;
   },
 
   /**
@@ -348,7 +356,7 @@ export default {
    * @param   {Date}    date  a date object
    * @returns {Number}        milliseconds from January 1, 1970
    */
-  [UNIX] (date) {
-    return Date.parse(date)
-  }
-}
+  [UNIX](date) {
+    return Date.parse(date);
+  },
+};
