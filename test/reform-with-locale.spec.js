@@ -22,6 +22,15 @@ test('uses the current time by default', t => {
   clock.restore();
 });
 
+test('uses English by default if locale is not supported', t => {
+  t.context.locale = 'fr_CA';
+  const reformWithLocaleFn = reformWithLocale(t.context.locale)('E, N o, Y H:T:S.L');
+  t.is(
+    reformWithLocaleFn(new Date('1988-04-11T12:45:00.000Z')),
+    'Monday, April 11th, 1988 05:45:00.000',
+  );
+});
+
 test('can be composed', t => {
   t.context.locale = 'pt';
   const reformWithLocaleFn = reformWithLocale(t.context.locale)('E, N o, Y H:T:S.L');

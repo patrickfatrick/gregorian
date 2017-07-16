@@ -130,7 +130,7 @@ export const de = {
     'Jan',
     'Feb',
     'März',
-    'April',
+    'Apr',
     'Mai',
     'Juni',
     'Juli',
