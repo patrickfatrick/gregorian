@@ -1,5 +1,13 @@
 ## Changelog
 
+#### v4.2
+
+New things:
+
+- reformWithLocale
+
+See the readme for how it works.  
+
 #### v4.1
 
 New things:

@@ -194,6 +194,26 @@ reformWithOverrides(overrides)('E, N o, Y')('2015-10-01T00:00:00.000Z') // 'Jeud
 
 **NOTE:** You do not have to provide a full override object; you can provide only the options you want to override, otherwise the default English will be used.
 
+### Included locale support
+
+Gregorian comes bundled with translations for several languages. To use these you will need to use the following:
+
+```javascript
+reformWithLocale('fr')('E, N o, Y')('2015-10-01T00:00:00.000Z') // 'Jeudi, Octobre 1er, 2015'
+```
+
+Included locales are:
+
+- French ('fr')
+- German ('de')
+- Spanish ('es')
+- Italian ('it')
+- Portuguese ('pt')
+- Dutch ('nl')
+- English ('en') (though you should obviously just use `reform` since it defaults to English)
+
+If you have any issues with existing translations or want a new translation included, please open an issue.
+
 ## Manipulation
 
 #### Adding and subtracting
