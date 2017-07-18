@@ -270,102 +270,6 @@ var en = {
   delimiter: '|'
 };
 
-var fr = {
-  daysShort: ['di', 'lun', 'mar', 'mer', 'jeu', 'ven', 'sam'],
-  daysLong: ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'],
-  monthsShort: ['janv', 'févr', 'mars', 'avril', 'mai', 'juin', 'juil', 'août', 'sept', 'oct', 'nov', 'déc'],
-  monthsLong: ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'],
-  ordinals: {
-    1: 'er',
-    default: 'e'
-  },
-  periods: ['am', 'pm'],
-  utc: 'UTC',
-  delimiter: '|'
-};
-
-var it = {
-  daysShort: ['do', 'lun', 'martedì', 'mer', 'gio', 'ven', 'sab'],
-  daysLong: ['domenica', 'lunedì', 'martedì', 'mercoledì', 'giovedì', 'venerdì', 'sabato'],
-  monthsShort: ['genn', 'febbr', 'mar', 'apr', 'magg', 'giugno', 'luglio', 'ag', 'sett', 'ott', 'nov', 'dic'],
-  monthsLong: ['gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno', 'luglio', 'agosto', 'settembre', 'ottobre', 'novembre', 'dicembre'],
-  ordinals: {
-    default: 'o'
-  },
-  periods: ['am', 'pm'],
-  utc: 'UTC',
-  delimiter: '|'
-};
-
-var de = {
-  daysShort: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
-  daysLong: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
-  monthsShort: ['Jan', 'Feb', 'März', 'Apr', 'Mai', 'Juni', 'Juli', 'Aug', 'Sept', 'Okt', 'Nov', 'Dez'],
-  monthsLong: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
-  ordinals: {
-    1: 'st',
-    2: 'nd',
-    3: 'rd',
-    21: 'st',
-    22: 'nd',
-    23: 'rd',
-    31: 'st',
-    default: 'th'
-  },
-  periods: ['am', 'pm'],
-  utc: 'UTC',
-  delimiter: '|'
-};
-
-var es = {
-  daysShort: ['do', 'lu', 'ma', 'mi', 'ju', 'vi', 'sa'],
-  daysLong: ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'],
-  monthsShort: ['enero', 'Feb', 'marzo', 'abr', 'mayo', 'jun', 'jul', 'agosto', 'sept', 'oct', 'nov', 'dic'],
-  monthsLong: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
-  ordinals: {
-    default: 'o'
-  },
-  periods: ['am', 'pm'],
-  utc: 'UTC',
-  delimiter: '|'
-};
-
-var nl = {
-  daysShort: ['zo', 'mo', 'di', 'wo', 'do', 'vr', 'za'],
-  daysLong: ['zondag', 'maandag', 'dinsdag', 'woensdag', 'donderdag', 'vrijdag', 'zaterdag'],
-  monthsShort: ['jan', 'feb', 'maart', 'apr', 'mei', 'juni', 'juli', 'aug', 'sept', 'okt', 'nov', 'dez'],
-  monthsLong: ['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december'],
-  ordinals: {
-    default: 'e'
-  },
-  periods: ['am', 'pm'],
-  utc: 'UTC',
-  delimiter: '|'
-};
-
-var pt = {
-  daysShort: ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sab'],
-  daysLong: ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'],
-  monthsShort: ['jan', 'fev', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'set', 'out', 'nov', 'dez'],
-  monthsLong: ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'],
-  ordinals: {
-    default: 'a'
-  },
-  periods: ['am', 'pm'],
-  utc: 'UTC',
-  delimiter: '|'
-};
-
-var translations = Object.freeze({
-	en: en,
-	fr: fr,
-	it: it,
-	de: de,
-	es: es,
-	nl: nl,
-	pt: pt
-});
-
 /**
  * Determines if an input is a Date instance with a valid date
  * @param   {Object}  input   anything, but preferably a Date object
@@ -432,9 +336,10 @@ function wrap(fn1, fn2) {
 }
 
 function formatDate(format, date, translation) {
-  return Object.keys(reformHandlers).reduce(function (acc, cur) {
-    return acc.replace(new RegExp('\\b' + cur + '\\b', 'g'), reformHandlers[cur](date, translation));
-  }, format).replace(translation.delimiter, '');
+  var longAssRegExp = /\b(unix|utc(-short)?|iso(-short)?|Y|y|M|m|N|n|E|e|D|d|o|H|h|G|g|T|t|P|p|S|s|L|l|z|w)\b/g;
+  return format.replace(longAssRegExp, function (match) {
+    return reformHandlers[match](date, translation);
+  }).replace(translation.delimiter, '');
 }
 
 /**
@@ -453,7 +358,6 @@ var reform = curry(function (format, date) {
 
 /**
  * Take a Date object and output the reformatted string using user-provided names
- * See ../lib/constants.js for details
  * @param     {Object}  overrides object consisting of whole or partial name overrides, see ../lib/default-names
  * @param     {String}  format    a string describing the format the date should take
  * @param     {Date}    date      a date object
@@ -468,9 +372,8 @@ var reformWithOverrides = curry(function (overrides, format, date) {
 });
 
 /**
- * Take a Date object and output the reformatted string using user-provided names
- * See ../lib/constants.js for details
- * @param     {String}  locale    string correlating with one of the exports from lib/translations
+ * Take a Date object and output the reformatted string using included locales
+ * @param     {Object}  locale    locale object exported from lib/translations
  * @param     {String}  format    a string describing the format the date should take
  * @param     {Date}    date      a date object
  * @returns   {String}            the date formatted into the specified format
@@ -479,7 +382,7 @@ var reformWithLocale = curry(function (locale, format, date) {
   date = date || new Date();
   validateDate(date);
 
-  return formatDate(format, date, translations[locale] || en);
+  return formatDate(format, date, locale || en);
 });
 
 /**
