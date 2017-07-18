@@ -51,7 +51,7 @@ export const fr = {
     'janv',
     'févr',
     'mars',
-    'avril',
+    'avr',
     'mai',
     'juin',
     'juil',
