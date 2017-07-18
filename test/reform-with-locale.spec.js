@@ -1,7 +1,7 @@
 import test from 'ava';
 import sinon from 'sinon';
 import { reformWithLocale } from '../src';
-import { fr, pt, de } from '../src/lib/translations';
+import { fr, pt, de } from '../locale';
 
 test.beforeEach(t => {
   t.context.locale = fr;
