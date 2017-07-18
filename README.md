@@ -199,7 +199,8 @@ reformWithOverrides(overrides)('E, N o, Y')('2015-10-01T00:00:00.000Z') // 'Jeud
 Gregorian comes bundled with translations for several languages. To use these you will need to use the following:
 
 ```javascript
-reformWithLocale('fr')('E, N o, Y')('2015-10-01T00:00:00.000Z') // 'Jeudi, Octobre 1er, 2015'
+import { fr } from 'gregorian/locale'
+reformWithLocale(fr)('E, N o, Y')('2015-10-01T00:00:00.000Z') // 'Jeudi, Octobre 1er, 2015'
 ```
 
 Included locales are:
