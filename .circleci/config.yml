@@ -18,10 +18,10 @@ jobs:
       - store_artifacts:
           path: coverage
           prefix: coverage
+      - codecov/upload:
+        file: ./coverage/lcov.info
 workflows:
-  version: 2
+  version: 2.1
   test:
     jobs:
       - test
-      - codecov/upload:
-        file: ./coverage/lcov.info
