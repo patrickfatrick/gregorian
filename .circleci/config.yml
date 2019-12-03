@@ -1,4 +1,6 @@
-version: 2
+version: 2.1
+orbs:
+  codecov: codecov/codecov@1.0.5
 jobs:
   test:
     docker:
@@ -13,9 +15,6 @@ jobs:
       - run: 
           name: Run unit tests
           command: npm test
-      - run: 
-          name: Generate code coverage
-          command: cat ./coverage/**/lcov.info | ./node_modules/.bin/codecov
       - store_artifacts:
           path: coverage
           prefix: coverage
@@ -24,3 +23,5 @@ workflows:
   test:
     jobs:
       - test
+      - codecov/upload:
+        file: ./coverage/lcov.info
