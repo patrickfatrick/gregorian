@@ -80,7 +80,43 @@ var defineProperty = function (obj, key, value) {
 
 
 
+var slicedToArray = function () {
+  function sliceIterator(arr, i) {
+    var _arr = [];
+    var _n = true;
+    var _d = false;
+    var _e = undefined;
 
+    try {
+      for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+        _arr.push(_s.value);
+
+        if (i && _arr.length === i) break;
+      }
+    } catch (err) {
+      _d = true;
+      _e = err;
+    } finally {
+      try {
+        if (!_n && _i["return"]) _i["return"]();
+      } finally {
+        if (_d) throw _e;
+      }
+    }
+
+    return _arr;
+  }
+
+  return function (arr, i) {
+    if (Array.isArray(arr)) {
+      return arr;
+    } else if (Symbol.iterator in Object(arr)) {
+      return sliceIterator(arr, i);
+    } else {
+      throw new TypeError("Invalid attempt to destructure non-iterable instance");
+    }
+  };
+}();
 
 
 
@@ -384,6 +420,91 @@ var reformWithLocale = curry(function (locale, format, date) {
 
   return formatDate(format, date, locale || en);
 });
+
+/**
+ * Parses either an ambiguous ISO partial (2019-08-16 / 2019-08-16T22:55:00)
+ * or a complete ISO string (2019-08-16T22:55:00Z) to a date
+ * @param  {String} isoDateTime date string formatted as an ISO partial date
+ * @return {Date}               a new Date instance
+ */
+function parse(isoDateTime) {
+  var _$Symbol$split = /T| /[Symbol.split](isoDateTime),
+      _$Symbol$split2 = slicedToArray(_$Symbol$split, 2),
+      date = _$Symbol$split2[0],
+      _$Symbol$split2$ = _$Symbol$split2[1],
+      rawTime = _$Symbol$split2$ === undefined ? '00:00:00' : _$Symbol$split2$;
+
+  var _$Symbol$split3 = /Z|\+|\-/[Symbol.split](rawTime),
+      _$Symbol$split4 = slicedToArray(_$Symbol$split3, 2),
+      time = _$Symbol$split4[0],
+      _$Symbol$split4$ = _$Symbol$split4[1],
+      offset = _$Symbol$split4$ === undefined ? (new Date().getTimezoneOffset() / 60).toString() : _$Symbol$split4$;
+
+  var z = Number.parseInt((/\d{1,2}/[Symbol.match](offset) || ['0'])[0], 10);
+
+  var _$Symbol$split$map = /-/[Symbol.split](date).map(function (str) {
+    return Number.parseInt(str, 10);
+  }),
+      _$Symbol$split$map2 = slicedToArray(_$Symbol$split$map, 3),
+      y = _$Symbol$split$map2[0],
+      m = _$Symbol$split$map2[1],
+      d = _$Symbol$split$map2[2];
+
+  var _$Symbol$split$map3 = /:|\./[Symbol.split](time).map(function (str) {
+    return Number.parseInt(str, 10);
+  }),
+      _$Symbol$split$map4 = slicedToArray(_$Symbol$split$map3, 4),
+      h = _$Symbol$split$map4[0],
+      t = _$Symbol$split$map4[1],
+      s = _$Symbol$split$map4[2],
+      _$Symbol$split$map4$ = _$Symbol$split$map4[3],
+      l = _$Symbol$split$map4$ === undefined ? 0 : _$Symbol$split$map4$;
+
+  return new Date(Date.UTC(y, m - 1, d, rawTime.includes('-') || offset > 0 ? h + z : h + z * -1, t, s, l));
+}
+
+/**
+ * Parses either an ambiguous ISO partial (2019-08-16 / 2019-08-16T22:55:00)
+ * or a complete ISO string (2019-08-16T22:55:00Z) to a date
+ * BUT this function assumes UTC if no timezone data is present
+ * @param  {String} isoDateTime date string formatted as an ISO partial date
+ * @return {Date}               a new Date instance
+ */
+function parseUTC(isoDateTime) {
+  var _$Symbol$split5 = /T| /[Symbol.split](isoDateTime),
+      _$Symbol$split6 = slicedToArray(_$Symbol$split5, 2),
+      date = _$Symbol$split6[0],
+      _$Symbol$split6$ = _$Symbol$split6[1],
+      rawTime = _$Symbol$split6$ === undefined ? '00:00:00' : _$Symbol$split6$;
+
+  var _$Symbol$split7 = /Z|\+|\-/[Symbol.split](rawTime),
+      _$Symbol$split8 = slicedToArray(_$Symbol$split7, 2),
+      time = _$Symbol$split8[0],
+      _$Symbol$split8$ = _$Symbol$split8[1],
+      offset = _$Symbol$split8$ === undefined ? '0' : _$Symbol$split8$;
+
+  var z = Number.parseInt((/\d{1,2}/[Symbol.match](offset) || ['0'])[0], 10);
+
+  var _$Symbol$split$map5 = /-/[Symbol.split](date).map(function (str) {
+    return Number.parseInt(str, 10);
+  }),
+      _$Symbol$split$map6 = slicedToArray(_$Symbol$split$map5, 3),
+      y = _$Symbol$split$map6[0],
+      m = _$Symbol$split$map6[1],
+      d = _$Symbol$split$map6[2];
+
+  var _$Symbol$split$map7 = /:|\./[Symbol.split](time).map(function (str) {
+    return Number.parseInt(str, 10);
+  }),
+      _$Symbol$split$map8 = slicedToArray(_$Symbol$split$map7, 4),
+      h = _$Symbol$split$map8[0],
+      t = _$Symbol$split$map8[1],
+      s = _$Symbol$split$map8[2],
+      _$Symbol$split$map8$ = _$Symbol$split$map8[3],
+      l = _$Symbol$split$map8$ === undefined ? 0 : _$Symbol$split$map8$;
+
+  return new Date(Date.UTC(y, m - 1, d, rawTime.includes('-') || offset > 0 ? h + z : h + z * -1, t, s, l));
+}
 
 /**
  * Adds or subtracts specified increments to or from a date object
@@ -783,6 +904,8 @@ exports.getUTC = getUTC;
 exports.getUTCGroup = getUTCGroup;
 exports.diffTime = diffTime;
 exports.compareTime = compareTime;
+exports.parse = parse;
+exports.parseUTC = parseUTC;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
