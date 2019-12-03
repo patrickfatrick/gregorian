@@ -4,10 +4,8 @@ _The tiny, composable, modular date library._
 
 [![Circle CI](https://circleci.com/gh/patrickfatrick/gregorian.svg?style=shield)](https://circleci.com/gh/patrickfatrick/gregorian)
 [![codecov.io](https://codecov.io/github/patrickfatrick/gregorian/coverage.svg?branch=master)](https://codecov.io/github/patrickfatrick/gregorian?branch=master)
-[![bitHound Score](https://www.bithound.io/github/patrickfatrick/gregorian/badges/score.svg)](https://www.bithound.io/github/patrickfatrick/gregorian)
-[![bitHound Dependencies](https://www.bithound.io/github/patrickfatrick/gregorian/badges/dependencies.svg)](https://www.bithound.io/github/patrickfatrick/gregorian/master/dependencies/npm)
-[![MIT License][license-image]][license-url]
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](#badge)
+[![MIT License][license-image]][license-url]
 
 ![Gregorian Page](./images/gregorian-page.jpg)
 

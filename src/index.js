@@ -6,6 +6,7 @@
 
 import { reform, reformWithOverrides, reformWithLocale } from './modules/reform';
 import isDate from './modules/is-date';
+import { parse, parseUTC } from './modules/parse';
 import {
   addTime,
   addTimeSequence,
@@ -39,4 +40,6 @@ export {
   getUTCGroup,
   diffTime,
   compareTime,
+  parse,
+  parseUTC,
 };
