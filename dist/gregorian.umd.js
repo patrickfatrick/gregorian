@@ -1,8 +1,8 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@babel/runtime-corejs3/core-js-stable/object/assign'), require('@babel/runtime-corejs3/helpers/defineProperty'), require('@babel/runtime-corejs3/helpers/toConsumableArray'), require('@babel/runtime-corejs3/core-js-stable/instance/concat'), require('@babel/runtime-corejs3/core-js-stable/number/is-nan'), require('@babel/runtime-corejs3/core-js-stable/instance/includes'), require('@babel/runtime-corejs3/core-js-stable/instance/map'), require('@babel/runtime-corejs3/core-js-stable/symbol/match'), require('@babel/runtime-corejs3/core-js-stable/number/parse-int'), require('@babel/runtime-corejs3/core-js-stable/symbol/split'), require('@babel/runtime-corejs3/helpers/slicedToArray'), require('@babel/runtime-corejs3/core-js-stable/instance/reduce'), require('@babel/runtime-corejs3/core-js-stable/object/keys')) :
-  typeof define === 'function' && define.amd ? define(['exports', '@babel/runtime-corejs3/core-js-stable/object/assign', '@babel/runtime-corejs3/helpers/defineProperty', '@babel/runtime-corejs3/helpers/toConsumableArray', '@babel/runtime-corejs3/core-js-stable/instance/concat', '@babel/runtime-corejs3/core-js-stable/number/is-nan', '@babel/runtime-corejs3/core-js-stable/instance/includes', '@babel/runtime-corejs3/core-js-stable/instance/map', '@babel/runtime-corejs3/core-js-stable/symbol/match', '@babel/runtime-corejs3/core-js-stable/number/parse-int', '@babel/runtime-corejs3/core-js-stable/symbol/split', '@babel/runtime-corejs3/helpers/slicedToArray', '@babel/runtime-corejs3/core-js-stable/instance/reduce', '@babel/runtime-corejs3/core-js-stable/object/keys'], factory) :
-  (global = global || self, factory(global.gregorian = {}, global._Object$assign, global._defineProperty, global._toConsumableArray, global._concatInstanceProperty, global._Number$isNaN, global._includesInstanceProperty, global._mapInstanceProperty, global._Symbol$match, global._Number$parseInt, global._Symbol$split, global._slicedToArray, global._reduceInstanceProperty, global._Object$keys));
-}(this, (function (exports, _Object$assign, _defineProperty, _toConsumableArray, _concatInstanceProperty, _Number$isNaN, _includesInstanceProperty, _mapInstanceProperty, _Symbol$match, _Number$parseInt, _Symbol$split, _slicedToArray, _reduceInstanceProperty, _Object$keys) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@babel/runtime-corejs3/core-js-stable/object/assign'), require('@babel/runtime-corejs3/helpers/defineProperty'), require('@babel/runtime-corejs3/helpers/toConsumableArray'), require('@babel/runtime-corejs3/core-js-stable/instance/concat'), require('@babel/runtime-corejs3/core-js-stable/number/is-nan'), require('@babel/runtime-corejs3/core-js-stable/instance/includes'), require('@babel/runtime-corejs3/core-js-stable/number/parse-float'), require('@babel/runtime-corejs3/core-js-stable/instance/map'), require('@babel/runtime-corejs3/core-js-stable/symbol/match'), require('@babel/runtime-corejs3/core-js-stable/number/parse-int'), require('@babel/runtime-corejs3/core-js-stable/symbol/split'), require('@babel/runtime-corejs3/helpers/slicedToArray'), require('@babel/runtime-corejs3/core-js-stable/instance/reduce'), require('@babel/runtime-corejs3/core-js-stable/object/keys')) :
+  typeof define === 'function' && define.amd ? define(['exports', '@babel/runtime-corejs3/core-js-stable/object/assign', '@babel/runtime-corejs3/helpers/defineProperty', '@babel/runtime-corejs3/helpers/toConsumableArray', '@babel/runtime-corejs3/core-js-stable/instance/concat', '@babel/runtime-corejs3/core-js-stable/number/is-nan', '@babel/runtime-corejs3/core-js-stable/instance/includes', '@babel/runtime-corejs3/core-js-stable/number/parse-float', '@babel/runtime-corejs3/core-js-stable/instance/map', '@babel/runtime-corejs3/core-js-stable/symbol/match', '@babel/runtime-corejs3/core-js-stable/number/parse-int', '@babel/runtime-corejs3/core-js-stable/symbol/split', '@babel/runtime-corejs3/helpers/slicedToArray', '@babel/runtime-corejs3/core-js-stable/instance/reduce', '@babel/runtime-corejs3/core-js-stable/object/keys'], factory) :
+  (global = global || self, factory(global.gregorian = {}, global._Object$assign, global._defineProperty, global._toConsumableArray, global._concatInstanceProperty, global._Number$isNaN, global._includesInstanceProperty, global._Number$parseFloat, global._mapInstanceProperty, global._Symbol$match, global._Number$parseInt, global._Symbol$split, global._slicedToArray, global._reduceInstanceProperty, global._Object$keys));
+}(this, (function (exports, _Object$assign, _defineProperty, _toConsumableArray, _concatInstanceProperty, _Number$isNaN, _includesInstanceProperty, _Number$parseFloat, _mapInstanceProperty, _Symbol$match, _Number$parseInt, _Symbol$split, _slicedToArray, _reduceInstanceProperty, _Object$keys) { 'use strict';
 
   _Object$assign = _Object$assign && _Object$assign.hasOwnProperty('default') ? _Object$assign['default'] : _Object$assign;
   _defineProperty = _defineProperty && _defineProperty.hasOwnProperty('default') ? _defineProperty['default'] : _defineProperty;
@@ -10,6 +10,7 @@
   _concatInstanceProperty = _concatInstanceProperty && _concatInstanceProperty.hasOwnProperty('default') ? _concatInstanceProperty['default'] : _concatInstanceProperty;
   _Number$isNaN = _Number$isNaN && _Number$isNaN.hasOwnProperty('default') ? _Number$isNaN['default'] : _Number$isNaN;
   _includesInstanceProperty = _includesInstanceProperty && _includesInstanceProperty.hasOwnProperty('default') ? _includesInstanceProperty['default'] : _includesInstanceProperty;
+  _Number$parseFloat = _Number$parseFloat && _Number$parseFloat.hasOwnProperty('default') ? _Number$parseFloat['default'] : _Number$parseFloat;
   _mapInstanceProperty = _mapInstanceProperty && _mapInstanceProperty.hasOwnProperty('default') ? _mapInstanceProperty['default'] : _mapInstanceProperty;
   _Symbol$match = _Symbol$match && _Symbol$match.hasOwnProperty('default') ? _Symbol$match['default'] : _Symbol$match;
   _Number$parseInt = _Number$parseInt && _Number$parseInt.hasOwnProperty('default') ? _Number$parseInt['default'] : _Number$parseInt;
@@ -414,16 +415,14 @@
         d = _$Symbol$split$map2[2];
 
     var _$Symbol$split$map3 = _mapInstanceProperty(_context2 = /:|\./[_Symbol$split](time)).call(_context2, function (str) {
-      return _Number$parseInt(str, 10);
+      return _Number$parseFloat(str, 10);
     }),
-        _$Symbol$split$map4 = _slicedToArray(_$Symbol$split$map3, 4),
+        _$Symbol$split$map4 = _slicedToArray(_$Symbol$split$map3, 3),
         h = _$Symbol$split$map4[0],
         t = _$Symbol$split$map4[1],
-        s = _$Symbol$split$map4[2],
-        _$Symbol$split$map4$ = _$Symbol$split$map4[3],
-        l = _$Symbol$split$map4$ === void 0 ? 0 : _$Symbol$split$map4$;
+        s = _$Symbol$split$map4[2];
 
-    return new Date(Date.UTC(y, m - 1, d, _includesInstanceProperty(rawTime).call(rawTime, '-') || offset > 0 ? h + z : h + z * -1, t, s, l));
+    return new Date(Date.UTC(y, m - 1, d, _includesInstanceProperty(rawTime).call(rawTime, '-') || offset > 0 ? h + z : h + z * -1, t, s));
   }
   /**
    * Parses either an ambiguous ISO partial (2019-08-16 / 2019-08-16T22:55:00)
@@ -460,17 +459,15 @@
         m = _$Symbol$split$map6[1],
         d = _$Symbol$split$map6[2];
 
-    var _$Symbol$split$map7 = _mapInstanceProperty(_context4 = /:|\./[_Symbol$split](time)).call(_context4, function (str) {
-      return _Number$parseInt(str, 10);
+    var _$Symbol$split$map7 = _mapInstanceProperty(_context4 = /:/[_Symbol$split](time)).call(_context4, function (str) {
+      return _Number$parseFloat(str, 10);
     }),
-        _$Symbol$split$map8 = _slicedToArray(_$Symbol$split$map7, 4),
+        _$Symbol$split$map8 = _slicedToArray(_$Symbol$split$map7, 3),
         h = _$Symbol$split$map8[0],
         t = _$Symbol$split$map8[1],
-        s = _$Symbol$split$map8[2],
-        _$Symbol$split$map8$ = _$Symbol$split$map8[3],
-        l = _$Symbol$split$map8$ === void 0 ? 0 : _$Symbol$split$map8$;
+        s = _$Symbol$split$map8[2];
 
-    return new Date(Date.UTC(y, m - 1, d, _includesInstanceProperty(rawTime).call(rawTime, '-') || offset > 0 ? h + z : h + z * -1, t, s, l));
+    return new Date(Date.UTC(y, m - 1, d, _includesInstanceProperty(rawTime).call(rawTime, '-') || offset > 0 ? h + z : h + z * -1, t, s));
   }
 
   /**

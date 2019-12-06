@@ -4,6 +4,7 @@ import _toConsumableArray from '@babel/runtime-corejs3/helpers/toConsumableArray
 import _concatInstanceProperty from '@babel/runtime-corejs3/core-js-stable/instance/concat';
 import _Number$isNaN from '@babel/runtime-corejs3/core-js-stable/number/is-nan';
 import _includesInstanceProperty from '@babel/runtime-corejs3/core-js-stable/instance/includes';
+import _Number$parseFloat from '@babel/runtime-corejs3/core-js-stable/number/parse-float';
 import _mapInstanceProperty from '@babel/runtime-corejs3/core-js-stable/instance/map';
 import _Symbol$match from '@babel/runtime-corejs3/core-js-stable/symbol/match';
 import _Number$parseInt from '@babel/runtime-corejs3/core-js-stable/number/parse-int';
@@ -408,16 +409,14 @@ function parse(input) {
       d = _$Symbol$split$map2[2];
 
   var _$Symbol$split$map3 = _mapInstanceProperty(_context2 = /:|\./[_Symbol$split](time)).call(_context2, function (str) {
-    return _Number$parseInt(str, 10);
+    return _Number$parseFloat(str, 10);
   }),
-      _$Symbol$split$map4 = _slicedToArray(_$Symbol$split$map3, 4),
+      _$Symbol$split$map4 = _slicedToArray(_$Symbol$split$map3, 3),
       h = _$Symbol$split$map4[0],
       t = _$Symbol$split$map4[1],
-      s = _$Symbol$split$map4[2],
-      _$Symbol$split$map4$ = _$Symbol$split$map4[3],
-      l = _$Symbol$split$map4$ === void 0 ? 0 : _$Symbol$split$map4$;
+      s = _$Symbol$split$map4[2];
 
-  return new Date(Date.UTC(y, m - 1, d, _includesInstanceProperty(rawTime).call(rawTime, '-') || offset > 0 ? h + z : h + z * -1, t, s, l));
+  return new Date(Date.UTC(y, m - 1, d, _includesInstanceProperty(rawTime).call(rawTime, '-') || offset > 0 ? h + z : h + z * -1, t, s));
 }
 /**
  * Parses either an ambiguous ISO partial (2019-08-16 / 2019-08-16T22:55:00)
@@ -454,17 +453,15 @@ function parseUTC(input) {
       m = _$Symbol$split$map6[1],
       d = _$Symbol$split$map6[2];
 
-  var _$Symbol$split$map7 = _mapInstanceProperty(_context4 = /:|\./[_Symbol$split](time)).call(_context4, function (str) {
-    return _Number$parseInt(str, 10);
+  var _$Symbol$split$map7 = _mapInstanceProperty(_context4 = /:/[_Symbol$split](time)).call(_context4, function (str) {
+    return _Number$parseFloat(str, 10);
   }),
-      _$Symbol$split$map8 = _slicedToArray(_$Symbol$split$map7, 4),
+      _$Symbol$split$map8 = _slicedToArray(_$Symbol$split$map7, 3),
       h = _$Symbol$split$map8[0],
       t = _$Symbol$split$map8[1],
-      s = _$Symbol$split$map8[2],
-      _$Symbol$split$map8$ = _$Symbol$split$map8[3],
-      l = _$Symbol$split$map8$ === void 0 ? 0 : _$Symbol$split$map8$;
+      s = _$Symbol$split$map8[2];
 
-  return new Date(Date.UTC(y, m - 1, d, _includesInstanceProperty(rawTime).call(rawTime, '-') || offset > 0 ? h + z : h + z * -1, t, s, l));
+  return new Date(Date.UTC(y, m - 1, d, _includesInstanceProperty(rawTime).call(rawTime, '-') || offset > 0 ? h + z : h + z * -1, t, s));
 }
 
 /**
