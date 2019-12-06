@@ -1,12 +1,14 @@
 import babel from 'rollup-plugin-babel'
 
 export default {
-  entry: 'src/index.js',
-  dest: 'dist/gregorian.js',
+  input: 'src/index.js',
+  output: {
+    file: 'dist/gregorian.js',
+    format: 'es'
+  },
   plugins: [
     babel({
       exclude: 'node_modules/**/*'
     })
   ],
-  format: 'es'
 }

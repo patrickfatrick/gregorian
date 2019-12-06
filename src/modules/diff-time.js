@@ -47,8 +47,8 @@ function diffIt(increment, date1, date2) {
 }
 
 export const diffTime = curry((increment, input1, input2) => {
-  input1 = input1 || new Date();
-  input2 = input2 || new Date();
+  input1 = input1 ?? new Date();
+  input2 = input2 ?? new Date();
   validateDate(input1);
   validateDate(input2);
   return diffIt(increment, input1, input2);

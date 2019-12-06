@@ -58,7 +58,7 @@ export const resetUTC = curry((increment, input) => {
     return wrap(resetUTC(increment), input);
   }
 
-  input = input || new Date();
+  input = input ?? new Date();
   validateDate(input);
   return resetLocalOrResetUTC(increment, input, 'UTC');
 });
@@ -68,7 +68,7 @@ export const resetLocal = curry((increment, input) => {
     return wrap(resetLocal(increment), input);
   }
 
-  input = input || new Date();
+  input = input ?? new Date();
   validateDate(input);
   return resetLocalOrResetUTC(increment, input, '');
 });

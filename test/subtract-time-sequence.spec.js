@@ -16,20 +16,33 @@ test('errors out if invalid increment passed in', t => {
 
 test('uses the current time by default', t => {
   const clock = sinon.useFakeTimers(new Date('1985-05-22T00:00:00.000Z'));
-  t.is(subtractTimeSequence([['y', 1], ['s', 100]])().toISOString(), '1984-05-21T23:58:20.000Z');
+  t.is(
+    subtractTimeSequence([
+      ['y', 1],
+      ['s', 100],
+    ])().toISOString(),
+    '1984-05-21T23:58:20.000Z',
+  );
   clock.restore();
 });
 
 test('sequence', t => {
   t.is(
-    subtractTimeSequence([['m', 11], ['d', 5], ['h', -6]])(t.context.date).toISOString(),
+    subtractTimeSequence([
+      ['m', 11],
+      ['d', 5],
+      ['h', -6],
+    ])(t.context.date).toISOString(),
     '1987-05-06T06:00:00.000Z',
   );
 });
 
 test('can be quasi-chained', t => {
   const subtractTimeSequenceFn = subtractTimeSequence([['m', 11]])(
-    subtractTimeSequence([['d', 5], ['h', -6]]),
+    subtractTimeSequence([
+      ['d', 5],
+      ['h', -6],
+    ]),
   );
   t.is(subtractTimeSequenceFn(t.context.date).toISOString(), '1987-05-06T06:00:00.000Z');
 });

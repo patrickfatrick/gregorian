@@ -65,7 +65,7 @@ export const addTime = curry((increment, n, input) => {
     return wrap(addTime(increment, n), input);
   }
 
-  input = input || new Date();
+  input = input ?? new Date();
   validateDate(input);
   return addTimeOrSubtractTime(increment, Number(n), input);
 });
@@ -75,7 +75,7 @@ export const subtractTime = curry((increment, n, input) => {
     return wrap(subtractTime(increment, n), input);
   }
 
-  input = input || new Date();
+  input = input ?? new Date();
   validateDate(input);
   return addTimeOrSubtractTime(increment, n * -1, input);
 });
@@ -85,7 +85,7 @@ export const addTimeSequence = curry((sequence, input) => {
     return wrap(addTimeSequence(sequence), input);
   }
 
-  input = input || new Date();
+  input = input ?? new Date();
   validateDate(input);
   return sequence.reduce((acc, cur) => addTimeOrSubtractTime(cur[0], Number(cur[1]), acc), input);
 });
@@ -95,7 +95,7 @@ export const subtractTimeSequence = curry((sequence, input) => {
     return wrap(subtractTimeSequence(sequence), input);
   }
 
-  input = input || new Date();
+  input = input ?? new Date();
   validateDate(input);
   return sequence.reduce((acc, cur) => addTimeOrSubtractTime(cur[0], cur[1] * -1, acc), input);
 });

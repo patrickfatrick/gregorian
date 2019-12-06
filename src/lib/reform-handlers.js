@@ -269,7 +269,10 @@ export default {
    * @returns {String}        the two-digit year
    */
   [YEAR](date) {
-    return date.getFullYear().toString().substr(2);
+    return date
+      .getFullYear()
+      .toString()
+      .substr(2);
   },
 
   /**
@@ -287,7 +290,7 @@ export default {
    * @returns {String}        the timezone offset
    */
   [TIMEZONE_OFFSET](date, { utc }) {
-    let offset = (date.getTimezoneOffset() / 60 * -1).toString();
+    let offset = ((date.getTimezoneOffset() / 60) * -1).toString();
     offset = /^[-]?\d$/g.test(offset)
       ? offset.replace(/\d/, (match, off) => {
           return '0' + offset.charAt(off);

@@ -22,7 +22,7 @@ import { validateDate, curry } from '../lib/utils';
 function getLocalOrGetUTC(increment, date, utc = '') {
   const incrementHandlers = {
     [TIMEZONE_OFFSET](date) {
-      return utc ? 0 : date.getTimezoneOffset() / 60 * -1;
+      return utc ? 0 : (date.getTimezoneOffset() / 60) * -1;
     },
 
     [MILLISECOND](date) {
@@ -68,25 +68,25 @@ function getLocalOrGetUTC(increment, date, utc = '') {
 }
 
 export const getUTC = curry((increment, date) => {
-  date = date || new Date();
+  date = date ?? new Date();
   validateDate(date);
   return getLocalOrGetUTC(increment, date, 'UTC');
 });
 
 export const getLocal = curry((increment, date) => {
-  date = date || new Date();
+  date = date ?? new Date();
   validateDate(date);
   return getLocalOrGetUTC(increment, date);
 });
 
 export const getUTCGroup = curry((increments, date) => {
-  date = date || new Date();
+  date = date ?? new Date();
   validateDate(date);
   return increments.map(increment => getLocalOrGetUTC(increment, date, 'UTC'));
 });
 
 export const getLocalGroup = curry((increments, date) => {
-  date = date || new Date();
+  date = date ?? new Date();
   validateDate(date);
   return increments.map(increment => getLocalOrGetUTC(increment, date));
 });

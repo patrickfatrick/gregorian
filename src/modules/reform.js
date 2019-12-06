@@ -17,7 +17,7 @@ function formatDate(format, date, translation) {
  * @returns   {String}            the date formatted into the specified format
  */
 export const reform = curry((format, date) => {
-  date = date || new Date();
+  date = date ?? new Date();
   validateDate(date);
 
   return formatDate(format, date, en);
@@ -31,7 +31,7 @@ export const reform = curry((format, date) => {
  * @returns   {String}            the date formatted into the specified format
  */
 export const reformWithOverrides = curry((overrides, format, date) => {
-  date = date || new Date();
+  date = date ?? new Date();
   const names = Object.assign({}, en, overrides);
   validateDate(date);
 
@@ -46,7 +46,7 @@ export const reformWithOverrides = curry((overrides, format, date) => {
  * @returns   {String}            the date formatted into the specified format
  */
 export const reformWithLocale = curry((locale, format, date) => {
-  date = date || new Date();
+  date = date ?? new Date();
   validateDate(date);
 
   return formatDate(format, date, locale || en);

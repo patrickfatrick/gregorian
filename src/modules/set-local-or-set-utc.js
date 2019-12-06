@@ -82,7 +82,7 @@ function setLocalOrSetUTC(increment, value, date, utc = '') {
 export const setUTC = curry((increment, value, input) => {
   if (input instanceof Function) return wrap(setUTC(increment, value), input);
 
-  input = input || new Date();
+  input = input ?? new Date();
   validateDate(input);
   return setLocalOrSetUTC(increment, value, input, 'UTC');
 });
@@ -90,7 +90,7 @@ export const setUTC = curry((increment, value, input) => {
 export const setLocal = curry((increment, value, input) => {
   if (input instanceof Function) return wrap(setLocal(increment, value), input);
 
-  input = input || new Date();
+  input = input ?? new Date();
   validateDate(input);
   return setLocalOrSetUTC(increment, value, input);
 });
@@ -98,7 +98,7 @@ export const setLocal = curry((increment, value, input) => {
 export const setLocalGroup = curry((group, input) => {
   if (input instanceof Function) return wrap(setLocalGroup(group), input);
 
-  input = input || new Date();
+  input = input ?? new Date();
   validateDate(input);
   return Object.keys(group).reduce((acc, cur) => setLocalOrSetUTC(cur, group[cur], input), input);
 });
@@ -106,7 +106,7 @@ export const setLocalGroup = curry((group, input) => {
 export const setUTCGroup = curry((group, input) => {
   if (input instanceof Function) return wrap(setUTCGroup(group), input);
 
-  input = input || new Date();
+  input = input ?? new Date();
   validateDate(input);
   return Object.keys(group).reduce(
     (acc, cur) => setLocalOrSetUTC(cur, group[cur], input, 'UTC'),
