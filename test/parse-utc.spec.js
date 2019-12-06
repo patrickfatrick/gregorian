@@ -29,6 +29,13 @@ test('parses a full ISO-8601 string with no timezone', t => {
   );
 });
 
+test('parses an ISO-8601 string with milliseconds', t => {
+  t.is(
+    parseUTC('2019-10-23T05:28:41.506245').toISOString(),
+    new Date(Date.UTC(2019, 9, 23, 5, 28, 41.506245)).toISOString(),
+  );
+});
+
 test('parses a partial ISO-8601', t => {
   t.is(parseUTC('2019-08-16').toISOString(), new Date(2019, 7, 15, 17, 0, 0, 0).toISOString());
 });
