@@ -28,9 +28,8 @@
   "author": "Patrick Fricano <patrick.fricano@icloud.com>",
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "^7.7.4",
-    "core-js": "^3.4.7",
-    "regenerator-runtime": "^0.13.3"
+    "@babel/runtime-corejs3": "^7.7.4",
+    "core-js": "^3.4.7"
   },
   "devDependencies": {
     "@babel/core": "^7.7.4",

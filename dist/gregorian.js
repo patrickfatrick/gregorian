@@ -1,404 +1,16 @@
-import 'core-js/modules/es.symbol';
-import 'core-js/modules/es.symbol.description';
-import 'core-js/modules/es.symbol.async-iterator';
-import 'core-js/modules/es.symbol.has-instance';
-import 'core-js/modules/es.symbol.is-concat-spreadable';
-import 'core-js/modules/es.symbol.iterator';
-import 'core-js/modules/es.symbol.match';
-import 'core-js/modules/es.symbol.match-all';
-import 'core-js/modules/es.symbol.replace';
-import 'core-js/modules/es.symbol.search';
-import 'core-js/modules/es.symbol.species';
-import 'core-js/modules/es.symbol.split';
-import 'core-js/modules/es.symbol.to-primitive';
-import 'core-js/modules/es.symbol.to-string-tag';
-import 'core-js/modules/es.symbol.unscopables';
-import 'core-js/modules/es.array.concat';
-import 'core-js/modules/es.array.copy-within';
-import 'core-js/modules/es.array.every';
-import 'core-js/modules/es.array.fill';
-import 'core-js/modules/es.array.filter';
-import 'core-js/modules/es.array.find';
-import 'core-js/modules/es.array.find-index';
-import 'core-js/modules/es.array.flat';
-import 'core-js/modules/es.array.flat-map';
-import 'core-js/modules/es.array.for-each';
-import 'core-js/modules/es.array.from';
-import 'core-js/modules/es.array.includes';
-import 'core-js/modules/es.array.index-of';
-import 'core-js/modules/es.array.iterator';
-import 'core-js/modules/es.array.join';
-import 'core-js/modules/es.array.last-index-of';
-import 'core-js/modules/es.array.map';
-import 'core-js/modules/es.array.of';
-import 'core-js/modules/es.array.reduce';
-import 'core-js/modules/es.array.reduce-right';
-import 'core-js/modules/es.array.reverse';
-import 'core-js/modules/es.array.slice';
-import 'core-js/modules/es.array.some';
-import 'core-js/modules/es.array.sort';
-import 'core-js/modules/es.array.species';
-import 'core-js/modules/es.array.splice';
-import 'core-js/modules/es.array.unscopables.flat';
-import 'core-js/modules/es.array.unscopables.flat-map';
-import 'core-js/modules/es.array-buffer.constructor';
-import 'core-js/modules/es.array-buffer.is-view';
-import 'core-js/modules/es.array-buffer.slice';
-import 'core-js/modules/es.data-view';
-import 'core-js/modules/es.date.to-iso-string';
-import 'core-js/modules/es.date.to-json';
-import 'core-js/modules/es.date.to-primitive';
-import 'core-js/modules/es.date.to-string';
-import 'core-js/modules/es.function.has-instance';
-import 'core-js/modules/es.function.name';
-import 'core-js/modules/es.global-this';
-import 'core-js/modules/es.json.to-string-tag';
-import 'core-js/modules/es.map';
-import 'core-js/modules/es.math.acosh';
-import 'core-js/modules/es.math.asinh';
-import 'core-js/modules/es.math.atanh';
-import 'core-js/modules/es.math.cbrt';
-import 'core-js/modules/es.math.clz32';
-import 'core-js/modules/es.math.cosh';
-import 'core-js/modules/es.math.expm1';
-import 'core-js/modules/es.math.fround';
-import 'core-js/modules/es.math.hypot';
-import 'core-js/modules/es.math.imul';
-import 'core-js/modules/es.math.log10';
-import 'core-js/modules/es.math.log1p';
-import 'core-js/modules/es.math.log2';
-import 'core-js/modules/es.math.sign';
-import 'core-js/modules/es.math.sinh';
-import 'core-js/modules/es.math.tanh';
-import 'core-js/modules/es.math.to-string-tag';
-import 'core-js/modules/es.math.trunc';
-import 'core-js/modules/es.number.constructor';
-import 'core-js/modules/es.number.epsilon';
-import 'core-js/modules/es.number.is-finite';
-import 'core-js/modules/es.number.is-integer';
-import 'core-js/modules/es.number.is-nan';
-import 'core-js/modules/es.number.is-safe-integer';
-import 'core-js/modules/es.number.max-safe-integer';
-import 'core-js/modules/es.number.min-safe-integer';
-import 'core-js/modules/es.number.parse-float';
-import 'core-js/modules/es.number.parse-int';
-import 'core-js/modules/es.number.to-fixed';
-import 'core-js/modules/es.number.to-precision';
-import 'core-js/modules/es.object.assign';
-import 'core-js/modules/es.object.define-getter';
-import 'core-js/modules/es.object.define-properties';
-import 'core-js/modules/es.object.define-property';
-import 'core-js/modules/es.object.define-setter';
-import 'core-js/modules/es.object.entries';
-import 'core-js/modules/es.object.freeze';
-import 'core-js/modules/es.object.from-entries';
-import 'core-js/modules/es.object.get-own-property-descriptor';
-import 'core-js/modules/es.object.get-own-property-descriptors';
-import 'core-js/modules/es.object.get-own-property-names';
-import 'core-js/modules/es.object.get-prototype-of';
-import 'core-js/modules/es.object.is';
-import 'core-js/modules/es.object.is-extensible';
-import 'core-js/modules/es.object.is-frozen';
-import 'core-js/modules/es.object.is-sealed';
-import 'core-js/modules/es.object.keys';
-import 'core-js/modules/es.object.lookup-getter';
-import 'core-js/modules/es.object.lookup-setter';
-import 'core-js/modules/es.object.prevent-extensions';
-import 'core-js/modules/es.object.seal';
-import 'core-js/modules/es.object.set-prototype-of';
-import 'core-js/modules/es.object.to-string';
-import 'core-js/modules/es.object.values';
-import 'core-js/modules/es.parse-float';
-import 'core-js/modules/es.parse-int';
-import 'core-js/modules/es.promise';
-import 'core-js/modules/es.promise.all-settled';
-import 'core-js/modules/es.promise.finally';
-import 'core-js/modules/es.reflect.apply';
-import 'core-js/modules/es.reflect.construct';
-import 'core-js/modules/es.reflect.define-property';
-import 'core-js/modules/es.reflect.delete-property';
-import 'core-js/modules/es.reflect.get';
-import 'core-js/modules/es.reflect.get-own-property-descriptor';
-import 'core-js/modules/es.reflect.get-prototype-of';
-import 'core-js/modules/es.reflect.has';
-import 'core-js/modules/es.reflect.is-extensible';
-import 'core-js/modules/es.reflect.own-keys';
-import 'core-js/modules/es.reflect.prevent-extensions';
-import 'core-js/modules/es.reflect.set';
-import 'core-js/modules/es.reflect.set-prototype-of';
-import 'core-js/modules/es.regexp.constructor';
-import 'core-js/modules/es.regexp.exec';
-import 'core-js/modules/es.regexp.flags';
-import 'core-js/modules/es.regexp.to-string';
-import 'core-js/modules/es.set';
-import 'core-js/modules/es.string.code-point-at';
-import 'core-js/modules/es.string.ends-with';
-import 'core-js/modules/es.string.from-code-point';
-import 'core-js/modules/es.string.includes';
-import 'core-js/modules/es.string.iterator';
-import 'core-js/modules/es.string.match';
-import 'core-js/modules/es.string.match-all';
-import 'core-js/modules/es.string.pad-end';
-import 'core-js/modules/es.string.pad-start';
-import 'core-js/modules/es.string.raw';
-import 'core-js/modules/es.string.repeat';
-import 'core-js/modules/es.string.replace';
-import 'core-js/modules/es.string.search';
-import 'core-js/modules/es.string.split';
-import 'core-js/modules/es.string.starts-with';
-import 'core-js/modules/es.string.trim';
-import 'core-js/modules/es.string.trim-end';
-import 'core-js/modules/es.string.trim-start';
-import 'core-js/modules/es.string.anchor';
-import 'core-js/modules/es.string.big';
-import 'core-js/modules/es.string.blink';
-import 'core-js/modules/es.string.bold';
-import 'core-js/modules/es.string.fixed';
-import 'core-js/modules/es.string.fontcolor';
-import 'core-js/modules/es.string.fontsize';
-import 'core-js/modules/es.string.italics';
-import 'core-js/modules/es.string.link';
-import 'core-js/modules/es.string.small';
-import 'core-js/modules/es.string.strike';
-import 'core-js/modules/es.string.sub';
-import 'core-js/modules/es.string.sup';
-import 'core-js/modules/es.typed-array.float32-array';
-import 'core-js/modules/es.typed-array.float64-array';
-import 'core-js/modules/es.typed-array.int8-array';
-import 'core-js/modules/es.typed-array.int16-array';
-import 'core-js/modules/es.typed-array.int32-array';
-import 'core-js/modules/es.typed-array.uint8-array';
-import 'core-js/modules/es.typed-array.uint8-clamped-array';
-import 'core-js/modules/es.typed-array.uint16-array';
-import 'core-js/modules/es.typed-array.uint32-array';
-import 'core-js/modules/es.typed-array.copy-within';
-import 'core-js/modules/es.typed-array.every';
-import 'core-js/modules/es.typed-array.fill';
-import 'core-js/modules/es.typed-array.filter';
-import 'core-js/modules/es.typed-array.find';
-import 'core-js/modules/es.typed-array.find-index';
-import 'core-js/modules/es.typed-array.for-each';
-import 'core-js/modules/es.typed-array.from';
-import 'core-js/modules/es.typed-array.includes';
-import 'core-js/modules/es.typed-array.index-of';
-import 'core-js/modules/es.typed-array.iterator';
-import 'core-js/modules/es.typed-array.join';
-import 'core-js/modules/es.typed-array.last-index-of';
-import 'core-js/modules/es.typed-array.map';
-import 'core-js/modules/es.typed-array.of';
-import 'core-js/modules/es.typed-array.reduce';
-import 'core-js/modules/es.typed-array.reduce-right';
-import 'core-js/modules/es.typed-array.reverse';
-import 'core-js/modules/es.typed-array.set';
-import 'core-js/modules/es.typed-array.slice';
-import 'core-js/modules/es.typed-array.some';
-import 'core-js/modules/es.typed-array.sort';
-import 'core-js/modules/es.typed-array.subarray';
-import 'core-js/modules/es.typed-array.to-locale-string';
-import 'core-js/modules/es.typed-array.to-string';
-import 'core-js/modules/es.weak-map';
-import 'core-js/modules/es.weak-set';
-import 'core-js/modules/esnext.aggregate-error';
-import 'core-js/modules/esnext.array.is-template-object';
-import 'core-js/modules/esnext.array.last-index';
-import 'core-js/modules/esnext.array.last-item';
-import 'core-js/modules/esnext.async-iterator.constructor';
-import 'core-js/modules/esnext.async-iterator.as-indexed-pairs';
-import 'core-js/modules/esnext.async-iterator.drop';
-import 'core-js/modules/esnext.async-iterator.every';
-import 'core-js/modules/esnext.async-iterator.filter';
-import 'core-js/modules/esnext.async-iterator.find';
-import 'core-js/modules/esnext.async-iterator.flat-map';
-import 'core-js/modules/esnext.async-iterator.for-each';
-import 'core-js/modules/esnext.async-iterator.from';
-import 'core-js/modules/esnext.async-iterator.map';
-import 'core-js/modules/esnext.async-iterator.reduce';
-import 'core-js/modules/esnext.async-iterator.some';
-import 'core-js/modules/esnext.async-iterator.take';
-import 'core-js/modules/esnext.async-iterator.to-array';
-import 'core-js/modules/esnext.composite-key';
-import 'core-js/modules/esnext.composite-symbol';
-import 'core-js/modules/esnext.global-this';
-import 'core-js/modules/esnext.iterator.constructor';
-import 'core-js/modules/esnext.iterator.as-indexed-pairs';
-import 'core-js/modules/esnext.iterator.drop';
-import 'core-js/modules/esnext.iterator.every';
-import 'core-js/modules/esnext.iterator.filter';
-import 'core-js/modules/esnext.iterator.find';
-import 'core-js/modules/esnext.iterator.flat-map';
-import 'core-js/modules/esnext.iterator.for-each';
-import 'core-js/modules/esnext.iterator.from';
-import 'core-js/modules/esnext.iterator.map';
-import 'core-js/modules/esnext.iterator.reduce';
-import 'core-js/modules/esnext.iterator.some';
-import 'core-js/modules/esnext.iterator.take';
-import 'core-js/modules/esnext.iterator.to-array';
-import 'core-js/modules/esnext.map.delete-all';
-import 'core-js/modules/esnext.map.every';
-import 'core-js/modules/esnext.map.filter';
-import 'core-js/modules/esnext.map.find';
-import 'core-js/modules/esnext.map.find-key';
-import 'core-js/modules/esnext.map.from';
-import 'core-js/modules/esnext.map.group-by';
-import 'core-js/modules/esnext.map.includes';
-import 'core-js/modules/esnext.map.key-by';
-import 'core-js/modules/esnext.map.key-of';
-import 'core-js/modules/esnext.map.map-keys';
-import 'core-js/modules/esnext.map.map-values';
-import 'core-js/modules/esnext.map.merge';
-import 'core-js/modules/esnext.map.of';
-import 'core-js/modules/esnext.map.reduce';
-import 'core-js/modules/esnext.map.some';
-import 'core-js/modules/esnext.map.update';
-import 'core-js/modules/esnext.map.update-or-insert';
-import 'core-js/modules/esnext.map.upsert';
-import 'core-js/modules/esnext.math.clamp';
-import 'core-js/modules/esnext.math.deg-per-rad';
-import 'core-js/modules/esnext.math.degrees';
-import 'core-js/modules/esnext.math.fscale';
-import 'core-js/modules/esnext.math.iaddh';
-import 'core-js/modules/esnext.math.imulh';
-import 'core-js/modules/esnext.math.isubh';
-import 'core-js/modules/esnext.math.rad-per-deg';
-import 'core-js/modules/esnext.math.radians';
-import 'core-js/modules/esnext.math.scale';
-import 'core-js/modules/esnext.math.seeded-prng';
-import 'core-js/modules/esnext.math.signbit';
-import 'core-js/modules/esnext.math.umulh';
-import 'core-js/modules/esnext.number.from-string';
-import 'core-js/modules/esnext.observable';
-import 'core-js/modules/esnext.promise.all-settled';
-import 'core-js/modules/esnext.promise.any';
-import 'core-js/modules/esnext.promise.try';
-import 'core-js/modules/esnext.reflect.define-metadata';
-import 'core-js/modules/esnext.reflect.delete-metadata';
-import 'core-js/modules/esnext.reflect.get-metadata';
-import 'core-js/modules/esnext.reflect.get-metadata-keys';
-import 'core-js/modules/esnext.reflect.get-own-metadata';
-import 'core-js/modules/esnext.reflect.get-own-metadata-keys';
-import 'core-js/modules/esnext.reflect.has-metadata';
-import 'core-js/modules/esnext.reflect.has-own-metadata';
-import 'core-js/modules/esnext.reflect.metadata';
-import 'core-js/modules/esnext.set.add-all';
-import 'core-js/modules/esnext.set.delete-all';
-import 'core-js/modules/esnext.set.difference';
-import 'core-js/modules/esnext.set.every';
-import 'core-js/modules/esnext.set.filter';
-import 'core-js/modules/esnext.set.find';
-import 'core-js/modules/esnext.set.from';
-import 'core-js/modules/esnext.set.intersection';
-import 'core-js/modules/esnext.set.is-disjoint-from';
-import 'core-js/modules/esnext.set.is-subset-of';
-import 'core-js/modules/esnext.set.is-superset-of';
-import 'core-js/modules/esnext.set.join';
-import 'core-js/modules/esnext.set.map';
-import 'core-js/modules/esnext.set.of';
-import 'core-js/modules/esnext.set.reduce';
-import 'core-js/modules/esnext.set.some';
-import 'core-js/modules/esnext.set.symmetric-difference';
-import 'core-js/modules/esnext.set.union';
-import 'core-js/modules/esnext.string.at';
-import 'core-js/modules/esnext.string.code-points';
-import 'core-js/modules/esnext.string.match-all';
-import 'core-js/modules/esnext.string.replace-all';
-import 'core-js/modules/esnext.symbol.async-dispose';
-import 'core-js/modules/esnext.symbol.dispose';
-import 'core-js/modules/esnext.symbol.observable';
-import 'core-js/modules/esnext.symbol.pattern-match';
-import 'core-js/modules/esnext.symbol.replace-all';
-import 'core-js/modules/esnext.weak-map.delete-all';
-import 'core-js/modules/esnext.weak-map.from';
-import 'core-js/modules/esnext.weak-map.of';
-import 'core-js/modules/esnext.weak-map.upsert';
-import 'core-js/modules/esnext.weak-set.add-all';
-import 'core-js/modules/esnext.weak-set.delete-all';
-import 'core-js/modules/esnext.weak-set.from';
-import 'core-js/modules/esnext.weak-set.of';
-import 'core-js/modules/web.dom-collections.for-each';
-import 'core-js/modules/web.dom-collections.iterator';
-import 'core-js/modules/web.immediate';
-import 'core-js/modules/web.queue-microtask';
-import 'core-js/modules/web.url';
-import 'core-js/modules/web.url.to-json';
-import 'core-js/modules/web.url-search-params';
-import 'regenerator-runtime/runtime';
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-function _slicedToArray(arr, i) {
-  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest();
-}
-
-function _toConsumableArray(arr) {
-  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
-}
-
-function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) {
-    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
-
-    return arr2;
-  }
-}
-
-function _arrayWithHoles(arr) {
-  if (Array.isArray(arr)) return arr;
-}
-
-function _iterableToArray(iter) {
-  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
-}
-
-function _iterableToArrayLimit(arr, i) {
-  if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) {
-    return;
-  }
-
-  var _arr = [];
-  var _n = true;
-  var _d = false;
-  var _e = undefined;
-
-  try {
-    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
-      _arr.push(_s.value);
-
-      if (i && _arr.length === i) break;
-    }
-  } catch (err) {
-    _d = true;
-    _e = err;
-  } finally {
-    try {
-      if (!_n && _i["return"] != null) _i["return"]();
-    } finally {
-      if (_d) throw _e;
-    }
-  }
-
-  return _arr;
-}
-
-function _nonIterableSpread() {
-  throw new TypeError("Invalid attempt to spread non-iterable instance");
-}
-
-function _nonIterableRest() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance");
-}
+import _Object$assign from '@babel/runtime-corejs3/core-js-stable/object/assign';
+import _defineProperty from '@babel/runtime-corejs3/helpers/defineProperty';
+import _toConsumableArray from '@babel/runtime-corejs3/helpers/toConsumableArray';
+import _concatInstanceProperty from '@babel/runtime-corejs3/core-js-stable/instance/concat';
+import _Number$isNaN from '@babel/runtime-corejs3/core-js-stable/number/is-nan';
+import _includesInstanceProperty from '@babel/runtime-corejs3/core-js-stable/instance/includes';
+import _mapInstanceProperty from '@babel/runtime-corejs3/core-js-stable/instance/map';
+import _Symbol$match from '@babel/runtime-corejs3/core-js-stable/symbol/match';
+import _Number$parseInt from '@babel/runtime-corejs3/core-js-stable/number/parse-int';
+import _Symbol$split from '@babel/runtime-corejs3/core-js-stable/symbol/split';
+import _slicedToArray from '@babel/runtime-corejs3/helpers/slicedToArray';
+import _reduceInstanceProperty from '@babel/runtime-corejs3/core-js-stable/instance/reduce';
+import _Object$keys from '@babel/runtime-corejs3/core-js-stable/object/keys';
 
 /**
  * Strings used in various functions to indicate different aspects of the date
@@ -511,7 +123,7 @@ var reformHandlers = (_PERIOD_UPPERCASE$PER = {}, _defineProperty(_PERIOD_UPPERC
 }), _defineProperty(_PERIOD_UPPERCASE$PER, DATE_ORDINAL, function (date, _ref7) {
   var ordinals = _ref7.ordinals;
   var day = date.getDate();
-  return day + (ordinals[day] || ordinals.default);
+  return day + (ordinals[day] || ordinals["default"]);
 }), _defineProperty(_PERIOD_UPPERCASE$PER, HOUR_PERIOD, function (date) {
   var hour = date.getHours();
 
@@ -631,7 +243,7 @@ var en = {
     22: 'nd',
     23: 'rd',
     31: 'st',
-    default: 'th'
+    "default": 'th'
   },
   periods: ['am', 'pm'],
   utc: 'UTC',
@@ -644,7 +256,7 @@ var en = {
  * @returns {Boolean}         whether or not the input is a valid Date
  */
 function isDate(input) {
-  return input instanceof Date && !Number.isNaN(Date.parse(input));
+  return input instanceof Date && !_Number$isNaN(Date.parse(input));
 }
 /**
  * Checks that the date object passed in is a valid Date instance, or throw a TypeError
@@ -686,7 +298,8 @@ function curry(fn) {
         args[_key2] = arguments[_key2];
       }
 
-      var nextArgs = resolverArgs.concat(args.length ? args : null);
+      var nextArgs = _concatInstanceProperty(resolverArgs).call(resolverArgs, args.length ? args : null);
+
       var next = nextArgs.length >= fn.length ? fn : resolver;
       return next.apply(void 0, _toConsumableArray(nextArgs));
     };
@@ -738,7 +351,9 @@ var reformWithOverrides = curry(function (overrides, format, date) {
   var _date2;
 
   date = (_date2 = date) !== null && _date2 !== void 0 ? _date2 : new Date();
-  var names = Object.assign({}, en, overrides);
+
+  var names = _Object$assign({}, en, overrides);
+
   validateDate(date);
   return formatDate(format, date, names);
 });
@@ -766,32 +381,34 @@ var reformWithLocale = curry(function (locale, format, date) {
  */
 
 function parse(input) {
+  var _context, _context2;
+
   if (isDate(input)) return input;
 
-  var _$Symbol$split = /T| /[Symbol.split](input),
+  var _$Symbol$split = /T| /[_Symbol$split](input),
       _$Symbol$split2 = _slicedToArray(_$Symbol$split, 2),
       date = _$Symbol$split2[0],
       _$Symbol$split2$ = _$Symbol$split2[1],
       rawTime = _$Symbol$split2$ === void 0 ? '00:00:00' : _$Symbol$split2$;
 
-  var _$Symbol$split3 = /Z|\+|\-/[Symbol.split](rawTime),
+  var _$Symbol$split3 = /Z|\+|\-/[_Symbol$split](rawTime),
       _$Symbol$split4 = _slicedToArray(_$Symbol$split3, 2),
       time = _$Symbol$split4[0],
       _$Symbol$split4$ = _$Symbol$split4[1],
       offset = _$Symbol$split4$ === void 0 ? (new Date().getTimezoneOffset() / 60).toString() : _$Symbol$split4$;
 
-  var z = Number.parseInt((/\d{1,2}/[Symbol.match](offset) || ['0'])[0], 10);
+  var z = _Number$parseInt((/\d{1,2}/[_Symbol$match](offset) || ['0'])[0], 10);
 
-  var _$Symbol$split$map = /-/[Symbol.split](date).map(function (str) {
-    return Number.parseInt(str, 10);
+  var _$Symbol$split$map = _mapInstanceProperty(_context = /-/[_Symbol$split](date)).call(_context, function (str) {
+    return _Number$parseInt(str, 10);
   }),
       _$Symbol$split$map2 = _slicedToArray(_$Symbol$split$map, 3),
       y = _$Symbol$split$map2[0],
       m = _$Symbol$split$map2[1],
       d = _$Symbol$split$map2[2];
 
-  var _$Symbol$split$map3 = /:|\./[Symbol.split](time).map(function (str) {
-    return Number.parseInt(str, 10);
+  var _$Symbol$split$map3 = _mapInstanceProperty(_context2 = /:|\./[_Symbol$split](time)).call(_context2, function (str) {
+    return _Number$parseInt(str, 10);
   }),
       _$Symbol$split$map4 = _slicedToArray(_$Symbol$split$map3, 4),
       h = _$Symbol$split$map4[0],
@@ -800,7 +417,7 @@ function parse(input) {
       _$Symbol$split$map4$ = _$Symbol$split$map4[3],
       l = _$Symbol$split$map4$ === void 0 ? 0 : _$Symbol$split$map4$;
 
-  return new Date(Date.UTC(y, m - 1, d, rawTime.includes('-') || offset > 0 ? h + z : h + z * -1, t, s, l));
+  return new Date(Date.UTC(y, m - 1, d, _includesInstanceProperty(rawTime).call(rawTime, '-') || offset > 0 ? h + z : h + z * -1, t, s, l));
 }
 /**
  * Parses either an ambiguous ISO partial (2019-08-16 / 2019-08-16T22:55:00)
@@ -811,32 +428,34 @@ function parse(input) {
  */
 
 function parseUTC(input) {
+  var _context3, _context4;
+
   if (isDate(input)) return input;
 
-  var _$Symbol$split5 = /T| /[Symbol.split](input),
+  var _$Symbol$split5 = /T| /[_Symbol$split](input),
       _$Symbol$split6 = _slicedToArray(_$Symbol$split5, 2),
       date = _$Symbol$split6[0],
       _$Symbol$split6$ = _$Symbol$split6[1],
       rawTime = _$Symbol$split6$ === void 0 ? '00:00:00' : _$Symbol$split6$;
 
-  var _$Symbol$split7 = /Z|\+|\-/[Symbol.split](rawTime),
+  var _$Symbol$split7 = /Z|\+|\-/[_Symbol$split](rawTime),
       _$Symbol$split8 = _slicedToArray(_$Symbol$split7, 2),
       time = _$Symbol$split8[0],
       _$Symbol$split8$ = _$Symbol$split8[1],
       offset = _$Symbol$split8$ === void 0 ? '0' : _$Symbol$split8$;
 
-  var z = Number.parseInt((/\d{1,2}/[Symbol.match](offset) || ['0'])[0], 10);
+  var z = _Number$parseInt((/\d{1,2}/[_Symbol$match](offset) || ['0'])[0], 10);
 
-  var _$Symbol$split$map5 = /-/[Symbol.split](date).map(function (str) {
-    return Number.parseInt(str, 10);
+  var _$Symbol$split$map5 = _mapInstanceProperty(_context3 = /-/[_Symbol$split](date)).call(_context3, function (str) {
+    return _Number$parseInt(str, 10);
   }),
       _$Symbol$split$map6 = _slicedToArray(_$Symbol$split$map5, 3),
       y = _$Symbol$split$map6[0],
       m = _$Symbol$split$map6[1],
       d = _$Symbol$split$map6[2];
 
-  var _$Symbol$split$map7 = /:|\./[Symbol.split](time).map(function (str) {
-    return Number.parseInt(str, 10);
+  var _$Symbol$split$map7 = _mapInstanceProperty(_context4 = /:|\./[_Symbol$split](time)).call(_context4, function (str) {
+    return _Number$parseInt(str, 10);
   }),
       _$Symbol$split$map8 = _slicedToArray(_$Symbol$split$map7, 4),
       h = _$Symbol$split$map8[0],
@@ -845,7 +464,7 @@ function parseUTC(input) {
       _$Symbol$split$map8$ = _$Symbol$split$map8[3],
       l = _$Symbol$split$map8$ === void 0 ? 0 : _$Symbol$split$map8$;
 
-  return new Date(Date.UTC(y, m - 1, d, rawTime.includes('-') || offset > 0 ? h + z : h + z * -1, t, s, l));
+  return new Date(Date.UTC(y, m - 1, d, _includesInstanceProperty(rawTime).call(rawTime, '-') || offset > 0 ? h + z : h + z * -1, t, s, l));
 }
 
 /**
@@ -926,7 +545,7 @@ var addTimeSequence = curry(function (sequence, input) {
 
   input = (_input3 = input) !== null && _input3 !== void 0 ? _input3 : new Date();
   validateDate(input);
-  return sequence.reduce(function (acc, cur) {
+  return _reduceInstanceProperty(sequence).call(sequence, function (acc, cur) {
     return addTimeOrSubtractTime(cur[0], Number(cur[1]), acc);
   }, input);
 });
@@ -939,7 +558,7 @@ var subtractTimeSequence = curry(function (sequence, input) {
 
   input = (_input4 = input) !== null && _input4 !== void 0 ? _input4 : new Date();
   validateDate(input);
-  return sequence.reduce(function (acc, cur) {
+  return _reduceInstanceProperty(sequence).call(sequence, function (acc, cur) {
     return addTimeOrSubtractTime(cur[0], cur[1] * -1, acc);
   }, input);
 });
@@ -1077,22 +696,22 @@ var setLocal = curry(function (increment, value, input) {
   return setLocalOrSetUTC(increment, value, input);
 });
 var setLocalGroup = curry(function (group, input) {
-  var _input3;
+  var _input3, _context;
 
   if (input instanceof Function) return wrap(setLocalGroup(group), input);
   input = (_input3 = input) !== null && _input3 !== void 0 ? _input3 : new Date();
   validateDate(input);
-  return Object.keys(group).reduce(function (acc, cur) {
+  return _reduceInstanceProperty(_context = _Object$keys(group)).call(_context, function (acc, cur) {
     return setLocalOrSetUTC(cur, group[cur], input);
   }, input);
 });
 var setUTCGroup = curry(function (group, input) {
-  var _input4;
+  var _input4, _context2;
 
   if (input instanceof Function) return wrap(setUTCGroup(group), input);
   input = (_input4 = input) !== null && _input4 !== void 0 ? _input4 : new Date();
   validateDate(input);
-  return Object.keys(group).reduce(function (acc, cur) {
+  return _reduceInstanceProperty(_context2 = _Object$keys(group)).call(_context2, function (acc, cur) {
     return setLocalOrSetUTC(cur, group[cur], input, 'UTC');
   }, input);
 });
@@ -1152,7 +771,7 @@ var getUTCGroup = curry(function (increments, date) {
 
   date = (_date3 = date) !== null && _date3 !== void 0 ? _date3 : new Date();
   validateDate(date);
-  return increments.map(function (increment) {
+  return _mapInstanceProperty(increments).call(increments, function (increment) {
     return getLocalOrGetUTC(increment, date, 'UTC');
   });
 });
@@ -1161,7 +780,7 @@ var getLocalGroup = curry(function (increments, date) {
 
   date = (_date4 = date) !== null && _date4 !== void 0 ? _date4 : new Date();
   validateDate(date);
-  return increments.map(function (increment) {
+  return _mapInstanceProperty(increments).call(increments, function (increment) {
     return getLocalOrGetUTC(increment, date);
   });
 });

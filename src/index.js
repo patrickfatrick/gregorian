@@ -3,8 +3,6 @@
  * Author: Patrick Fricano
  * https://www.github.com/patrickfatrick/gregorian
  */
-import 'core-js';
-import 'regenerator-runtime/runtime';
 
 import { reform, reformWithOverrides, reformWithLocale } from './modules/reform';
 import isDate from './modules/is-date';
