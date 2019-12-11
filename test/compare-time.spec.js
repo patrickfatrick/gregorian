@@ -3,8 +3,8 @@ import sinon from 'sinon';
 import { compareTime } from '../src';
 
 test.beforeEach(t => {
-  t.context.date1 = new Date('1988-04-11T00:00:00.000Z');
-  t.context.date2 = new Date('1989-04-11T00:00:00.000Z');
+  t.context.date1 = new Date('2019-10-28T22:51:20.86375');
+  t.context.date2 = new Date('2019-10-28T22:51:20.877386');
 });
 
 test('errors out if invalid date1 passed in', t => {

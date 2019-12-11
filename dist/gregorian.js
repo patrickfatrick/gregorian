@@ -279,7 +279,7 @@ function validateDate(date) {
  */
 
 function diff(date1, date2) {
-  return Date.parse(date2) - Date.parse(date1);
+  return date2.valueOf() - date1.valueOf();
 }
 /**
  * Takes a function with args and returns a curried version of it

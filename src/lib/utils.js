@@ -26,7 +26,7 @@ export function validateDate(date) {
  * @return  {Number}        difference between the dates
  */
 export function diff(date1, date2) {
-  return Date.parse(date2) - Date.parse(date1);
+  return date2.valueOf() - date1.valueOf();
 }
 
 /**
