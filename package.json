@@ -45,6 +45,7 @@
     "eslint": "^6.7.2",
     "eslint-config-prettier": "^6.7.0",
     "eslint-plugin-prettier": "^3.1.1",
+    "husky": "^3.1.0",
     "nyc": "^14.1.1",
     "prettier": "^1.19.1",
     "rollup": "^1.27.8",
@@ -56,5 +57,11 @@
     "require": [
       "@babel/register"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test && npm run build",
+      "pre-push": "npm test"
+    }
   }
 }
