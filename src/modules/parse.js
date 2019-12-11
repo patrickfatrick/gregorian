@@ -17,6 +17,7 @@ export function parse(input) {
   const [h, t, s, l = 0] = /:|\./
     [Symbol.split](time)
     .map(str => Number.parseInt(str.substring(0, 4), 10));
+  console.log(l);
   return new Date(
     Date.UTC(
       y,
@@ -25,7 +26,7 @@ export function parse(input) {
       rawTime.includes('-') || offset > 0 ? h + z : h + z * -1,
       t,
       s,
-      Math.round(l * 0.1),
+      l >= 1000 ? Math.round(l * 0.1) : l,
     ),
   );
 }
@@ -54,7 +55,7 @@ export function parseUTC(input) {
       rawTime.includes('-') || offset > 0 ? h + z : h + z * -1,
       t,
       s,
-      Math.round(l * 0.1),
+      l >= 1000 ? Math.round(l * 0.1) : l,
     ),
   );
 }

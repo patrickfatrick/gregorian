@@ -202,6 +202,35 @@ Included locales are:
 
 If you have any issues with existing translations or want a new translation included, please open an issue.
 
+
+## Parse
+
+You can parse an ISO-8601 string into a Date instance, using two methods.
+
+### parse
+
+This method assumes the date is in local time ONLY if the timezone is not specified in the string.
+
+```javascript
+// Assuming UTC-8:00
+parse('2019-12-01T05:34:27.987') === new Date(2019, 11, 1, 5, 34, 27, 987)
+parse('2019-12-01 05:34:27.987Z') === new Date(2019, 10, 30, 21, 34, 27, 987)
+parse('2019-12-01 05:34:27.987-0800') === new Date(2019, 11, 1, 5, 34, 27, 987)
+parse('2019-12-01') === new Date(2019, 11, 1)
+```
+
+### parseUTC
+
+This method assumes the date is in UTC time ONLY if the timezone is not specified in the string.
+
+```js
+// Assuming UTC-8:00
+parseUTC('2019-12-01T05:34:27.987') === new Date(2019, 10, 30, 21, 34, 27, 987)
+parseUTC('2019-12-01 05:34:27.987Z') === new Date(2019, 10, 30, 21, 34, 27, 987)
+parseUTC('2019-12-01 05:34:27.987-0800') === new Date(2019, 11, 1, 5, 34, 27, 987)
+parseUTC('2019-12-01') === new Date(2019, 10, 30, 14)
+```
+
 ## Manipulation
 
 #### Adding and subtracting

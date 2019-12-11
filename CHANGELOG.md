@@ -1,5 +1,26 @@
 ## Changelog
 
+#### v5.0.1
+
+Fixes:
+
+- Fix milliseconds in thousandths or less for parse methods
+
+#### v5
+
+Breaking changes:
+
+- Remove unix, utc, utc-short, iso, iso-short ("plug-n-play") reform handlers.
+
+Features:
+
+- parse and parseUTC for parsing a date from different variants of an ISO-8601 string
+
+Fixes:
+
+- change diff and any API that relies on it to use date.valueOf rather than Date.parse
+
+
 #### v4.2
 
 New things:
