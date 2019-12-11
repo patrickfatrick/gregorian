@@ -408,16 +408,16 @@ function parse(input) {
       d = _$Symbol$split$map2[2];
 
   var _$Symbol$split$map3 = _mapInstanceProperty(_context2 = /:|\./[_Symbol$split](time)).call(_context2, function (str) {
-    return _Number$parseInt(str.substring(0, 3), 10);
+    return _Number$parseInt(str.substring(0, 4), 10);
   }),
       _$Symbol$split$map4 = _slicedToArray(_$Symbol$split$map3, 4),
       h = _$Symbol$split$map4[0],
       t = _$Symbol$split$map4[1],
       s = _$Symbol$split$map4[2],
       _$Symbol$split$map4$ = _$Symbol$split$map4[3],
-      l = _$Symbol$split$map4$ === void 0 ? '000' : _$Symbol$split$map4$;
+      l = _$Symbol$split$map4$ === void 0 ? 0 : _$Symbol$split$map4$;
 
-  return new Date(Date.UTC(y, m - 1, d, _includesInstanceProperty(rawTime).call(rawTime, '-') || offset > 0 ? h + z : h + z * -1, t, s, l));
+  return new Date(Date.UTC(y, m - 1, d, _includesInstanceProperty(rawTime).call(rawTime, '-') || offset > 0 ? h + z : h + z * -1, t, s, Math.round(l * 0.1)));
 }
 /**
  * Parses either an ambiguous ISO partial (2019-08-16 / 2019-08-16T22:55:00)
@@ -455,17 +455,16 @@ function parseUTC(input) {
       d = _$Symbol$split$map6[2];
 
   var _$Symbol$split$map7 = _mapInstanceProperty(_context4 = /:|\./[_Symbol$split](time)).call(_context4, function (str) {
-    return _Number$parseInt(str.substring(0, 3), 10);
+    return _Number$parseInt(str.substring(0, 4), 10);
   }),
       _$Symbol$split$map8 = _slicedToArray(_$Symbol$split$map7, 4),
       h = _$Symbol$split$map8[0],
       t = _$Symbol$split$map8[1],
       s = _$Symbol$split$map8[2],
       _$Symbol$split$map8$ = _$Symbol$split$map8[3],
-      l = _$Symbol$split$map8$ === void 0 ? '000' : _$Symbol$split$map8$;
+      l = _$Symbol$split$map8$ === void 0 ? 0 : _$Symbol$split$map8$;
 
-  console.log(h, t, s, l);
-  return new Date(Date.UTC(y, m - 1, d, _includesInstanceProperty(rawTime).call(rawTime, '-') || offset > 0 ? h + z : h + z * -1, t, s, l));
+  return new Date(Date.UTC(y, m - 1, d, _includesInstanceProperty(rawTime).call(rawTime, '-') || offset > 0 ? h + z : h + z * -1, t, s, Math.round(l * 0.1)));
 }
 
 /**
