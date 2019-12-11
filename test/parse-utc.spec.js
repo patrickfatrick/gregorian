@@ -32,7 +32,7 @@ test('parses a full ISO-8601 string with no timezone', t => {
 test('parses an ISO-8601 string with milliseconds', t => {
   t.is(
     parseUTC('2019-10-23T05:28:41.506245').toISOString(),
-    new Date(Date.UTC(2019, 9, 23, 5, 28, 41.506245)).toISOString(),
+    new Date(Date.UTC(2019, 9, 23, 5, 28, 41, 506)).toISOString(),
   );
 });
 
