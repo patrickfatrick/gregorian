@@ -3,7 +3,7 @@ import { en } from '../lib/translations';
 import { validateDate, curry } from '../lib/utils';
 
 function formatDate(format, date, translation) {
-  const longAssRegExp = /\b(unix|utc(-short)?|iso(-short)?|Y|y|M|m|N|n|E|e|D|d|o|H|h|G|g|T|t|P|p|S|s|L|l|z|w)\b/g;
+  const longAssRegExp = /\b(Y|y|M|m|N|n|E|e|D|d|o|H|h|G|g|T|t|P|p|S|s|L|l|z|w)\b/g;
   return format
     .replace(longAssRegExp, match => reformHandlers[match](date, translation))
     .replace(translation.delimiter, '');

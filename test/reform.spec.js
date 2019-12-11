@@ -86,33 +86,6 @@ test('handles being mixed in with regular words', t => {
   t.is(reform('E, the o of N, Y')(new Date('10/25/2015')), 'Sunday, the 25th of October, 2015');
 });
 
-test('works with multiply plug-n-play formats', t => {
-  t.is(
-    reform('utc iso')(new Date('April 11, 1988 07:45 UTC')),
-    'Mon, 11 Apr 1988 07:45:00 GMT 1988-04-11T07:45:00.000Z',
-  );
-});
-
-test('converts a date to a unix timestamp', t => {
-  t.is(reform('unix')(new Date('April 11, 1988 07:45 UTC')), '576747900000');
-});
-
-test('converts a date to an ISO string', t => {
-  t.is(reform('iso')(new Date('April 11, 1988 00:00 UTC')), '1988-04-11T00:00:00.000Z');
-});
-
-test('converts a date to a shortened ISO string', t => {
-  t.is(reform('iso-short')(new Date('April 11, 1988 00:00 UTC')), '1988-04-11');
-});
-
-test('converts a date to a UTC string', t => {
-  t.is(reform('utc')(new Date('April 11, 1988 00:00 UTC')), 'Mon, 11 Apr 1988 00:00:00 GMT');
-});
-
-test('converts a date to a shortened UTC string', t => {
-  t.is(reform('utc-short')(new Date('April 11, 1988 00:00 UTC')), 'Mon, 11 Apr 1988');
-});
-
 test('can be composed', t => {
   const reformFn = reform('E, N o, Y H:T:S.L');
   t.is(reformFn(new Date('1988-04-11T12:45:00.000Z')), 'Monday, April 11th, 1988 05:45:00.000');

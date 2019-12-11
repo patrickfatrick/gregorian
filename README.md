@@ -41,6 +41,7 @@ It also does not manipulate the input Date; these functions always return a new 
 ## Install
 
 ```bash
+# Choose one
 $ npm install gregorian --save
 $ yarn add gregorian
 $ jspm install npm:gregorian
@@ -50,7 +51,7 @@ $ git clone git@github.com:patrickfatrick/gregorian.git
 
 You can install it into your site using `<script src="./gregorian/dist/gregorian.min.js"></script>` as usual, or you can include it as a module using `require('gregorian').reform` or `import { reform } from 'gregorian'`, etc., with your favorite module loader.
 
-To run the tests, `$ yarn test`.
+To run the tests, `$ npm test`.
 
 ## Basic Usage
 
@@ -109,18 +110,6 @@ reform('M/D/Y')(new Date('1988-04-11T12:45:00.000Z')) // 04/11/1988
 ```
 
 ### Accepted formats
-
-The following are plug-n-play formats that are more or less wrappers for existing Javascript `Date` methods. The `-short` methods extend the existing methods by removing the time from the output.
-
-```javascript
-// Given the date 1988-04-11T12:45:00.000Z, assuming a locale in Eastern Standard Time:
-
-'unix' // 576747900000 as a string, not a number
-'utc-short' // Mon, 11 Apr 1988
-'utc' // Mon, 11 Apr 1988 12:45:00 GMT
-'iso-short' // 1988-04-11
-'iso' // 1988-04-11T12:45:00.000Z
-```
 
 The following are components you can use to construct a format string like `'M/D/Y'` or `'E, N o, Y G:T:S.L|P'`. 
 
@@ -402,12 +391,11 @@ isDate('1988-04-11T00:00:00.000Z') // false
 isDate(new Date('invalid date')) // false
 ```
 
+## Differences between Moment and date-fns
 
-## Why not use MomentJS or date-fns?
+[Moment](http://momentjs.com/) is the OG date library. It has a pretty jquery-esque approach, so you're forced to work with an overloaded and mutable `moment` object to do everything and then convert it to a date at the end, or whatever. Gregorian works with native dates and is completely mutable. Because Gregorian uses individual functions you get to import only what you need and nothing more.
 
-[Moment](http://momentjs.com/) is awesome but is also much bigger in scope. It also forces you to use a special `moment` object which is mutable. Gregorian works with native dates and outputs new dates each time. Because Gregorian uses individual functions you get to import only what you need and nothing more.
-
-[date-fns](https://date-fns.org) is also awesome and much more in line with Gregorian's intentions at this point. That said it's also larger in scope, but like Gregorian you can import individual functions to reduce overhead. The main benefit to Gregorian is that if you're using the library the traditional way by adding it to the global scope via `<script>`, the entire library for Gregorian is much, much smaller, totaling out to less than 10KB compared with date-fns at over 60KB for a lot of functions you won't be using. date-fns also continues the unfortunate tradition of mixing zero-indexed with one-indexed methods in ways that don't make much practical sense, and which Gregorian does not, but that may be a benefit or a hindrance depending on your use case. Lastly, the functions in date-fns are not designed with composability in mind. So if you'd like to store custom functions to run on different dates, you would be out of luck with date-fns.
+[date-fns](https://date-fns.org) is more in line with gregorian but is larger in scope. APIs are a bit different though, for instance gregorian has currying built-in so it's trivial to make your own utility functions. IMO many of gregorian's APIs provide more utility and flexibility than date-fn's equivalents. Comparison functions (isBefore, isAfter) only return a boolean, while gregorian's compareTime returns a number indicating which date comes after. Difference functions return an integer while gregorian's return a float. There's very little support for UTC.
 
 Both of the above libraries were clearly intended to be widely used and so represent many use cases. Gregorian is something I came up with for my personal projects, with a more focused set of features. You absolutely should use Moment or date-fns if it makes sense.
 
