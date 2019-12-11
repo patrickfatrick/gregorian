@@ -378,7 +378,7 @@ function parse(input) {
       _$Symbol$split$map4$ = _$Symbol$split$map4[3],
       l = _$Symbol$split$map4$ === void 0 ? 0 : _$Symbol$split$map4$;
 
-  return new Date(Date.UTC(y, m - 1, d, _includesInstanceProperty(rawTime).call(rawTime, '-') || offset > 0 ? h + z : h + z * -1, t, s, Math.round(l * 0.1)));
+  return new Date(Date.UTC(y, m - 1, d, _includesInstanceProperty(rawTime).call(rawTime, '-') || offset > 0 ? h + z : h + z * -1, t, s, l >= 1000 ? Math.round(l * 0.1) : l));
 }
 /**
  * Parses either an ambiguous ISO partial (2019-08-16 / 2019-08-16T22:55:00)
@@ -425,7 +425,7 @@ function parseUTC(input) {
       _$Symbol$split$map8$ = _$Symbol$split$map8[3],
       l = _$Symbol$split$map8$ === void 0 ? 0 : _$Symbol$split$map8$;
 
-  return new Date(Date.UTC(y, m - 1, d, _includesInstanceProperty(rawTime).call(rawTime, '-') || offset > 0 ? h + z : h + z * -1, t, s, Math.round(l * 0.1)));
+  return new Date(Date.UTC(y, m - 1, d, _includesInstanceProperty(rawTime).call(rawTime, '-') || offset > 0 ? h + z : h + z * -1, t, s, l >= 1000 ? Math.round(l * 0.1) : l));
 }
 
 /**
