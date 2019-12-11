@@ -17,7 +17,6 @@ export function parse(input) {
   const [h, t, s, l = 0] = /:|\./
     [Symbol.split](time)
     .map(str => Number.parseInt(str.substring(0, 4), 10));
-  console.log(l);
   return new Date(
     Date.UTC(
       y,
