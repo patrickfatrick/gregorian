@@ -21,15 +21,6 @@ import _Object$keys from '@babel/runtime-corejs3/core-js-stable/object/keys';
  *
  * Given the date 1988-04-11T12:45:00.000Z, assuming a locale in Eastern Standard Time:
  */
-var UNIX = 'unix'; // 576747900000
-
-var UTC_SHORT = 'utc-short'; // Mon, 11 Apr 1988
-
-var UTC = 'utc'; // Mon, 11 Apr 1988 12:45:00 GMT
-
-var ISO_SHORT = 'iso-short'; // 1988-04-11
-
-var ISO = 'iso'; // 1988-04-11T12:45:00.000Z
 
 var YEAR_FULL = 'Y'; // 1988
 
@@ -198,36 +189,6 @@ var reformHandlers = (_PERIOD_UPPERCASE$PER = {}, _defineProperty(_PERIOD_UPPERC
   }
 
   return utc + offset + ':00';
-}), _defineProperty(_PERIOD_UPPERCASE$PER, ISO_SHORT, function (date) {
-  return this[ISO](date, 'short');
-}), _defineProperty(_PERIOD_UPPERCASE$PER, ISO, function (date) {
-  var format = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-
-  if (format === 'short') {
-    return date.toISOString().split('T')[0];
-  }
-
-  return date.toISOString();
-}), _defineProperty(_PERIOD_UPPERCASE$PER, UTC_SHORT, function (date) {
-  return this[UTC](date, 'short');
-}), _defineProperty(_PERIOD_UPPERCASE$PER, UTC, function (date) {
-  var format = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-  var utc = date.toUTCString();
-
-  if (format === 'short') {
-    var arr = utc.split(' ');
-    var newArr = [];
-
-    for (var i = 0; i < 4; i++) {
-      newArr.push(arr[i]);
-    }
-
-    return newArr.join(' ');
-  }
-
-  return utc;
-}), _defineProperty(_PERIOD_UPPERCASE$PER, UNIX, function (date) {
-  return Date.parse(date);
 }), _PERIOD_UPPERCASE$PER);
 
 var en = {
@@ -318,7 +279,7 @@ function wrap(fn1, fn2) {
 }
 
 function formatDate(format, date, translation) {
-  var longAssRegExp = /\b(unix|utc(-short)?|iso(-short)?|Y|y|M|m|N|n|E|e|D|d|o|H|h|G|g|T|t|P|p|S|s|L|l|z|w)\b/g;
+  var longAssRegExp = /\b(Y|y|M|m|N|n|E|e|D|d|o|H|h|G|g|T|t|P|p|S|s|L|l|z|w)\b/g;
   return format.replace(longAssRegExp, function (match) {
     return reformHandlers[match](date, translation);
   }).replace(translation.delimiter, '');
