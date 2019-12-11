@@ -36,6 +36,13 @@ test('parses an ISO-8601 string with milliseconds', t => {
   );
 });
 
+test('parses an ISO-8601 string with milliseconds (rounding up)', t => {
+  t.is(
+    parse('2019-10-23T05:28:41.506789').toISOString(),
+    new Date(2019, 9, 23, 5, 28, 41, 507).toISOString(),
+  );
+});
+
 test('parses a partial ISO-8601', t => {
   t.is(parse('2019-08-16').toISOString(), new Date(2019, 7, 16, 0, 0, 0, 0).toISOString());
 });
