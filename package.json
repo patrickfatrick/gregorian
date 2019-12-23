@@ -18,7 +18,7 @@
     "min": "BABEL_ENV=production rollup -c 'rollup.config.min.js'",
     "prettier": "prettier --write --single-quote --print-width 100 --trailing-comma all '{src,test}/**/*.js'",
     "pretest": "npm run lint",
-    "preversion": "npm run build && git commit -am \"chore(build)\" &>/dev/null"
+    "preversion": "npm run build && git commit -am \"chore(build)\" 2>/dev/null"
   },
   "repository": {
     "type": "git",
