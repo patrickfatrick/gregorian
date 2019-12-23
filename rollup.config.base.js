@@ -1,15 +1,30 @@
-import babel from 'rollup-plugin-babel'
+import babel from 'rollup-plugin-babel';
+import bundleSize from 'rollup-plugin-bundle-size';
+import sizes from 'rollup-plugin-sizes';
 
-export default {
-  input: 'src/index.js',
-  output: {
-    file: 'dist/gregorian.js',
-    format: 'es'
+export const plugins = [
+  babel({
+    exclude: 'node_modules/**/*',
+  }),
+  bundleSize(),
+  sizes({ details: true }),
+];
+
+export default [
+  {
+    input: 'src/index.js',
+    output: {
+      file: 'dist/gregorian.js',
+      format: 'es',
+    },
+    plugins,
   },
-  plugins: [
-    babel({
-      exclude: 'node_modules/**/*',
-      runtimeHelpers: true
-    })
-  ],
-}
+  {
+    input: 'locale/index.js',
+    output: {
+      file: 'dist/locale.js',
+      format: 'es',
+    },
+    plugins,
+  },
+];

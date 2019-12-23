@@ -1,16 +1,79 @@
-import _Object$assign from '@babel/runtime-corejs3/core-js-stable/object/assign';
-import _defineProperty from '@babel/runtime-corejs3/helpers/defineProperty';
-import _toConsumableArray from '@babel/runtime-corejs3/helpers/toConsumableArray';
-import _concatInstanceProperty from '@babel/runtime-corejs3/core-js-stable/instance/concat';
-import _Number$isNaN from '@babel/runtime-corejs3/core-js-stable/number/is-nan';
-import _includesInstanceProperty from '@babel/runtime-corejs3/core-js-stable/instance/includes';
-import _mapInstanceProperty from '@babel/runtime-corejs3/core-js-stable/instance/map';
-import _Symbol$match from '@babel/runtime-corejs3/core-js-stable/symbol/match';
-import _Number$parseInt from '@babel/runtime-corejs3/core-js-stable/number/parse-int';
-import _Symbol$split from '@babel/runtime-corejs3/core-js-stable/symbol/split';
-import _slicedToArray from '@babel/runtime-corejs3/helpers/slicedToArray';
-import _reduceInstanceProperty from '@babel/runtime-corejs3/core-js-stable/instance/reduce';
-import _Object$keys from '@babel/runtime-corejs3/core-js-stable/object/keys';
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function _slicedToArray(arr, i) {
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest();
+}
+
+function _toConsumableArray(arr) {
+  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
+}
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
+
+    return arr2;
+  }
+}
+
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
+function _iterableToArray(iter) {
+  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+}
+
+function _iterableToArrayLimit(arr, i) {
+  if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) {
+    return;
+  }
+
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _e = undefined;
+
+  try {
+    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance");
+}
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance");
+}
 
 /**
  * Strings used in various functions to indicate different aspects of the date
@@ -217,7 +280,7 @@ var en = {
  * @returns {Boolean}         whether or not the input is a valid Date
  */
 function isDate(input) {
-  return input instanceof Date && !_Number$isNaN(Date.parse(input));
+  return input instanceof Date && !Number.isNaN(Date.parse(input));
 }
 /**
  * Checks that the date object passed in is a valid Date instance, or throw a TypeError
@@ -259,8 +322,7 @@ function curry(fn) {
         args[_key2] = arguments[_key2];
       }
 
-      var nextArgs = _concatInstanceProperty(resolverArgs).call(resolverArgs, args.length ? args : null);
-
+      var nextArgs = resolverArgs.concat(args.length ? args : null);
       var next = nextArgs.length >= fn.length ? fn : resolver;
       return next.apply(void 0, _toConsumableArray(nextArgs));
     };
@@ -312,9 +374,7 @@ var reformWithOverrides = curry(function (overrides, format, date) {
   var _date2;
 
   date = (_date2 = date) !== null && _date2 !== void 0 ? _date2 : new Date();
-
-  var names = _Object$assign({}, en, overrides);
-
+  var names = Object.assign({}, en, overrides);
   validateDate(date);
   return formatDate(format, date, names);
 });
@@ -342,34 +402,32 @@ var reformWithLocale = curry(function (locale, format, date) {
  */
 
 function parse(input) {
-  var _context, _context2;
-
   if (isDate(input)) return input;
 
-  var _$Symbol$split = /T| /[_Symbol$split](input),
+  var _$Symbol$split = /T| /[Symbol.split](input),
       _$Symbol$split2 = _slicedToArray(_$Symbol$split, 2),
       date = _$Symbol$split2[0],
       _$Symbol$split2$ = _$Symbol$split2[1],
       rawTime = _$Symbol$split2$ === void 0 ? '00:00:00' : _$Symbol$split2$;
 
-  var _$Symbol$split3 = /Z|\+|\-/[_Symbol$split](rawTime),
+  var _$Symbol$split3 = /Z|\+|\-/[Symbol.split](rawTime),
       _$Symbol$split4 = _slicedToArray(_$Symbol$split3, 2),
       time = _$Symbol$split4[0],
       _$Symbol$split4$ = _$Symbol$split4[1],
       offset = _$Symbol$split4$ === void 0 ? (new Date().getTimezoneOffset() / 60).toString() : _$Symbol$split4$;
 
-  var z = _Number$parseInt((/\d{1,2}/[_Symbol$match](offset) || ['0'])[0], 10);
+  var z = Number.parseInt((/\d{1,2}/[Symbol.match](offset) || ['0'])[0], 10);
 
-  var _$Symbol$split$map = _mapInstanceProperty(_context = /-/[_Symbol$split](date)).call(_context, function (str) {
-    return _Number$parseInt(str, 10);
+  var _$Symbol$split$map = /-/[Symbol.split](date).map(function (str) {
+    return Number.parseInt(str, 10);
   }),
       _$Symbol$split$map2 = _slicedToArray(_$Symbol$split$map, 3),
       y = _$Symbol$split$map2[0],
       m = _$Symbol$split$map2[1],
       d = _$Symbol$split$map2[2];
 
-  var _$Symbol$split$map3 = _mapInstanceProperty(_context2 = /:|\./[_Symbol$split](time)).call(_context2, function (str) {
-    return _Number$parseInt(str.substring(0, 4), 10);
+  var _$Symbol$split$map3 = /:|\./[Symbol.split](time).map(function (str) {
+    return Number.parseInt(str.substring(0, 4), 10);
   }),
       _$Symbol$split$map4 = _slicedToArray(_$Symbol$split$map3, 4),
       h = _$Symbol$split$map4[0],
@@ -378,7 +436,7 @@ function parse(input) {
       _$Symbol$split$map4$ = _$Symbol$split$map4[3],
       l = _$Symbol$split$map4$ === void 0 ? 0 : _$Symbol$split$map4$;
 
-  return new Date(Date.UTC(y, m - 1, d, _includesInstanceProperty(rawTime).call(rawTime, '-') || offset > 0 ? h + z : h + z * -1, t, s, l >= 1000 ? Math.round(l * 0.1) : l));
+  return new Date(Date.UTC(y, m - 1, d, rawTime.includes('-') || offset > 0 ? h + z : h + z * -1, t, s, l >= 1000 ? Math.round(l * 0.1) : l));
 }
 /**
  * Parses either an ambiguous ISO partial (2019-08-16 / 2019-08-16T22:55:00)
@@ -389,34 +447,32 @@ function parse(input) {
  */
 
 function parseUTC(input) {
-  var _context3, _context4;
-
   if (isDate(input)) return input;
 
-  var _$Symbol$split5 = /T| /[_Symbol$split](input),
+  var _$Symbol$split5 = /T| /[Symbol.split](input),
       _$Symbol$split6 = _slicedToArray(_$Symbol$split5, 2),
       date = _$Symbol$split6[0],
       _$Symbol$split6$ = _$Symbol$split6[1],
       rawTime = _$Symbol$split6$ === void 0 ? '00:00:00' : _$Symbol$split6$;
 
-  var _$Symbol$split7 = /Z|\+|\-/[_Symbol$split](rawTime),
+  var _$Symbol$split7 = /Z|\+|\-/[Symbol.split](rawTime),
       _$Symbol$split8 = _slicedToArray(_$Symbol$split7, 2),
       time = _$Symbol$split8[0],
       _$Symbol$split8$ = _$Symbol$split8[1],
       offset = _$Symbol$split8$ === void 0 ? '0' : _$Symbol$split8$;
 
-  var z = _Number$parseInt((/\d{1,2}/[_Symbol$match](offset) || ['0'])[0], 10);
+  var z = Number.parseInt((/\d{1,2}/[Symbol.match](offset) || ['0'])[0], 10);
 
-  var _$Symbol$split$map5 = _mapInstanceProperty(_context3 = /-/[_Symbol$split](date)).call(_context3, function (str) {
-    return _Number$parseInt(str, 10);
+  var _$Symbol$split$map5 = /-/[Symbol.split](date).map(function (str) {
+    return Number.parseInt(str, 10);
   }),
       _$Symbol$split$map6 = _slicedToArray(_$Symbol$split$map5, 3),
       y = _$Symbol$split$map6[0],
       m = _$Symbol$split$map6[1],
       d = _$Symbol$split$map6[2];
 
-  var _$Symbol$split$map7 = _mapInstanceProperty(_context4 = /:|\./[_Symbol$split](time)).call(_context4, function (str) {
-    return _Number$parseInt(str.substring(0, 4), 10);
+  var _$Symbol$split$map7 = /:|\./[Symbol.split](time).map(function (str) {
+    return Number.parseInt(str.substring(0, 4), 10);
   }),
       _$Symbol$split$map8 = _slicedToArray(_$Symbol$split$map7, 4),
       h = _$Symbol$split$map8[0],
@@ -425,7 +481,7 @@ function parseUTC(input) {
       _$Symbol$split$map8$ = _$Symbol$split$map8[3],
       l = _$Symbol$split$map8$ === void 0 ? 0 : _$Symbol$split$map8$;
 
-  return new Date(Date.UTC(y, m - 1, d, _includesInstanceProperty(rawTime).call(rawTime, '-') || offset > 0 ? h + z : h + z * -1, t, s, l >= 1000 ? Math.round(l * 0.1) : l));
+  return new Date(Date.UTC(y, m - 1, d, rawTime.includes('-') || offset > 0 ? h + z : h + z * -1, t, s, l >= 1000 ? Math.round(l * 0.1) : l));
 }
 
 /**
@@ -506,7 +562,7 @@ var addTimeSequence = curry(function (sequence, input) {
 
   input = (_input3 = input) !== null && _input3 !== void 0 ? _input3 : new Date();
   validateDate(input);
-  return _reduceInstanceProperty(sequence).call(sequence, function (acc, cur) {
+  return sequence.reduce(function (acc, cur) {
     return addTimeOrSubtractTime(cur[0], Number(cur[1]), acc);
   }, input);
 });
@@ -519,7 +575,7 @@ var subtractTimeSequence = curry(function (sequence, input) {
 
   input = (_input4 = input) !== null && _input4 !== void 0 ? _input4 : new Date();
   validateDate(input);
-  return _reduceInstanceProperty(sequence).call(sequence, function (acc, cur) {
+  return sequence.reduce(function (acc, cur) {
     return addTimeOrSubtractTime(cur[0], cur[1] * -1, acc);
   }, input);
 });
@@ -657,22 +713,22 @@ var setLocal = curry(function (increment, value, input) {
   return setLocalOrSetUTC(increment, value, input);
 });
 var setLocalGroup = curry(function (group, input) {
-  var _input3, _context;
+  var _input3;
 
   if (input instanceof Function) return wrap(setLocalGroup(group), input);
   input = (_input3 = input) !== null && _input3 !== void 0 ? _input3 : new Date();
   validateDate(input);
-  return _reduceInstanceProperty(_context = _Object$keys(group)).call(_context, function (acc, cur) {
+  return Object.keys(group).reduce(function (acc, cur) {
     return setLocalOrSetUTC(cur, group[cur], input);
   }, input);
 });
 var setUTCGroup = curry(function (group, input) {
-  var _input4, _context2;
+  var _input4;
 
   if (input instanceof Function) return wrap(setUTCGroup(group), input);
   input = (_input4 = input) !== null && _input4 !== void 0 ? _input4 : new Date();
   validateDate(input);
-  return _reduceInstanceProperty(_context2 = _Object$keys(group)).call(_context2, function (acc, cur) {
+  return Object.keys(group).reduce(function (acc, cur) {
     return setLocalOrSetUTC(cur, group[cur], input, 'UTC');
   }, input);
 });
@@ -732,7 +788,7 @@ var getUTCGroup = curry(function (increments, date) {
 
   date = (_date3 = date) !== null && _date3 !== void 0 ? _date3 : new Date();
   validateDate(date);
-  return _mapInstanceProperty(increments).call(increments, function (increment) {
+  return increments.map(function (increment) {
     return getLocalOrGetUTC(increment, date, 'UTC');
   });
 });
@@ -741,7 +797,7 @@ var getLocalGroup = curry(function (increments, date) {
 
   date = (_date4 = date) !== null && _date4 !== void 0 ? _date4 : new Date();
   validateDate(date);
-  return _mapInstanceProperty(increments).call(increments, function (increment) {
+  return increments.map(function (increment) {
     return getLocalOrGetUTC(increment, date);
   });
 });
