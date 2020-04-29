@@ -416,27 +416,26 @@ function parse(input) {
       _$Symbol$split4$ = _$Symbol$split4[1],
       offset = _$Symbol$split4$ === void 0 ? (new Date().getTimezoneOffset() / 60).toString() : _$Symbol$split4$;
 
-  var z = Number.parseInt((/\d{1,2}/[Symbol.match](offset) || ['0'])[0], 10);
+  var z = Number.parseFloat((/\d{1,2}/[Symbol.match](offset) || ['0'])[0], 10);
 
   var _$Symbol$split$map = /-/[Symbol.split](date).map(function (str) {
-    return Number.parseInt(str, 10);
+    return Number.parseFloat(str, 10);
   }),
       _$Symbol$split$map2 = _slicedToArray(_$Symbol$split$map, 3),
       y = _$Symbol$split$map2[0],
       m = _$Symbol$split$map2[1],
       d = _$Symbol$split$map2[2];
 
-  var _$Symbol$split$map3 = /:|\./[Symbol.split](time).map(function (str) {
-    return Number.parseInt(str.substring(0, 4), 10);
+  var _$Symbol$split$map3 = /:/[Symbol.split](time).map(function (str) {
+    return Number.parseFloat(str, 10);
   }),
-      _$Symbol$split$map4 = _slicedToArray(_$Symbol$split$map3, 4),
+      _$Symbol$split$map4 = _slicedToArray(_$Symbol$split$map3, 3),
       h = _$Symbol$split$map4[0],
       t = _$Symbol$split$map4[1],
-      s = _$Symbol$split$map4[2],
-      _$Symbol$split$map4$ = _$Symbol$split$map4[3],
-      l = _$Symbol$split$map4$ === void 0 ? 0 : _$Symbol$split$map4$;
+      s = _$Symbol$split$map4[2];
 
-  return new Date(Date.UTC(y, m - 1, d, rawTime.includes('-') || offset > 0 ? h + z : h + z * -1, t, s, l >= 1000 ? Math.round(l * 0.1) : l));
+  var l = s % 1 * 1000;
+  return new Date(Date.UTC(y, m - 1, d, rawTime.includes('-') || offset > 0 ? h + z : h + z * -1, t, s, l));
 }
 /**
  * Parses either an ambiguous ISO partial (2019-08-16 / 2019-08-16T22:55:00)
@@ -461,27 +460,26 @@ function parseUTC(input) {
       _$Symbol$split8$ = _$Symbol$split8[1],
       offset = _$Symbol$split8$ === void 0 ? '0' : _$Symbol$split8$;
 
-  var z = Number.parseInt((/\d{1,2}/[Symbol.match](offset) || ['0'])[0], 10);
+  var z = Number.parseFloat((/\d{1,2}/[Symbol.match](offset) || ['0'])[0], 10);
 
   var _$Symbol$split$map5 = /-/[Symbol.split](date).map(function (str) {
-    return Number.parseInt(str, 10);
+    return Number.parseFloat(str, 10);
   }),
       _$Symbol$split$map6 = _slicedToArray(_$Symbol$split$map5, 3),
       y = _$Symbol$split$map6[0],
       m = _$Symbol$split$map6[1],
       d = _$Symbol$split$map6[2];
 
-  var _$Symbol$split$map7 = /:|\./[Symbol.split](time).map(function (str) {
-    return Number.parseInt(str.substring(0, 4), 10);
+  var _$Symbol$split$map7 = /:/[Symbol.split](time).map(function (str) {
+    return Number.parseFloat(str, 10);
   }),
-      _$Symbol$split$map8 = _slicedToArray(_$Symbol$split$map7, 4),
+      _$Symbol$split$map8 = _slicedToArray(_$Symbol$split$map7, 3),
       h = _$Symbol$split$map8[0],
       t = _$Symbol$split$map8[1],
-      s = _$Symbol$split$map8[2],
-      _$Symbol$split$map8$ = _$Symbol$split$map8[3],
-      l = _$Symbol$split$map8$ === void 0 ? 0 : _$Symbol$split$map8$;
+      s = _$Symbol$split$map8[2];
 
-  return new Date(Date.UTC(y, m - 1, d, rawTime.includes('-') || offset > 0 ? h + z : h + z * -1, t, s, l >= 1000 ? Math.round(l * 0.1) : l));
+  var l = s % 1 * 1000;
+  return new Date(Date.UTC(y, m - 1, d, rawTime.includes('-') || offset > 0 ? h + z : h + z * -1, t, s, l));
 }
 
 /**
