@@ -32,21 +32,28 @@ test('parses a full ISO-8601 string with no timezone', t => {
 test('parses an ISO-8601 string with milliseconds', t => {
   t.is(
     parseUTC('2019-10-23T05:28:41.506245').toISOString(),
-    new Date(Date.UTC(2019, 9, 23, 5, 28, 41, 506)).toISOString(),
+    new Date(Date.UTC(2019, 9, 23, 5, 28, 41, 506.245)).toISOString(),
   );
 });
 
 test('parses an ISO-8601 string with milliseconds (rounding up)', t => {
   t.is(
     parseUTC('2019-10-23T05:28:41.506789').toISOString(),
-    new Date(Date.UTC(2019, 9, 23, 5, 28, 41, 507)).toISOString(),
+    new Date(Date.UTC(2019, 9, 23, 5, 28, 41, 506.789)).toISOString(),
   );
 });
 
 test('parses an ISO-8601 string with milliseconds in hundredths', t => {
   t.is(
-    parseUTC('2019-10-23T05:28:41.50').toISOString(),
-    new Date(Date.UTC(2019, 9, 23, 5, 28, 41, 50)).toISOString(),
+    parseUTC('2019-10-23T05:28:41.57').toISOString(),
+    new Date(Date.UTC(2019, 9, 23, 5, 28, 41, 570)).toISOString(),
+  );
+});
+
+test('parses an ISO-8601 string with less than 100 milliseconds', t => {
+  t.is(
+    parseUTC('2020-04-29T18:47:45.042003').toISOString(),
+    new Date(Date.UTC(2020, 3, 29, 18, 47, 45, 42.003)).toISOString(),
   );
 });
 
