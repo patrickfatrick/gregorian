@@ -242,20 +242,20 @@ addTime('d')(5)(new Date('2015-10-31')) // 2015-11-05
 subtractTime('m')(7)(new Date('2015-10-31')) // 2015-03-31
 ```
 
-There's also methods for combining multiple add and subtract operations:
+There are also methods for combining multiple add and subtract operations (accepting an object or a Map):
 
 ```javascript
-addTimeSequence([
-  [ 'y', 1 ],
-  [ 'm', 3 ],
-  [ 'd', -1 ]
-])(new Date('2015-10-31')) // 2017-02-01
+addTimeFor({
+  y: 1,
+  m: 3,
+  d: -1,
+})(new Date('2015-10-31')) // 2017-02-01
 
-subtractTimeSequence([
-  [ 'y', 1 ],
-  [ 'm', 3 ],
-  [ 'y', 1 ]
-])(new Date('2015-10-31')) // 2013-07-31
+subtractTimeFor({
+  y: 1,
+  m: 3,
+  y: 1
+})(new Date('2015-10-31')) // 2013-07-31
 ```
 
 This accepts an array of arrays
@@ -295,8 +295,8 @@ setUTC('m')(7)(new Date('2015-10-31')) // 2015-07-31 00:00:000 UTC
 But wait, there's more! You can also run multiple set operations with one function call like so
 
 ```javascript
-setUTCGroup({ y: 1985, m: 5, d: 22 })(new Date('2015-10-31')) // 1985-05-22
-setLocalGroup({ y: 1985, m: 5, d: 22 }, new Date('2015-10-31')) // 1985-05-21
+setUTCFor({ y: 1985, m: 5, d: 22 })(new Date('2015-10-31')) // 1985-05-22
+setLocalFor({ y: 1985, m: 5, d: 22 }, new Date('2015-10-31')) // 1985-05-21
 ```
 
 This accepts an object where the keys correspond to the increments below.
@@ -337,8 +337,8 @@ getUTC('m')(new Date('2015-10-31T00:00:00.000Z')) // 9
 And you can also get multiple increments at the same time, like so:
 
 ```javascript
-getUTCGroup([ 'h', 'y', 'm' ])(new Date('2015-10-31T00:00:00.000Z')) // [ 0, 2015, 10 ]
-getLocalGroup([ 'm', 'd' ])(new Date('2015-10-31T00:00:00.000Z')) // [ 10, 30 ]
+getUTCFor([ 'h', 'y', 'm' ])(new Date('2015-10-31T00:00:00.000Z')) // [ 0, 2015, 10 ]
+getLocalFor([ 'm', 'd' ])(new Date('2015-10-31T00:00:00.000Z')) // [ 10, 30 ]
 ```
 
 This accepts an array of increments, and returns the corresponding values as an array.
@@ -418,6 +418,19 @@ isDate(new Date('1988-04-11T00:00:00.000Z')) // true
 isDate(new Date()) // true
 isDate('1988-04-11T00:00:00.000Z') // false
 isDate(new Date('invalid date')) // false
+```
+
+### isLeapYear
+
+Simple utility function used internally but exposed for consumption. Validates whether the given date is in a leap year.
+
+```javascript
+isLeapYear(new Date('1988-04-11T00:00:00.000Z')) // true
+isLeapYear(new Date('1987-04-11T00:00:00.000Z')) // false
+isLeapYear(new Date('2100-04-11T00:00:00.000Z')) // false
+isLeapYear(new Date('2000-04-11T00:00:00.000Z')) // true
+isLeapYear(new Date('2000-01-01T00:00:00.000Z')) // false
+isLeapYearUTC(new Date('2000-01-01T00:00:00.000Z')) // true
 ```
 
 ## Differences between Moment and date-fns

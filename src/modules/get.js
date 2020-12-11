@@ -19,48 +19,48 @@ import { validateDate, curry } from '../lib/utils';
  * @param   {String}  utc         should equal 'UTC' if UTC function
  * @returns {Date}                the value for that increment, in UTC
  */
-function getLocalOrGetUTC(increment, date, utc = '') {
+function _get(increment, date, UTC = '') {
   const incrementHandlers = {
     [TIMEZONE_OFFSET](date) {
-      return utc ? 0 : (date.getTimezoneOffset() / 60) * -1;
+      return UTC ? 0 : (date.getTimezoneOffset() / 60) * -1;
     },
 
     [MILLISECOND](date) {
-      return date[`get${utc}Milliseconds`]();
+      return date[`get${UTC}Milliseconds`]();
     },
 
     [SECOND](date) {
-      return date[`get${utc}Seconds`]();
+      return date[`get${UTC}Seconds`]();
     },
 
     [MINUTE](date) {
-      return date[`get${utc}Minutes`]();
+      return date[`get${UTC}Minutes`]();
     },
 
     [HOUR](date) {
-      return date[`get${utc}Hours`]();
+      return date[`get${UTC}Hours`]();
     },
 
     [DATE](date) {
-      return date[`get${utc}Date`]();
+      return date[`get${UTC}Date`]();
     },
 
     [DAY](date) {
-      return date[`get${utc}Day`]() + 1;
+      return date[`get${UTC}Day`]() + 1;
     },
 
     [WEEK](date) {
       return Math.floor(
-        ((date - new Date(date[`get${utc}FullYear`](), 0, 1)) / 1000 / 60 / 60 / 24 + 1) / 7,
+        ((date - new Date(date[`get${UTC}FullYear`](), 0, 1)) / 1000 / 60 / 60 / 24 + 1) / 7,
       );
     },
 
     [MONTH](date) {
-      return date[`get${utc}Month`]() + 1;
+      return date[`get${UTC}Month`]() + 1;
     },
 
     [YEAR](date) {
-      return date[`get${utc}FullYear`]();
+      return date[`get${UTC}FullYear`]();
     },
   };
 
@@ -70,23 +70,23 @@ function getLocalOrGetUTC(increment, date, utc = '') {
 export const getUTC = curry((increment, date) => {
   date = date ?? new Date();
   validateDate(date);
-  return getLocalOrGetUTC(increment, date, 'UTC');
+  return _get(increment, date, 'UTC');
 });
 
-export const getLocal = curry((increment, date) => {
+export const get = curry((increment, date) => {
   date = date ?? new Date();
   validateDate(date);
-  return getLocalOrGetUTC(increment, date);
+  return _get(increment, date);
 });
 
-export const getUTCGroup = curry((increments, date) => {
+export const getUTCFor = curry((increments, date) => {
   date = date ?? new Date();
   validateDate(date);
-  return increments.map(increment => getLocalOrGetUTC(increment, date, 'UTC'));
+  return increments.map((increment) => _get(increment, date, 'UTC'));
 });
 
-export const getLocalGroup = curry((increments, date) => {
+export const getFor = curry((increments, date) => {
   date = date ?? new Date();
   validateDate(date);
-  return increments.map(increment => getLocalOrGetUTC(increment, date));
+  return increments.map((increment) => _get(increment, date));
 });

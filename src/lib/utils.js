@@ -8,6 +8,17 @@ export function isDate(input) {
 }
 
 /**
+ * Determines if the given date is in a leap year
+ * @param  {Date}    input a date object
+ * @param  {String}  UTC   either 'UTC' or an empty string
+ * @return {Boolean}       whether the date is in a leap year or not
+ */
+export function isLeapYear(date, UTC = '') {
+  const year = date[`get${UTC}FullYear`]();
+  return year % 100 === 0 ? year % 400 === 0 : year % 4 === 0;
+}
+
+/**
  * Checks that the date object passed in is a valid Date instance, or throw a TypeError
  * @param   {Date}      date  a date object
  * @return  {Boolean}         true if validated
@@ -25,7 +36,7 @@ export function validateDate(date) {
  * @param   {Date}    date2 a date object
  * @return  {Number}        difference between the dates
  */
-export function diff(date1, date2) {
+export function difference(date1, date2) {
   return date2.valueOf() - date1.valueOf();
 }
 
@@ -50,7 +61,12 @@ export function curry(fn) {
  * @param {Function}  fn2  a function
  */
 export function wrap(fn1, fn2) {
-  return function(arg) {
+  return function (arg) {
     return fn2(fn1(arg));
   };
+}
+
+export function entries(input) {
+  if (input instanceof Map) return Array.from(input.entries());
+  return Object.entries(input);
 }

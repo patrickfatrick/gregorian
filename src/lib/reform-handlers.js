@@ -1,9 +1,4 @@
 import {
-  UNIX,
-  UTC_SHORT,
-  UTC,
-  ISO_SHORT,
-  ISO,
   YEAR_FULL,
   YEAR,
   DAY_FULL,
@@ -269,10 +264,7 @@ export default {
    * @returns {String}        the two-digit year
    */
   [YEAR](date) {
-    return date
-      .getFullYear()
-      .toString()
-      .substr(2);
+    return date.getFullYear().toString().substr(2);
   },
 
   /**

@@ -1,19 +1,16 @@
 module.exports = {
   parser: 'babel-eslint',
-  extends: [
-    'prettier'
-  ],
-  plugins: [
-    'prettier'
-  ],
+  extends: ['eslint:recommended', 'prettier', 'plugin:import/warnings', 'plugin:import/errors'],
+  plugins: ['prettier'],
   parserOptions: {
-    sourceType: 'module'
+    sourceType: 'module',
   },
   rules: {
     'prettier/prettier': 'error',
   },
   env: {
     browser: true,
-    node: true
-  }
-}
+    node: true,
+    es6: true,
+  },
+};

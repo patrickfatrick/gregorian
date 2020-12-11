@@ -1,21 +1,21 @@
 import { MILLISECOND, SECOND, MINUTE, HOUR, DATE, WEEK, MONTH, YEAR } from '../lib/constants';
-import { validateDate, curry, diff } from '../lib/utils';
+import { validateDate, curry, difference } from '../lib/utils';
 
 /**
  * Adds or subtracts specified increments to or from a date object
  * @param   {String}  increment   an increment to add
  * @param   {Number}  date1       date object
  * @param   {Date}    date2       date object
- * @returns {Number}              numeric difference between the dates in the specific increment
+ * @returns {Number}              numeric differenceence between the dates in the specific increment
  */
-function diffIt(increment, date1, date2) {
+function _diff(increment, date1, date2) {
   const incrementHandlers = {
     [MILLISECOND](date1, date2) {
-      return diff(date1, date2);
+      return difference(date1, date2);
     },
 
     [SECOND](date1, date2) {
-      return diff(date1, date2) / 1000;
+      return difference(date1, date2) / 1000;
     },
 
     [MINUTE](date1, date2) {
@@ -46,10 +46,10 @@ function diffIt(increment, date1, date2) {
   return incrementHandlers[increment](date1, date2);
 }
 
-export const diffTime = curry((increment, input1, input2) => {
+export const diff = curry((increment, input1, input2) => {
   input1 = input1 ?? new Date();
   input2 = input2 ?? new Date();
   validateDate(input1);
   validateDate(input2);
-  return diffIt(increment, input1, input2);
+  return _diff(increment, input1, input2);
 });

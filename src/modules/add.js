@@ -1,5 +1,5 @@
 import { MILLISECOND, SECOND, MINUTE, HOUR, DATE, WEEK, MONTH, YEAR } from '../lib/constants';
-import { validateDate, curry, wrap } from '../lib/utils';
+import { validateDate, curry, wrap, entries } from '../lib/utils';
 
 /**
  * Adds or subtracts specified increments to or from a date object
@@ -8,7 +8,7 @@ import { validateDate, curry, wrap } from '../lib/utils';
  * @param   {Date}    date        date object
  * @returns {Date}                a new date
  */
-function addTimeOrSubtractTime(increment, n, date) {
+function _add(increment, n, date) {
   const incrementHandlers = {
     [MILLISECOND](date) {
       return new Date(date.setUTCMilliseconds(date.getUTCMilliseconds() + n));
@@ -60,42 +60,45 @@ function addTimeOrSubtractTime(increment, n, date) {
   return incrementHandlers[increment](date);
 }
 
-export const addTime = curry((increment, n, input) => {
+export const add = curry((increment, n, input) => {
   if (input instanceof Function) {
-    return wrap(addTime(increment, n), input);
+    return wrap(add(increment, n), input);
   }
 
   input = input ?? new Date();
   validateDate(input);
-  return addTimeOrSubtractTime(increment, Number(n), input);
+  return _add(increment, n, input);
 });
 
-export const subtractTime = curry((increment, n, input) => {
+export const subtract = curry((increment, n, input) => {
   if (input instanceof Function) {
-    return wrap(subtractTime(increment, n), input);
+    return wrap(subtract(increment, n), input);
   }
 
   input = input ?? new Date();
   validateDate(input);
-  return addTimeOrSubtractTime(increment, n * -1, input);
+  return _add(increment, n * -1, input);
 });
 
-export const addTimeSequence = curry((sequence, input) => {
+export const addFor = curry((group, input) => {
   if (input instanceof Function) {
-    return wrap(addTimeSequence(sequence), input);
+    return wrap(addFor(group), input);
   }
 
   input = input ?? new Date();
   validateDate(input);
-  return sequence.reduce((acc, cur) => addTimeOrSubtractTime(cur[0], Number(cur[1]), acc), input);
+  return entries(group).reduce((acc, [increment, value]) => _add(increment, value, acc), input);
 });
 
-export const subtractTimeSequence = curry((sequence, input) => {
+export const subtractFor = curry((group, input) => {
   if (input instanceof Function) {
-    return wrap(subtractTimeSequence(sequence), input);
+    return wrap(subtractFor(group), input);
   }
 
   input = input ?? new Date();
   validateDate(input);
-  return sequence.reduce((acc, cur) => addTimeOrSubtractTime(cur[0], cur[1] * -1, acc), input);
+  return entries(group).reduce(
+    (acc, [increment, value]) => _add(increment, value * -1, acc),
+    input,
+  );
 });

@@ -4,42 +4,14 @@
  * https://www.github.com/patrickfatrick/gregorian
  */
 
-import { reform, reformWithOverrides, reformWithLocale } from './modules/reform';
-import isDate from './modules/is-date';
-import { parse, parseUTC } from './modules/parse';
-import {
-  addTime,
-  addTimeSequence,
-  subtractTime,
-  subtractTimeSequence,
-} from './modules/add-time-or-subtract-time';
-import { resetLocal, resetUTC } from './modules/reset-local-or-reset-utc';
-import { setLocal, setLocalGroup, setUTC, setUTCGroup } from './modules/set-local-or-set-utc';
-import { getLocal, getLocalGroup, getUTC, getUTCGroup } from './modules/get-local-or-get-utc';
-import { diffTime } from './modules/diff-time';
-import { compareTime } from './modules/compare-time';
-
-export {
-  reform,
-  reformWithOverrides,
-  reformWithLocale,
-  isDate,
-  addTime,
-  addTimeSequence,
-  subtractTime,
-  subtractTimeSequence,
-  resetLocal,
-  resetUTC,
-  setLocal,
-  setLocalGroup,
-  setUTC,
-  setUTCGroup,
-  getLocal,
-  getLocalGroup,
-  getUTC,
-  getUTCGroup,
-  diffTime,
-  compareTime,
-  parse,
-  parseUTC,
-};
+export { reform, reformWithOverrides, reformWithLocale } from './modules/reform';
+export { isDate } from './modules/is-date';
+export { isLeapYear, isLeapYearUTC } from './modules/is-leap-year';
+export { parse, parseUTC } from './modules/parse';
+export { add, subtract, addFor, subtractFor } from './modules/add';
+export { startOf, startOfUTC } from './modules/start-of';
+export { endOf, endOfUTC } from './modules/end-of';
+export { set, setFor, setUTC, setUTCFor } from './modules/set';
+export { get, getFor, getUTC, getUTCFor } from './modules/get';
+export { diff } from './modules/diff';
+export { compare } from './modules/compare';

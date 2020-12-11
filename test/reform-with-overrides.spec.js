@@ -2,7 +2,7 @@ import test from 'ava';
 import sinon from 'sinon';
 import { reformWithOverrides } from '../src';
 
-test.beforeEach(t => {
+test.beforeEach((t) => {
   t.context.overridesComplete = {
     daysShort: ['di', 'lun', 'mar', 'mer', 'jeu', 'ven', 'sam'],
     daysLong: ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'],
@@ -47,7 +47,7 @@ test.beforeEach(t => {
   };
 });
 
-test('errors out if invalid date passed in', t => {
+test('errors out if invalid date passed in', (t) => {
   t.throws(
     () =>
       reformWithOverrides(t.context.overridesComplete)('E, N o, Y H:T:S.L')(
@@ -57,7 +57,7 @@ test('errors out if invalid date passed in', t => {
   );
 });
 
-test('uses the current time by default', t => {
+test('uses the current time by default', (t) => {
   const clock = sinon.useFakeTimers(new Date('1985-05-22T00:00:00.000Z'));
   t.is(
     reformWithOverrides(t.context.overridesComplete)('E, N o, Y H:T:S.L')(),
@@ -66,7 +66,7 @@ test('uses the current time by default', t => {
   clock.restore();
 });
 
-test('can be composed', t => {
+test('can be composed', (t) => {
   const reformWithOverridesFn = reformWithOverrides(t.context.overridesComplete)(
     'E, N o, Y H:T:S.L',
   );
@@ -76,7 +76,7 @@ test('can be composed', t => {
   );
 });
 
-test('can be run with all arguments at once', t => {
+test('can be run with all arguments at once', (t) => {
   t.is(
     reformWithOverrides(
       t.context.overridesComplete,
@@ -87,7 +87,7 @@ test('can be run with all arguments at once', t => {
   );
 });
 
-test('can be run with an incomplete override list', t => {
+test('can be run with an incomplete override list', (t) => {
   t.is(
     reformWithOverrides(
       t.context.overridesIncomplete,
@@ -98,7 +98,7 @@ test('can be run with an incomplete override list', t => {
   );
 });
 
-test('allows for the customization of the delimiter used', t => {
+test('allows for the customization of the delimiter used', (t) => {
   t.is(
     reformWithOverrides(t.context.overridesComplete)('E, n Y-m-d H:T.L*p')(new Date('09/25/2015')),
     'vendredi, sept 2015-9-25 00:00.000am',

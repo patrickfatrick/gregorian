@@ -1,3 +1,1 @@
-import { isDate } from '../lib/utils';
-
-export default isDate;
+export { isDate } from '../lib/utils';
