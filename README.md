@@ -73,13 +73,13 @@ const string2 = reformFnEurope(new Date('1988-04-11T12:45:00.000Z')) // 11/04/19
 But you can also run each function with all arguments
 
 ```javascript
-addTime('y', 1, new Date('1988-04-11T12:45:00.000Z')) // 1989-04-11T12:45:00.000Z
+add('y', 1, new Date('1988-04-11T12:45:00.000Z')) // 1989-04-11T12:45:00.000Z
 ```
 
 Or any combination in between
 
 ```javascript
-const addYearFn = addTime('y')
+const addYearFn = add('y')
 addYearFn(1, new Date('1988-04-11T12:45:00.000Z')) // 1989-04-11T12:45:00.000Z
 const addOneYearFn = addYearFn(1)
 addOneYearFn(new Date('1988-04-11T12:45:00.000Z')) // 1989-04-11T12:45:00.000Z
@@ -88,16 +88,16 @@ addOneYearFn(new Date('1988-04-11T12:45:00.000Z')) // 1989-04-11T12:45:00.000Z
 By default if no date is passed, these functions will use the current time via `new Date()`. You should always run the function or pass in null though, like this:
 
 ```javascript
-addTime('y')(1)() // Correct
-addTime('y', 1, null) // Correct
-addTime('y', 1) // Wrong, this will return a function
-addTime('y')(1) // Wrong, this will return a function
+add('y')(1)() // Correct
+add('y', 1, null) // Correct
+add('y', 1) // Wrong, this will return a function
+add('y')(1) // Wrong, this will return a function
 ```
 
-For even greater flexibility you can also pass another function as the last argument rather than a date. This allows you to compose seriously custom functions that can be applied to any number of Date objects easily. Please note that the functions are called in a left-right manner, so in the following example `setUTC` would be called before `resetUTC`.
+For even greater flexibility you can also pass another function as the last argument rather than a date. This allows you to compose seriously custom functions that can be applied to any number of Date objects easily. Please note that the functions are called in a left-right manner, so in the following example `setUTC` would be called before `startOfUTC`.
 
 ```javascript
-const setTimeTo6am = setUTC('h', 6)(resetUTC('h'))
+const setTimeTo6am = setUTC('h', 6)(startOfUTC('h'))
 setTimetTo6am(new Date('1988-04-11T12:45:00.000Z')) // 1988-04-11T06:00:00.000Z
 ```
 
@@ -238,20 +238,20 @@ parseUTC('2019-12-01') === new Date(2019, 10, 30, 14)
 You can manipulate dates like 
 
 ```javascript
-addTime('d')(5)(new Date('2015-10-31')) // 2015-11-05
-subtractTime('m')(7)(new Date('2015-10-31')) // 2015-03-31
+add('d')(5)(new Date('2015-10-31')) // 2015-11-05
+subtract('m')(7)(new Date('2015-10-31')) // 2015-03-31
 ```
 
 There are also methods for combining multiple add and subtract operations (accepting an object or a Map):
 
 ```javascript
-addTimeFor({
+addFor({
   y: 1,
   m: 3,
   d: -1,
 })(new Date('2015-10-31')) // 2017-02-01
 
-subtractTimeFor({
+subtractFor({
   y: 1,
   m: 3,
   y: 1
@@ -281,8 +281,8 @@ Setting specific values for different time increments is much like adding and su
 
 ```javascript
 // Let's say your user is in New York...
-setLocal('d')(5)(new Date('2015-10-31')) // 2015-10-05 05:00:00.000 UTC
-setLocal('m')(7)(new Date('2015-10-31')) // 2015-07-31 05:00:00.000 UTC
+set('d')(5)(new Date('2015-10-31')) // 2015-10-05 05:00:00.000 UTC
+set('m')(7)(new Date('2015-10-31')) // 2015-07-31 05:00:00.000 UTC
 ```
 
 There is also a method for setting with UTC time.
@@ -296,7 +296,7 @@ But wait, there's more! You can also run multiple set operations with one functi
 
 ```javascript
 setUTCFor({ y: 1985, m: 5, d: 22 })(new Date('2015-10-31')) // 1985-05-22
-setLocalFor({ y: 1985, m: 5, d: 22 }, new Date('2015-10-31')) // 1985-05-21
+setFor({ y: 1985, m: 5, d: 22 }, new Date('2015-10-31')) // 1985-05-21
 ```
 
 This accepts an object where the keys correspond to the increments below.
@@ -323,8 +323,8 @@ This will retrieve specific numeric time increments for the Date.
 
 ```javascript
 // Let's say your user is in mainland Europe...
-getLocal('h')(new Date('2015-10-31T00:00:00.000Z')) // 1
-getLocal('m')(new Date('2015-10-31T00:00:00.000Z')) // 10
+get('h')(new Date('2015-10-31T00:00:00.000Z')) // 1
+get('m')(new Date('2015-10-31T00:00:00.000Z')) // 10
 ```
 
 There is also a method for getting the UTC value.
@@ -338,7 +338,7 @@ And you can also get multiple increments at the same time, like so:
 
 ```javascript
 getUTCFor([ 'h', 'y', 'm' ])(new Date('2015-10-31T00:00:00.000Z')) // [ 0, 2015, 10 ]
-getLocalFor([ 'm', 'd' ])(new Date('2015-10-31T00:00:00.000Z')) // [ 10, 30 ]
+getFor([ 'm', 'd' ])(new Date('2015-10-31T00:00:00.000Z')) // [ 10, 30 ]
 ```
 
 This accepts an array of increments, and returns the corresponding values as an array.
@@ -364,49 +364,49 @@ You can set the date or time to the start of the increment specified in local ti
 
 ```javascript
 // Let's say your user is in New York...
-resetLocal('s')(new Date('April 11, 1988 8:23:15.123')) // '1988-04-11 13:23:15 UTC'
-resetLocal('t')(new Date('April 11, 1988 8:23:15.123')) // '1988-04-11 13:23:00 UTC'
-resetLocal('h')(new Date('April 11, 1988 8:23:15.123')) // '1988-04-11 13:00:00 UTC'
-resetLocal('d')(new Date('April 11, 1988 8:23:15.123')) // '1988-04-11 05:00:00 UTC'
-resetLocal('w')(new Date('April 11, 1988 8:23:15.123')) // '1988-04-10 05:00:00 UTC'
-resetLocal('m')(new Date('April 11, 1988 8:23:15.123')) // '1988-04-01 05:00:00 UTC'
-resetLocal('y')(new Date('April 11, 1988 8:23:15.123')) // '1988-01-01 05:00:00 UTC'
+startOf('s')(new Date('April 11, 1988 8:23:15.123')) // '1988-04-11 13:23:15 UTC'
+startOf('t')(new Date('April 11, 1988 8:23:15.123')) // '1988-04-11 13:23:00 UTC'
+startOf('h')(new Date('April 11, 1988 8:23:15.123')) // '1988-04-11 13:00:00 UTC'
+startOf('d')(new Date('April 11, 1988 8:23:15.123')) // '1988-04-11 05:00:00 UTC'
+startOf('w')(new Date('April 11, 1988 8:23:15.123')) // '1988-04-10 05:00:00 UTC'
+startOf('m')(new Date('April 11, 1988 8:23:15.123')) // '1988-04-01 05:00:00 UTC'
+startOf('y')(new Date('April 11, 1988 8:23:15.123')) // '1988-01-01 05:00:00 UTC'
 ```
 
 There is also a method for reset in UTC.
 
 ```javascript
-resetUTC('d')(new Date('2015-10-31T03:42:877Z')) // 2015-10-31 00:00:000 UTC
-resetUTC('m')(new Date('2015-10-31T03:42:877Z')) // 2015-10-01 00:00:000 UTC
+startOfUTC('d')(new Date('2015-10-31T03:42:877Z')) // 2015-10-31 00:00:000 UTC
+startOfUTC('m')(new Date('2015-10-31T03:42:877Z')) // 2015-10-01 00:00:000 UTC
 // etc.
 ```
 
 ## Utility Functions
 
-### diffTime
+### diff
 
 This returns the numeric difference between two dates expressed in terms of the provided time increment. The difference will be positive if the second date is greater, and negative if the first date is great, and 0 if they are the same date. All the same increments allowed in the manipulation functions are allowed here as well.
 
 ```javascript
-diffTime('s')(new Date('1988-04-11T07:45:00.000Z'))(new Date('1989-04-11T07:45:00.000Z')) // 31536000
-diffTime('d')(new Date('1988-04-11T07:45:00.000Z'))(new Date('1989-04-11T07:45:00.000Z')) // 365
+diff('s')(new Date('1988-04-11T07:45:00.000Z'))(new Date('1989-04-11T07:45:00.000Z')) // 31536000
+diff('d')(new Date('1988-04-11T07:45:00.000Z'))(new Date('1989-04-11T07:45:00.000Z')) // 365
 ```
 
 For months and years, a year that 365.25 days long is assumed, and a month is assumed to be 1/12th of that. Which is why you won't always get a nice clean integer when you think you should.
 
 ```javascript
-diffTime('m')(new Date('1988-04-11T07:45:00.000Z'))(new Date('1989-04-11T07:45:00.000Z')) // 11.990801576872535
-diffTime('y')(new Date('1988-04-11T07:45:00.000Z'))(new Date('1989-04-11T07:45:00.000Z')) // 0.999315537303217
+diff('m')(new Date('1988-04-11T07:45:00.000Z'))(new Date('1989-04-11T07:45:00.000Z')) // 11.990801576872535
+diff('y')(new Date('1988-04-11T07:45:00.000Z'))(new Date('1989-04-11T07:45:00.000Z')) // 0.999315537303217
 ```
 
-### compareTime
+### compare
 
 This compares two dates to see which is greater. If the second date is greater, 1 is returned. If the first date is greater, -1 is returned. And if they are the same date and time, 0 is returned. Examples:
 
 ```javascript
-compareTime(new Date('1988-04-11T00:00:00.000Z'))(new Date('1989-04-11T00:00:00.000Z')) // 1
-compareTime(new Date('1989-04-11T00:00:00.000Z'))(new Date('1988-04-11T00:00:00.000Z')) // -1
-compareTime(new Date('1988-04-11T00:00:00.000Z'))(new Date('1988-04-11T00:00:00.000Z')) // 0
+compare(new Date('1988-04-11T00:00:00.000Z'))(new Date('1989-04-11T00:00:00.000Z')) // 1
+compare(new Date('1989-04-11T00:00:00.000Z'))(new Date('1988-04-11T00:00:00.000Z')) // -1
+compare(new Date('1988-04-11T00:00:00.000Z'))(new Date('1988-04-11T00:00:00.000Z')) // 0
 ```
 
 ### isDate
@@ -437,7 +437,7 @@ isLeapYearUTC(new Date('2000-01-01T00:00:00.000Z')) // true
 
 [Moment](http://momentjs.com/) is the OG date library. It has a pretty jquery-esque approach, so you're forced to work with an overloaded and mutable `moment` object to do everything and then convert it to a date at the end, or whatever. Gregorian works with native dates and is completely mutable. Because Gregorian uses individual functions you get to import only what you need and nothing more.
 
-[date-fns](https://date-fns.org) is more in line with gregorian but is larger in scope. APIs are a bit different though, for instance gregorian has currying built-in so it's trivial to make your own utility functions. IMO many of gregorian's APIs provide more utility and flexibility than date-fn's equivalents. Comparison functions (isBefore, isAfter) only return a boolean, while gregorian's compareTime returns a number indicating which date comes after. Difference functions return an integer while gregorian's return a float. There's very little support for UTC.
+[date-fns](https://date-fns.org) is more in line with gregorian but is larger in scope. APIs are a bit different though, for instance gregorian has currying built-in so it's trivial to make your own utility functions. IMO many of gregorian's APIs provide more utility and flexibility than date-fn's equivalents. Comparison functions (isBefore, isAfter) only return a boolean, while gregorian's compare returns a number indicating which date comes after. Difference functions return an integer while gregorian's return a float. There's very little support for UTC.
 
 Both of the above libraries were clearly intended to be widely used and so represent many use cases. Gregorian is something I came up with for my personal projects, with a more focused set of features. You absolutely should use Moment or date-fns if it makes sense.
 

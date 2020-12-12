@@ -1,5 +1,12 @@
 ## Changelog
 
+#### v6
+
+- Lots of things were renamed. I would recommend checking the README for details, but essentially changed all `...Local` functions (eg `setLocal`) to remove the `Local` (eg `set`). Also changed all `...Time` functions (eg `diffTime`) to remove the `Time` (eg `diff`). Also changed `resetLocal` and `resetUTC` to `startOf` and `startOfUTC`. 
+- Removed `addTimeSequence` and `subtractTimeSequence` functions. I began to feel that addition operations done in a sequence was not actually all that useful. I replaced these with `addFor` and `subtractFor` which work like other `...For` functions in that they accept an object or a Map defining multiple operations. So if you need operations to be carried out in a specific order I would recommend using a Map to define them.
+- Added isLeapYear and isLeapYearUTC utility functions.
+- Added `endOf` and `endOfUTC` functions.
+
 #### v5.0.1
 
 Fixes:
