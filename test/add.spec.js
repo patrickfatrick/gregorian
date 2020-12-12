@@ -7,11 +7,11 @@ test.beforeEach((t) => {
 });
 
 test('errors out if invalid date passed in', (t) => {
-  t.throws(() => add('y')(1)('1988-04-11T00:00:00.000Z'), TypeError);
+  t.throws(() => add('y')(1)('1988-04-11T00:00:00.000Z'), { instanceOf: TypeError });
 });
 
 test('errors out if invalid increment passed in', (t) => {
-  t.throws(() => add('invalid')(1)(t.context.date), TypeError);
+  t.throws(() => add('invalid')(1)(t.context.date), { instanceOf: TypeError });
 });
 
 test('uses the current time by default', (t) => {

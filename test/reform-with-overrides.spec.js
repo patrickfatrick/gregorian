@@ -53,7 +53,7 @@ test('errors out if invalid date passed in', (t) => {
       reformWithOverrides(t.context.overridesComplete)('E, N o, Y H:T:S.L')(
         '1988-04-11T00:00:00.000Z',
       ),
-    TypeError,
+    { instanceOf: TypeError },
   );
 });
 

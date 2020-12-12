@@ -7,11 +7,11 @@ test.beforeEach((t) => {
 });
 
 test('errors out if invalid date passed in', (t) => {
-  t.throws(() => getUTCFor(['y'])('1988-04-11T00:00:00.000Z'), TypeError);
+  t.throws(() => getUTCFor(['y'])('1988-04-11T00:00:00.000Z'), { instanceOf: TypeError });
 });
 
 test('errors out if invalid increment passed in', (t) => {
-  t.throws(() => getUTCFor(['invalid'])(t.context.date), TypeError);
+  t.throws(() => getUTCFor(['invalid'])(t.context.date), { instanceOf: TypeError });
 });
 
 test('uses the current time by default', (t) => {

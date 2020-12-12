@@ -8,15 +8,17 @@ test.beforeEach((t) => {
 });
 
 test('errors out if invalid date1 passed in', (t) => {
-  t.throws(() => diff('y')('1988-04-11T00:00:00.000Z')(new Date()), TypeError);
+  t.throws(() => diff('y')('1988-04-11T00:00:00.000Z')(new Date()), { instanceOf: TypeError });
 });
 
 test('errors out if invalid date2 passed in', (t) => {
-  t.throws(() => diff('y')(new Date())('1988-04-11T00:00:00.000Z'), TypeError);
+  t.throws(() => diff('y')(new Date())('1988-04-11T00:00:00.000Z'), { instanceOf: TypeError });
 });
 
 test('errors out if invalid increment passed in', (t) => {
-  t.throws(() => diff('invalid')(new Date('2017-01-01'))(t.context.date1), TypeError);
+  t.throws(() => diff('invalid')(new Date('2017-01-01'))(t.context.date1), {
+    instanceOf: TypeError,
+  });
 });
 
 test('uses the current time by default (date1)', (t) => {

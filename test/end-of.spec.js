@@ -7,7 +7,7 @@ test.beforeEach((t) => {
 });
 
 test('errors out if invalid date passed in', (t) => {
-  t.throws(() => endOf('y')('1988-04-11T00:00:00.000Z'), TypeError);
+  t.throws(() => endOf('y')('1988-04-11T00:00:00.000Z'), { instanceOf: TypeError });
 });
 
 test('uses the current time by default', (t) => {

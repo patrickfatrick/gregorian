@@ -8,11 +8,11 @@ test.beforeEach((t) => {
 });
 
 test('errors out if invalid date1 passed in', (t) => {
-  t.throws(() => compare('1988-04-11T00:00:00.000Z')(new Date()), TypeError);
+  t.throws(() => compare('1988-04-11T00:00:00.000Z')(new Date()), { instanceOf: TypeError });
 });
 
 test('errors out if invalid date2 passed in', (t) => {
-  t.throws(() => compare(new Date())('1988-04-11T00:00:00.000Z'), TypeError);
+  t.throws(() => compare(new Date())('1988-04-11T00:00:00.000Z'), { instanceOf: TypeError });
 });
 
 test('uses the current time by default (date1)', (t) => {

@@ -10,7 +10,7 @@ test.beforeEach((t) => {
 test('errors out if invalid date passed in', (t) => {
   t.throws(
     () => reformWithLocale(t.context.locale)('E, N o, Y H:T:S.L')('1988-04-11T00:00:00.000Z'),
-    TypeError,
+    { instanceOf: TypeError },
   );
 });
 
