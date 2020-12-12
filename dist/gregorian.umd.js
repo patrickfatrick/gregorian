@@ -20,19 +20,15 @@
   }
 
   function _slicedToArray(arr, i) {
-    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest();
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
   }
 
   function _toConsumableArray(arr) {
-    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
+    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
   }
 
   function _arrayWithoutHoles(arr) {
-    if (Array.isArray(arr)) {
-      for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
-
-      return arr2;
-    }
+    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
   }
 
   function _arrayWithHoles(arr) {
@@ -40,14 +36,11 @@
   }
 
   function _iterableToArray(iter) {
-    if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+    if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
   }
 
   function _iterableToArrayLimit(arr, i) {
-    if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) {
-      return;
-    }
-
+    if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
     var _arr = [];
     var _n = true;
     var _d = false;
@@ -73,12 +66,29 @@
     return _arr;
   }
 
+  function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+  }
+
+  function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+
+    for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+    return arr2;
+  }
+
   function _nonIterableSpread() {
-    throw new TypeError("Invalid attempt to spread non-iterable instance");
+    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
   }
 
   function _nonIterableRest() {
-    throw new TypeError("Invalid attempt to destructure non-iterable instance");
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
   }
 
   /**
@@ -289,6 +299,18 @@
     return input instanceof Date && !Number.isNaN(Date.parse(input));
   }
   /**
+   * Determines if the given date is in a leap year
+   * @param  {Date}    input a date object
+   * @param  {String}  UTC   either 'UTC' or an empty string
+   * @return {Boolean}       whether the date is in a leap year or not
+   */
+
+  function isLeapYear(date) {
+    var UTC = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+    var year = date["get".concat(UTC, "FullYear")]();
+    return year % 100 === 0 ? year % 400 === 0 : year % 4 === 0;
+  }
+  /**
    * Checks that the date object passed in is a valid Date instance, or throw a TypeError
    * @param   {Date}      date  a date object
    * @return  {Boolean}         true if validated
@@ -308,7 +330,7 @@
    * @return  {Number}        difference between the dates
    */
 
-  function diff(date1, date2) {
+  function difference(date1, date2) {
     return date2.valueOf() - date1.valueOf();
   }
   /**
@@ -344,6 +366,10 @@
     return function (arg) {
       return fn2(fn1(arg));
     };
+  }
+  function entries(input) {
+    if (input instanceof Map) return Array.from(input.entries());
+    return Object.entries(input);
   }
 
   function formatDate(format, date, translation) {
@@ -400,6 +426,21 @@
     return formatDate(format, date, locale || en);
   });
 
+  function isLeapYear$1(date) {
+    var _date;
+
+    date = (_date = date) !== null && _date !== void 0 ? _date : new Date();
+    validateDate(date);
+    return isLeapYear(date);
+  }
+  function isLeapYearUTC(date) {
+    var _date2;
+
+    date = (_date2 = date) !== null && _date2 !== void 0 ? _date2 : new Date();
+    validateDate(date);
+    return isLeapYear(date, 'UTC');
+  }
+
   /**
    * Parses either an ambiguous ISO partial (2019-08-16 / 2019-08-16T22:55:00)
    * or a complete ISO string (2019-08-16T22:55:00Z) to a date
@@ -416,7 +457,7 @@
         _$Symbol$split2$ = _$Symbol$split2[1],
         rawTime = _$Symbol$split2$ === void 0 ? '00:00:00' : _$Symbol$split2$;
 
-    var _$Symbol$split3 = /Z|\+|\-/[Symbol.split](rawTime),
+    var _$Symbol$split3 = /Z|\+|-/[Symbol.split](rawTime),
         _$Symbol$split4 = _slicedToArray(_$Symbol$split3, 2),
         time = _$Symbol$split4[0],
         _$Symbol$split4$ = _$Symbol$split4[1],
@@ -460,7 +501,7 @@
         _$Symbol$split6$ = _$Symbol$split6[1],
         rawTime = _$Symbol$split6$ === void 0 ? '00:00:00' : _$Symbol$split6$;
 
-    var _$Symbol$split7 = /Z|\+|\-/[Symbol.split](rawTime),
+    var _$Symbol$split7 = /Z|\+|-/[Symbol.split](rawTime),
         _$Symbol$split8 = _slicedToArray(_$Symbol$split7, 2),
         time = _$Symbol$split8[0],
         _$Symbol$split8$ = _$Symbol$split8[1],
@@ -496,7 +537,7 @@
    * @returns {Date}                a new date
    */
 
-  function addTimeOrSubtractTime(increment, n, date) {
+  function _add(increment, n, date) {
     var _incrementHandlers;
 
     var incrementHandlers = (_incrementHandlers = {}, _defineProperty(_incrementHandlers, MILLISECOND, function (date) {
@@ -535,52 +576,60 @@
     return incrementHandlers[increment](date);
   }
 
-  var addTime = curry(function (increment, n, input) {
+  var add = curry(function (increment, n, input) {
     var _input;
 
     if (input instanceof Function) {
-      return wrap(addTime(increment, n), input);
+      return wrap(add(increment, n), input);
     }
 
     input = (_input = input) !== null && _input !== void 0 ? _input : new Date();
     validateDate(input);
-    return addTimeOrSubtractTime(increment, Number(n), input);
+    return _add(increment, n, input);
   });
-  var subtractTime = curry(function (increment, n, input) {
+  var subtract = curry(function (increment, n, input) {
     var _input2;
 
     if (input instanceof Function) {
-      return wrap(subtractTime(increment, n), input);
+      return wrap(subtract(increment, n), input);
     }
 
     input = (_input2 = input) !== null && _input2 !== void 0 ? _input2 : new Date();
     validateDate(input);
-    return addTimeOrSubtractTime(increment, n * -1, input);
+    return _add(increment, n * -1, input);
   });
-  var addTimeSequence = curry(function (sequence, input) {
+  var addFor = curry(function (group, input) {
     var _input3;
 
     if (input instanceof Function) {
-      return wrap(addTimeSequence(sequence), input);
+      return wrap(addFor(group), input);
     }
 
     input = (_input3 = input) !== null && _input3 !== void 0 ? _input3 : new Date();
     validateDate(input);
-    return sequence.reduce(function (acc, cur) {
-      return addTimeOrSubtractTime(cur[0], Number(cur[1]), acc);
+    return entries(group).reduce(function (acc, _ref) {
+      var _ref2 = _slicedToArray(_ref, 2),
+          increment = _ref2[0],
+          value = _ref2[1];
+
+      return _add(increment, value, acc);
     }, input);
   });
-  var subtractTimeSequence = curry(function (sequence, input) {
+  var subtractFor = curry(function (group, input) {
     var _input4;
 
     if (input instanceof Function) {
-      return wrap(subtractTimeSequence(sequence), input);
+      return wrap(subtractFor(group), input);
     }
 
     input = (_input4 = input) !== null && _input4 !== void 0 ? _input4 : new Date();
     validateDate(input);
-    return sequence.reduce(function (acc, cur) {
-      return addTimeOrSubtractTime(cur[0], cur[1] * -1, acc);
+    return entries(group).reduce(function (acc, _ref3) {
+      var _ref4 = _slicedToArray(_ref3, 2),
+          increment = _ref4[0],
+          value = _ref4[1];
+
+      return _add(increment, value * -1, acc);
     }, input);
   });
 
@@ -591,56 +640,140 @@
    * @returns {Date}                  a new date
    */
 
-  function resetLocalOrResetUTC(increment, date, utc) {
+  function _startOf(increment, date, UTC) {
     var _incrementHandlers;
 
     var incrementHandlers = (_incrementHandlers = {}, _defineProperty(_incrementHandlers, SECOND, function (date) {
-      return new Date(date["set".concat(utc, "Seconds")](date["get".concat(utc, "Seconds")](), 0));
+      return new Date(date["set".concat(UTC, "Seconds")](date["get".concat(UTC, "Seconds")](), 0));
     }), _defineProperty(_incrementHandlers, MINUTE, function (date) {
-      return new Date(date["set".concat(utc, "Minutes")](date["get".concat(utc, "Minutes")](), 0, 0));
+      return new Date(date["set".concat(UTC, "Minutes")](date["get".concat(UTC, "Minutes")](), 0, 0));
     }), _defineProperty(_incrementHandlers, HOUR, function (date) {
-      return new Date(date["set".concat(utc, "Hours")](date["get".concat(utc, "Hours")](), 0, 0, 0));
+      return new Date(date["set".concat(UTC, "Hours")](date["get".concat(UTC, "Hours")](), 0, 0, 0));
     }), _defineProperty(_incrementHandlers, DATE, function (date) {
-      date["set".concat(utc, "Date")](date["get".concat(utc, "Date")]());
-      date["set".concat(utc, "Hours")](0, 0, 0, 0);
+      date["set".concat(UTC, "Date")](date["get".concat(UTC, "Date")]());
+      date["set".concat(UTC, "Hours")](0, 0, 0, 0);
       return new Date(date);
     }), _defineProperty(_incrementHandlers, WEEK, function (date) {
-      date["set".concat(utc, "Date")](date["get".concat(utc, "Date")]() - date["get".concat(utc, "Day")]());
-      date["set".concat(utc, "Hours")](0, 0, 0, 0);
+      date["set".concat(UTC, "Date")](date["get".concat(UTC, "Date")]() - date["get".concat(UTC, "Day")]());
+      date["set".concat(UTC, "Hours")](0, 0, 0, 0);
       return new Date(date);
     }), _defineProperty(_incrementHandlers, MONTH, function (date) {
-      date["set".concat(utc, "Month")](date["get".concat(utc, "Month")](), 1);
-      date["set".concat(utc, "Hours")](0, 0, 0, 0);
+      date["set".concat(UTC, "Month")](date["get".concat(UTC, "Month")](), 1);
+      date["set".concat(UTC, "Hours")](0, 0, 0, 0);
       return new Date(date);
     }), _defineProperty(_incrementHandlers, YEAR, function (date) {
-      date["set".concat(utc, "FullYear")](date["get".concat(utc, "FullYear")](), 0, 1);
-      date["set".concat(utc, "Hours")](0, 0, 0, 0);
+      date["set".concat(UTC, "FullYear")](date["get".concat(UTC, "FullYear")](), 0, 1);
+      date["set".concat(UTC, "Hours")](0, 0, 0, 0);
       return new Date(date);
     }), _incrementHandlers);
     return incrementHandlers[increment](date);
   }
 
-  var resetUTC = curry(function (increment, input) {
+  var startOfUTC = curry(function (increment, input) {
     var _input;
 
     if (input instanceof Function) {
-      return wrap(resetUTC(increment), input);
+      return wrap(startOfUTC(increment), input);
     }
 
     input = (_input = input) !== null && _input !== void 0 ? _input : new Date();
     validateDate(input);
-    return resetLocalOrResetUTC(increment, input, 'UTC');
+    return _startOf(increment, input, 'UTC');
   });
-  var resetLocal = curry(function (increment, input) {
+  var startOf = curry(function (increment, input) {
     var _input2;
 
     if (input instanceof Function) {
-      return wrap(resetLocal(increment), input);
+      return wrap(startOf(increment), input);
     }
 
     input = (_input2 = input) !== null && _input2 !== void 0 ? _input2 : new Date();
     validateDate(input);
-    return resetLocalOrResetUTC(increment, input, '');
+    return _startOf(increment, input, '');
+  });
+
+  /**
+   * Sets the date or time to the start of the specified increment
+   * @param   {String}    increment   an increment to set the date back to
+   * @param   {Date}      date        a date object
+   * @returns {Date}                  a new date
+   */
+
+  function _endOf(increment, date) {
+    var _incrementHandlers;
+
+    var UTC = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+    var incrementHandlers = (_incrementHandlers = {}, _defineProperty(_incrementHandlers, SECOND, function (date) {
+      return new Date(date["set".concat(UTC, "Milliseconds")](999));
+    }), _defineProperty(_incrementHandlers, MINUTE, function (date) {
+      date["set".concat(UTC, "Seconds")](59);
+      date["set".concat(UTC, "Milliseconds")](999);
+      return new Date(date);
+    }), _defineProperty(_incrementHandlers, HOUR, function (date) {
+      date["set".concat(UTC, "Minutes")](59);
+      date["set".concat(UTC, "Seconds")](59);
+      date["set".concat(UTC, "Milliseconds")](999);
+      return new Date(date);
+    }), _defineProperty(_incrementHandlers, DATE, function (date) {
+      date["set".concat(UTC, "Minutes")](59);
+      date["set".concat(UTC, "Seconds")](59);
+      date["set".concat(UTC, "Milliseconds")](999);
+      date["set".concat(UTC, "Hours")](23);
+      return new Date(date);
+    }), _defineProperty(_incrementHandlers, WEEK, function (date) {
+      date["set".concat(UTC, "Minutes")](59);
+      date["set".concat(UTC, "Seconds")](59);
+      date["set".concat(UTC, "Milliseconds")](999);
+      date["set".concat(UTC, "Hours")](23);
+      date["set".concat(UTC, "Date")](date["get".concat(UTC, "Date")]() + 7 - date["get".concat(UTC, "Day")]());
+      return new Date(date);
+    }), _defineProperty(_incrementHandlers, MONTH, function (date) {
+      var thirtyDaysHath = [3, 5, 8, 10];
+      var thirtyOneDaysHath = [0, 2, 4, 6, 7, 9, 11];
+      var twentyEightDaysHath = [1];
+      var day;
+      if (thirtyDaysHath.includes(date["get".concat(UTC, "Month")]())) day = 30;
+      if (twentyEightDaysHath.includes(date["get".concat(UTC, "Month")]())) day = isLeapYear(date) ? 29 : 28;
+      if (thirtyOneDaysHath.includes(date["get".concat(UTC, "Month")]())) day = 31;
+      date["set".concat(UTC, "Date")](day);
+      date["set".concat(UTC, "Hours")](23);
+      date["set".concat(UTC, "Minutes")](59);
+      date["set".concat(UTC, "Seconds")](59);
+      date["set".concat(UTC, "Milliseconds")](999);
+      return new Date(date);
+    }), _defineProperty(_incrementHandlers, YEAR, function (date) {
+      date["set".concat(UTC, "Month")](11);
+      date["set".concat(UTC, "Date")](31);
+      date["set".concat(UTC, "Hours")](23);
+      date["set".concat(UTC, "Minutes")](59);
+      date["set".concat(UTC, "Seconds")](59);
+      date["set".concat(UTC, "Milliseconds")](999);
+      return new Date(date);
+    }), _incrementHandlers);
+    return incrementHandlers[increment](date);
+  }
+
+  var endOfUTC = curry(function (increment, input) {
+    var _input;
+
+    if (input instanceof Function) {
+      return wrap(endOfUTC(increment), input);
+    }
+
+    input = (_input = input) !== null && _input !== void 0 ? _input : new Date();
+    validateDate(input);
+    return _endOf(increment, new Date(input), 'UTC');
+  });
+  var endOf = curry(function (increment, input) {
+    var _input2;
+
+    if (input instanceof Function) {
+      return wrap(endOf(increment), input);
+    }
+
+    input = (_input2 = input) !== null && _input2 !== void 0 ? _input2 : new Date();
+    validateDate(input);
+    return _endOf(increment, new Date(input), '');
   });
 
   /**
@@ -651,50 +784,50 @@
    * @returns   {Object}              a new gregorian object
    */
 
-  function setLocalOrSetUTC(increment, value, date) {
+  function _set(increment, value, date) {
     var _incrementHandlers;
 
-    var utc = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
+    var UTC = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
     var incrementHandlers = (_incrementHandlers = {}, _defineProperty(_incrementHandlers, MILLISECOND, function (date) {
-      return new Date(date["set".concat(utc, "Milliseconds")](value));
+      return new Date(date["set".concat(UTC, "Milliseconds")](value));
     }), _defineProperty(_incrementHandlers, SECOND, function (date) {
-      return new Date(date["set".concat(utc, "Seconds")](value));
+      return new Date(date["set".concat(UTC, "Seconds")](value));
     }), _defineProperty(_incrementHandlers, MINUTE, function (date) {
-      return new Date(date["set".concat(utc, "Minutes")](value));
+      return new Date(date["set".concat(UTC, "Minutes")](value));
     }), _defineProperty(_incrementHandlers, HOUR, function (date) {
-      return new Date(date["set".concat(utc, "Hours")](value));
+      return new Date(date["set".concat(UTC, "Hours")](value));
     }), _defineProperty(_incrementHandlers, DATE, function (date) {
-      return new Date(date["set".concat(utc, "Date")](value));
+      return new Date(date["set".concat(UTC, "Date")](value));
     }), _defineProperty(_incrementHandlers, DAY, function (date) {
-      return new Date(date["set".concat(utc, "Date")](date["get".concat(utc, "Date")]() - date["get".concat(utc, "Day")]() + (value - 1)));
+      return new Date(date["set".concat(UTC, "Date")](date["get".concat(UTC, "Date")]() - date["get".concat(UTC, "Day")]() + (value - 1)));
     }), _defineProperty(_incrementHandlers, WEEK, function (date) {
-      var currentDay = date["get".concat(utc, "Day")]();
-      var currentMilliseconds = date["get".concat(utc, "Milliseconds")]();
-      date["set".concat(utc, "FullYear")](date["get".concat(utc, "FullYear")](), 0, value * 7);
-      var n = currentDay - date["get".concat(utc, "Day")]();
-      date["set".concat(utc, "Date")](date["get".concat(utc, "Date")]() + n);
-      return new Date(date["set".concat(utc, "Milliseconds")](currentMilliseconds));
+      var currentDay = date["get".concat(UTC, "Day")]();
+      var currentMilliseconds = date["get".concat(UTC, "Milliseconds")]();
+      date["set".concat(UTC, "FullYear")](date["get".concat(UTC, "FullYear")](), 0, value * 7);
+      var n = currentDay - date["get".concat(UTC, "Day")]();
+      date["set".concat(UTC, "Date")](date["get".concat(UTC, "Date")]() + n);
+      return new Date(date["set".concat(UTC, "Milliseconds")](currentMilliseconds));
     }), _defineProperty(_incrementHandlers, MONTH, function (date) {
       var newMonth = value - 1;
-      var newYear = date["get".concat(utc, "FullYear")]();
-      var newDate = date["get".concat(utc, "Date")]();
-      var shiftMonth = new Date(date["set".concat(utc, "FullYear")](newYear, newMonth + 1, 0));
+      var newYear = date["get".concat(UTC, "FullYear")]();
+      var newDate = date["get".concat(UTC, "Date")]();
+      var shiftMonth = new Date(date["set".concat(UTC, "FullYear")](newYear, newMonth + 1, 0));
 
-      if (newDate > shiftMonth["get".concat(utc, "Date")]()) {
+      if (newDate > shiftMonth["get".concat(UTC, "Date")]()) {
         return shiftMonth;
       } else {
-        return new Date(date["set".concat(utc, "FullYear")](newYear, newMonth, newDate));
+        return new Date(date["set".concat(UTC, "FullYear")](newYear, newMonth, newDate));
       }
     }), _defineProperty(_incrementHandlers, YEAR, function (date) {
       var newYear = value;
-      var newMonth = date["get".concat(utc, "Month")]();
-      var newDate = date["get".concat(utc, "Date")]();
-      var shiftMonth = new Date(date["set".concat(utc, "FullYear")](newYear, newMonth + 1, 0));
+      var newMonth = date["get".concat(UTC, "Month")]();
+      var newDate = date["get".concat(UTC, "Date")]();
+      var shiftMonth = new Date(date["set".concat(UTC, "FullYear")](newYear, newMonth + 1, 0));
 
-      if (newDate > shiftMonth["get".concat(utc, "Date")]()) {
+      if (newDate > shiftMonth["get".concat(UTC, "Date")]()) {
         return shiftMonth;
       } else {
-        return new Date(date["set".concat(utc, "FullYear")](newYear, newMonth, newDate));
+        return new Date(date["set".concat(UTC, "FullYear")](newYear, newMonth, newDate));
       }
     }), _incrementHandlers);
     return incrementHandlers[increment](date);
@@ -706,34 +839,42 @@
     if (input instanceof Function) return wrap(setUTC(increment, value), input);
     input = (_input = input) !== null && _input !== void 0 ? _input : new Date();
     validateDate(input);
-    return setLocalOrSetUTC(increment, value, input, 'UTC');
+    return _set(increment, value, input, 'UTC');
   });
-  var setLocal = curry(function (increment, value, input) {
+  var set = curry(function (increment, value, input) {
     var _input2;
 
-    if (input instanceof Function) return wrap(setLocal(increment, value), input);
+    if (input instanceof Function) return wrap(set(increment, value), input);
     input = (_input2 = input) !== null && _input2 !== void 0 ? _input2 : new Date();
     validateDate(input);
-    return setLocalOrSetUTC(increment, value, input);
+    return _set(increment, value, input);
   });
-  var setLocalGroup = curry(function (group, input) {
+  var setFor = curry(function (group, input) {
     var _input3;
 
-    if (input instanceof Function) return wrap(setLocalGroup(group), input);
+    if (input instanceof Function) return wrap(setFor(group), input);
     input = (_input3 = input) !== null && _input3 !== void 0 ? _input3 : new Date();
     validateDate(input);
-    return Object.keys(group).reduce(function (acc, cur) {
-      return setLocalOrSetUTC(cur, group[cur], input);
+    return entries(group).reduce(function (acc, _ref) {
+      var _ref2 = _slicedToArray(_ref, 2),
+          increment = _ref2[0],
+          value = _ref2[1];
+
+      return _set(increment, value, input);
     }, input);
   });
-  var setUTCGroup = curry(function (group, input) {
+  var setUTCFor = curry(function (group, input) {
     var _input4;
 
-    if (input instanceof Function) return wrap(setUTCGroup(group), input);
+    if (input instanceof Function) return wrap(setUTCFor(group), input);
     input = (_input4 = input) !== null && _input4 !== void 0 ? _input4 : new Date();
     validateDate(input);
-    return Object.keys(group).reduce(function (acc, cur) {
-      return setLocalOrSetUTC(cur, group[cur], input, 'UTC');
+    return entries(group).reduce(function (acc, _ref3) {
+      var _ref4 = _slicedToArray(_ref3, 2),
+          increment = _ref4[0],
+          value = _ref4[1];
+
+      return _set(increment, value, input, 'UTC');
     }, input);
   });
 
@@ -745,30 +886,30 @@
    * @returns {Date}                the value for that increment, in UTC
    */
 
-  function getLocalOrGetUTC(increment, date) {
+  function _get(increment, date) {
     var _incrementHandlers;
 
-    var utc = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+    var UTC = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
     var incrementHandlers = (_incrementHandlers = {}, _defineProperty(_incrementHandlers, TIMEZONE_OFFSET, function (date) {
-      return utc ? 0 : date.getTimezoneOffset() / 60 * -1;
+      return UTC ? 0 : date.getTimezoneOffset() / 60 * -1;
     }), _defineProperty(_incrementHandlers, MILLISECOND, function (date) {
-      return date["get".concat(utc, "Milliseconds")]();
+      return date["get".concat(UTC, "Milliseconds")]();
     }), _defineProperty(_incrementHandlers, SECOND, function (date) {
-      return date["get".concat(utc, "Seconds")]();
+      return date["get".concat(UTC, "Seconds")]();
     }), _defineProperty(_incrementHandlers, MINUTE, function (date) {
-      return date["get".concat(utc, "Minutes")]();
+      return date["get".concat(UTC, "Minutes")]();
     }), _defineProperty(_incrementHandlers, HOUR, function (date) {
-      return date["get".concat(utc, "Hours")]();
+      return date["get".concat(UTC, "Hours")]();
     }), _defineProperty(_incrementHandlers, DATE, function (date) {
-      return date["get".concat(utc, "Date")]();
+      return date["get".concat(UTC, "Date")]();
     }), _defineProperty(_incrementHandlers, DAY, function (date) {
-      return date["get".concat(utc, "Day")]() + 1;
+      return date["get".concat(UTC, "Day")]() + 1;
     }), _defineProperty(_incrementHandlers, WEEK, function (date) {
-      return Math.floor(((date - new Date(date["get".concat(utc, "FullYear")](), 0, 1)) / 1000 / 60 / 60 / 24 + 1) / 7);
+      return Math.floor(((date - new Date(date["get".concat(UTC, "FullYear")](), 0, 1)) / 1000 / 60 / 60 / 24 + 1) / 7);
     }), _defineProperty(_incrementHandlers, MONTH, function (date) {
-      return date["get".concat(utc, "Month")]() + 1;
+      return date["get".concat(UTC, "Month")]() + 1;
     }), _defineProperty(_incrementHandlers, YEAR, function (date) {
-      return date["get".concat(utc, "FullYear")]();
+      return date["get".concat(UTC, "FullYear")]();
     }), _incrementHandlers);
     return incrementHandlers[increment](date);
   }
@@ -778,31 +919,31 @@
 
     date = (_date = date) !== null && _date !== void 0 ? _date : new Date();
     validateDate(date);
-    return getLocalOrGetUTC(increment, date, 'UTC');
+    return _get(increment, date, 'UTC');
   });
-  var getLocal = curry(function (increment, date) {
+  var get = curry(function (increment, date) {
     var _date2;
 
     date = (_date2 = date) !== null && _date2 !== void 0 ? _date2 : new Date();
     validateDate(date);
-    return getLocalOrGetUTC(increment, date);
+    return _get(increment, date);
   });
-  var getUTCGroup = curry(function (increments, date) {
+  var getUTCFor = curry(function (increments, date) {
     var _date3;
 
     date = (_date3 = date) !== null && _date3 !== void 0 ? _date3 : new Date();
     validateDate(date);
     return increments.map(function (increment) {
-      return getLocalOrGetUTC(increment, date, 'UTC');
+      return _get(increment, date, 'UTC');
     });
   });
-  var getLocalGroup = curry(function (increments, date) {
+  var getFor = curry(function (increments, date) {
     var _date4;
 
     date = (_date4 = date) !== null && _date4 !== void 0 ? _date4 : new Date();
     validateDate(date);
     return increments.map(function (increment) {
-      return getLocalOrGetUTC(increment, date);
+      return _get(increment, date);
     });
   });
 
@@ -811,16 +952,16 @@
    * @param   {String}  increment   an increment to add
    * @param   {Number}  date1       date object
    * @param   {Date}    date2       date object
-   * @returns {Number}              numeric difference between the dates in the specific increment
+   * @returns {Number}              numeric differenceence between the dates in the specific increment
    */
 
-  function diffIt(increment, date1, date2) {
+  function _diff(increment, date1, date2) {
     var _incrementHandlers;
 
     var incrementHandlers = (_incrementHandlers = {}, _defineProperty(_incrementHandlers, MILLISECOND, function (date1, date2) {
-      return diff(date1, date2);
+      return difference(date1, date2);
     }), _defineProperty(_incrementHandlers, SECOND, function (date1, date2) {
-      return diff(date1, date2) / 1000;
+      return difference(date1, date2) / 1000;
     }), _defineProperty(_incrementHandlers, MINUTE, function (date1, date2) {
       return this[SECOND](date1, date2) / 60;
     }), _defineProperty(_incrementHandlers, HOUR, function (date1, date2) {
@@ -837,14 +978,14 @@
     return incrementHandlers[increment](date1, date2);
   }
 
-  var diffTime = curry(function (increment, input1, input2) {
+  var diff = curry(function (increment, input1, input2) {
     var _input, _input2;
 
     input1 = (_input = input1) !== null && _input !== void 0 ? _input : new Date();
     input2 = (_input2 = input2) !== null && _input2 !== void 0 ? _input2 : new Date();
     validateDate(input1);
     validateDate(input2);
-    return diffIt(increment, input1, input2);
+    return _diff(increment, input1, input2);
   });
 
   /**
@@ -854,46 +995,50 @@
    * @returns {Number}         1 if input2 is greater, -1 if input1 is greated, 0 if they are the same
    */
 
-  var compareTime = curry(function (input1, input2) {
+  var compare = curry(function (input1, input2) {
     var _input, _input2;
 
     input1 = (_input = input1) !== null && _input !== void 0 ? _input : new Date();
     input2 = (_input2 = input2) !== null && _input2 !== void 0 ? _input2 : new Date();
     validateDate(input1);
     validateDate(input2);
-    var difference = diff(input1, input2);
+    var diff = difference(input1, input2);
 
-    if (difference === 0) {
+    if (diff === 0) {
       return 0;
-    } else if (difference < 0) {
+    } else if (diff < 0) {
       return -1;
     }
 
     return 1;
   });
 
-  exports.addTime = addTime;
-  exports.addTimeSequence = addTimeSequence;
-  exports.compareTime = compareTime;
-  exports.diffTime = diffTime;
-  exports.getLocal = getLocal;
-  exports.getLocalGroup = getLocalGroup;
+  exports.add = add;
+  exports.addFor = addFor;
+  exports.compare = compare;
+  exports.diff = diff;
+  exports.endOf = endOf;
+  exports.endOfUTC = endOfUTC;
+  exports.get = get;
+  exports.getFor = getFor;
   exports.getUTC = getUTC;
-  exports.getUTCGroup = getUTCGroup;
+  exports.getUTCFor = getUTCFor;
   exports.isDate = isDate;
+  exports.isLeapYear = isLeapYear$1;
+  exports.isLeapYearUTC = isLeapYearUTC;
   exports.parse = parse;
   exports.parseUTC = parseUTC;
   exports.reform = reform;
   exports.reformWithLocale = reformWithLocale;
   exports.reformWithOverrides = reformWithOverrides;
-  exports.resetLocal = resetLocal;
-  exports.resetUTC = resetUTC;
-  exports.setLocal = setLocal;
-  exports.setLocalGroup = setLocalGroup;
+  exports.set = set;
+  exports.setFor = setFor;
   exports.setUTC = setUTC;
-  exports.setUTCGroup = setUTCGroup;
-  exports.subtractTime = subtractTime;
-  exports.subtractTimeSequence = subtractTimeSequence;
+  exports.setUTCFor = setUTCFor;
+  exports.startOf = startOf;
+  exports.startOfUTC = startOfUTC;
+  exports.subtract = subtract;
+  exports.subtractFor = subtractFor;
 
   Object.defineProperty(exports, '__esModule', { value: true });
 
