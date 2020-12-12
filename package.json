@@ -1,6 +1,6 @@
 {
   "name": "gregorian",
-  "version": "5.0.3",
+  "version": "6.0.0",
   "description": "A Javascript micro library for converting and displaying dates",
   "main": "dist/gregorian.umd.js",
   "module": "dist/gregorian.js",
@@ -63,7 +63,10 @@
   },
   "ava": {
     "babel": true,
-    "require": ["esm", "./test/_register.js"]
+    "require": [
+      "esm",
+      "./test/_register.js"
+    ]
   },
   "husky": {
     "hooks": {
