@@ -13,6 +13,40 @@ function _defineProperty(obj, key, value) {
   return obj;
 }
 
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
 function _slicedToArray(arr, i) {
   return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
 }
@@ -927,18 +961,26 @@ var getUTCFor = curry(function (increments, date) {
 
   date = (_date3 = date) !== null && _date3 !== void 0 ? _date3 : new Date();
   validateDate(date);
-  return increments.map(function (increment) {
-    return _get(increment, date, 'UTC');
-  });
+  return Object.entries(increments).reduce(function (obj, _ref) {
+    var _ref2 = _slicedToArray(_ref, 2),
+        increment = _ref2[0],
+        v = _ref2[1];
+
+    return _objectSpread2(_objectSpread2({}, obj), v && _defineProperty({}, increment, _get(increment, date, 'UTC')));
+  }, {});
 });
 var getFor = curry(function (increments, date) {
   var _date4;
 
   date = (_date4 = date) !== null && _date4 !== void 0 ? _date4 : new Date();
   validateDate(date);
-  return increments.map(function (increment) {
-    return _get(increment, date);
-  });
+  return Object.entries(increments).reduce(function (obj, _ref4) {
+    var _ref5 = _slicedToArray(_ref4, 2),
+        increment = _ref5[0],
+        v = _ref5[1];
+
+    return _objectSpread2(_objectSpread2({}, obj), v && _defineProperty({}, increment, _get(increment, date)));
+  }, {});
 });
 
 /**
