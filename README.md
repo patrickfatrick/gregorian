@@ -337,8 +337,8 @@ getUTC('m')(new Date('2015-10-31T00:00:00.000Z')) // 9
 And you can also get multiple increments at the same time, like so:
 
 ```javascript
-getUTCFor([ 'h', 'y', 'm' ])(new Date('2015-10-31T00:00:00.000Z')) // [ 0, 2015, 10 ]
-getFor([ 'm', 'd' ])(new Date('2015-10-31T00:00:00.000Z')) // [ 10, 30 ]
+getUTCFor({ h: true, y: true, m : true })(new Date('2015-10-31T00:00:00.000Z')) // { h: 0, y: 2015, m: 10 }
+getFor({ m: true, d: true })(new Date('2015-10-31T00:00:00.000Z')) // { m: 10, d: 30 }
 ```
 
 This accepts an array of increments, and returns the corresponding values as an array.

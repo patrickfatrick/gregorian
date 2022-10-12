@@ -16,10 +16,14 @@ test('errors out if invalid increment passed in', (t) => {
 
 test('uses the current time by default', (t) => {
   const clock = sinon.useFakeTimers(new Date('1985-05-22T00:00:00.000Z'));
-  t.deepEqual(getFor(['y', 'm', 'd', 'h'])(), [1985, 5, 21, 17]);
+  t.deepEqual(getFor({ y: true, m: true, d: true, h: true })(), { y: 1985, m: 5, d: 21, h: 17 });
   clock.restore();
 });
 
-test('returns an array corresponding to the passed in increments', (t) => {
-  t.deepEqual(getFor(['y', 'm', 'd', 'h'])(t.context.date), [1988, 4, 10, 17]);
+test('returns an object corresponding to the passed in increments', (t) => {
+  t.deepEqual(getFor({ y: true, m: true, d: true, h: false })(t.context.date), {
+    y: 1988,
+    m: 4,
+    d: 10,
+  });
 });

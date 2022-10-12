@@ -4,10 +4,15 @@
   "description": "A Javascript micro library for converting and displaying dates",
   "main": "dist/gregorian.umd.js",
   "module": "dist/gregorian.js",
+  "types": "index.d.ts",
   "format": "es6",
   "engines": {
     "node": ">= 4.0.0"
   },
+  "files": [
+    "dist/",
+    "index.d.ts"
+  ],
   "scripts": {
     "test": "BABEL_ENV=development TZ=MST nyc --reporter=lcov --reporter=text ava --verbose --timeout=1m",
     "lint": "eslint --fix './src/**/*.js' './test/**/*.js'",
@@ -18,7 +23,8 @@
     "min": "BABEL_ENV=production rollup -c 'rollup.config.min.js'",
     "prettier": "prettier --write --single-quote --print-width 100 --trailing-comma all '{src,test}/**/*.js'",
     "pretest": "npm run lint",
-    "preversion": "npm run build && git commit -am \"chore(build)\" || true"
+    "preversion": "npm run build && git commit -am \"chore(build)\" || true",
+    "type-check": "tsc"
   },
   "repository": {
     "type": "git",
@@ -58,8 +64,11 @@
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-bundle-size": "^1.0.3",
     "rollup-plugin-sizes": "^1.0.3",
+    "rollup-plugin-typescript2": "^0.34.1",
     "rollup-plugin-uglify": "^6.0.4",
-    "sinon": "^9.2.2"
+    "sinon": "^9.2.2",
+    "ts-toolbelt": "^9.6.0",
+    "typescript": "^4.8.4"
   },
   "ava": {
     "babel": true,

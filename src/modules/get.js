@@ -82,11 +82,20 @@ export const get = curry((increment, date) => {
 export const getUTCFor = curry((increments, date) => {
   date = date ?? new Date();
   validateDate(date);
-  return increments.map((increment) => _get(increment, date, 'UTC'));
+  return Object.entries(increments).reduce(
+    (obj, [increment, v]) => ({
+      ...obj,
+      ...(v && { [increment]: _get(increment, date, 'UTC') }),
+    }),
+    {},
+  );
 });
 
 export const getFor = curry((increments, date) => {
   date = date ?? new Date();
   validateDate(date);
-  return increments.map((increment) => _get(increment, date));
+  return Object.entries(increments).reduce(
+    (obj, [increment, v]) => ({ ...obj, ...(v && { [increment]: _get(increment, date) }) }),
+    {},
+  );
 });
