@@ -78,13 +78,13 @@ export function add(increment: Increment, n: number, fn: Function): Date;
 export function add(increment: Increment, n: number): (fn: Function) => Date;
 export function add(increment: Increment): F.Curry<(n: number, fn: Function) => Date>;
 
-export function addFor(dict: IncrementDict, n: number, date: Date): Date;
-export function addFor(dict: IncrementDict, n: number): (date: Date) => Date;
-export function addFor(dict: IncrementDict): F.Curry<(n: number, date: Date) => Date>;
+export function addFor(dict: Partial<IncrementDict>, n: number, date: Date): Date;
+export function addFor(dict: Partial<IncrementDict>, n: number): (date: Date) => Date;
+export function addFor(dict: Partial<IncrementDict>): F.Curry<(n: number, date: Date) => Date>;
 
-export function addFor(dict: IncrementDict, n: number, fn: Function): Date;
-export function addFor(dict: IncrementDict, n: number): (fn: Function) => Date;
-export function addFor(dict: IncrementDict): F.Curry<(n: number, fn: Function) => Date>;
+export function addFor(dict: Partial<IncrementDict>, n: number, fn: Function): Date;
+export function addFor(dict: Partial<IncrementDict>, n: number): (fn: Function) => Date;
+export function addFor(dict: Partial<IncrementDict>): F.Curry<(n: number, fn: Function) => Date>;
 
 export function subtract(increment: Increment, n: number, date: Date): Date;
 export function subtract(increment: Increment, n: number): (date: Date) => Date;
@@ -94,21 +94,19 @@ export function subtract(increment: Increment, n: number, fn: Function): Date;
 export function subtract(increment: Increment, n: number): (fn: Function) => Date;
 export function subtract(increment: Increment): F.Curry<(n: number, fn: Function) => Date>;
 
-export function subtractFor(dict: IncrementDict, n: number, date: Date): Date;
-export function subtractFor(dict: IncrementDict, n: number): (date: Date) => Date;
-export function subtractFor(dict: IncrementDict): F.Curry<(n: number, date: Date) => Date>;
+export function subtractFor(dict: Partial<IncrementDict>, n: number, date: Date): Date;
+export function subtractFor(dict: Partial<IncrementDict>, n: number): (date: Date) => Date;
+export function subtractFor(dict: Partial<IncrementDict>): F.Curry<(n: number, date: Date) => Date>;
 
-export function subtractFor(dict: IncrementDict, n: number, fn: Function): Date;
-export function subtractFor(dict: IncrementDict, n: number): (fn: Function) => Date;
-export function subtractFor(dict: IncrementDict): F.Curry<(n: number, fn: Function) => Date>;
+export function subtractFor(dict: Partial<IncrementDict>, n: number, fn: Function): Date;
+export function subtractFor(dict: Partial<IncrementDict>, n: number): (fn: Function) => Date;
+export function subtractFor(dict: Partial<IncrementDict>): F.Curry<(n: number, fn: Function) => Date>;
 
 export function startOf(increment: Exclude<SetIncrement, 'l'>, date: Date): Date;
 export function startOf(increment: Exclude<SetIncrement, 'l'>): F.Curry<(date: Date) => Date>;
 
-
 export function startOf(increment: Exclude<SetIncrement, 'l'>, fn: Function): Date;
 export function startOf(increment: Exclude<SetIncrement, 'l'>): F.Curry<(fn: Function) => Date>;
-
 
 export function startOfUTC(increment: Exclude<SetIncrement, 'l'>): (date: Date) => Date;
 export function startOfUTC(increment: Exclude<SetIncrement, 'l'>, date: Date): Date;
@@ -116,20 +114,17 @@ export function startOfUTC(increment: Exclude<SetIncrement, 'l'>, date: Date): D
 export function startOfUTC(increment: Exclude<SetIncrement, 'l'>, fn: Function): Date;
 export function startOfUTC(increment: Exclude<SetIncrement, 'l'>): F.Curry<(fn: Function) => Date>;
 
-
 export function endOf(increment: Exclude<SetIncrement, 'l'>, date: Date): Date;
 export function endOf(increment: Exclude<SetIncrement, 'l'>): F.Curry<(date: Date) => Date>;
 
 export function endOf(increment: Exclude<SetIncrement, 'l'>, fn: Function): Date;
 export function endOf(increment: Exclude<SetIncrement, 'l'>): F.Curry<(fn: Function) => Date>;
 
-
 export function endOfUTC(increment: Exclude<SetIncrement, 'l'>, date: Date): Date;
 export function endOfUTC(increment: Exclude<SetIncrement, 'l'>): F.Curry<(date: Date) => Date>;
 
 export function endOfUTC(increment: Exclude<SetIncrement, 'l'>, fn: Function): Date;
 export function endOfUTC(increment: Exclude<SetIncrement, 'l'>): F.Curry<(fn: Function) => Date>;
-
 
 export function set(increment: SetIncrement, value: number, date: Date): Date;
 export function set(increment: SetIncrement, value: number): (date: Date) => Date;
@@ -139,7 +134,6 @@ export function set(increment: SetIncrement, value: number, fn: Function): Date;
 export function set(increment: SetIncrement, value: number): (fn: Function) => Date;
 export function set(increment: SetIncrement): F.Curry<(value: number, fn: Function) => Date>;
 
-
 export function setUTC(increment: SetIncrement, value: number, date: Date): Date;
 export function setUTC(increment: SetIncrement, value: number): (date: Date) => Date;
 export function setUTC(increment: SetIncrement): F.Curry<(value: number, date: Date) => Date>;
@@ -148,26 +142,21 @@ export function setUTC(increment: SetIncrement, value: number, fn: Function): Da
 export function setUTC(increment: SetIncrement, value: number): (fn: Function) => Date;
 export function setUTC(increment: SetIncrement): F.Curry<(value: number, fn: Function) => Date>;
 
+export function setFor(dict: Partial<SetIncrementDict>, value: number, date: Date): Date;
+export function setFor(dict: Partial<SetIncrementDict>, value: number): (date: Date) => Date;
+export function setFor(dict: Partial<SetIncrementDict>): F.Curry<(value: number, date: Date) => Date>;
 
+export function setFor(dict: Partial<SetIncrementDict>, value: number, fn: Function): Date;
+export function setFor(dict: Partial<SetIncrementDict>, value: number): (fn: Function) => Date;
+export function setFor(dict: Partial<SetIncrementDict>): F.Curry<(value: number, fn: Function) => Date>;
 
-export function setFor(dict: SetIncrementDict, value: number, date: Date): Date;
-export function setFor(dict: SetIncrementDict, value: number): (date: Date) => Date;
-export function setFor(dict: SetIncrementDict): F.Curry<(value: number, date: Date) => Date>;
+export function setUTCFor(dict: Partial<SetIncrementDict>, value: number, date: Date): Date;
+export function setUTCFor(dict: Partial<SetIncrementDict>, value: number): (date: Date) => Date;
+export function setUTCFor(dict: Partial<SetIncrementDict>): F.Curry<(value: number, date: Date) => Date>;
 
-export function setFor(dict: SetIncrementDict, value: number, fn: Function): Date;
-export function setFor(dict: SetIncrementDict, value: number): (fn: Function) => Date;
-export function setFor(dict: SetIncrementDict): F.Curry<(value: number, fn: Function) => Date>;
-
-
-
-export function setUTCFor(dict: SetIncrementDict, value: number, date: Date): Date;
-export function setUTCFor(dict: SetIncrementDict, value: number): (date: Date) => Date;
-export function setUTCFor(dict: SetIncrementDict): F.Curry<(value: number, date: Date) => Date>;
-
-export function setUTCFor(dict: SetIncrementDict, value: number, fn: Function): Date;
-export function setUTCFor(dict: SetIncrementDict, value: number): (fn: Function) => Date;
-export function setUTCFor(dict: SetIncrementDict): F.Curry<(value: number, fn: Function) => Date>;
-
+export function setUTCFor(dict: Partial<SetIncrementDict>, value: number, fn: Function): Date;
+export function setUTCFor(dict: Partial<SetIncrementDict>, value: number): (fn: Function) => Date;
+export function setUTCFor(dict: Partial<SetIncrementDict>): F.Curry<(value: number, fn: Function) => Date>;
 
 export function get(increment: GetIncrement, date: Date): number;
 export function get(increment: GetIncrement): F.Curry<(date: Date) => number>;
@@ -187,4 +176,3 @@ export function diff(increment: Increment): F.Curry<(date1: Date, date2: Date) =
 
 export function compare(date1: Date, date2: Date): -1 | 0 | 1;
 export function compare(date1: Date): F.Curry<(date2: Date) => -1 | 0 | 1>;
-

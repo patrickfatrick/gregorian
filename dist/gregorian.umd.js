@@ -575,71 +575,65 @@
     var _incrementHandlers;
 
     var incrementHandlers = (_incrementHandlers = {}, _defineProperty(_incrementHandlers, MILLISECOND, function (date) {
-      return new Date(date.setUTCMilliseconds(date.getUTCMilliseconds() + n));
+      return new Date(date.setMilliseconds(date.getMilliseconds() + n));
     }), _defineProperty(_incrementHandlers, SECOND, function (date) {
-      return new Date(date.setUTCSeconds(date.getUTCSeconds() + n));
+      return new Date(date.setSeconds(date.getSeconds() + n));
     }), _defineProperty(_incrementHandlers, MINUTE, function (date) {
-      return new Date(date.setUTCMinutes(date.getUTCMinutes() + n));
+      return new Date(date.setMinutes(date.getMinutes() + n));
     }), _defineProperty(_incrementHandlers, HOUR, function (date) {
-      return new Date(date.setUTCHours(date.getUTCHours() + n));
+      return new Date(date.setHours(date.getHours() + n));
     }), _defineProperty(_incrementHandlers, DATE, function (date) {
-      return new Date(date.setUTCDate(date.getUTCDate() + n));
+      return new Date(date.setDate(date.getDate() + n));
     }), _defineProperty(_incrementHandlers, WEEK, function (date) {
-      return new Date(date.setUTCDate(date.getUTCDate() + n * 7));
+      return new Date(date.setDate(date.getDate() + n * 7));
     }), _defineProperty(_incrementHandlers, MONTH, function (date) {
-      var newMonth = date.getUTCMonth() + n;
-      var newYear = date.getUTCFullYear();
-      var newDate = date.getUTCDate();
+      var newMonth = date.getMonth() + n;
+      var newYear = date.getFullYear();
+      var newDate = date.getDate();
 
-      if (newDate > new Date(date.setUTCFullYear(newYear, newMonth + 1, 0)).getUTCDate()) {
-        return new Date(date.setUTCFullYear(newYear, newMonth + 1, 0));
+      if (newDate > new Date(date.setFullYear(newYear, newMonth + 1, 0)).getDate()) {
+        return new Date(date.setFullYear(newYear, newMonth + 1, 0));
       }
 
-      return new Date(date.setUTCFullYear(newYear, newMonth, newDate));
+      return new Date(date.setFullYear(newYear, newMonth, newDate));
     }), _defineProperty(_incrementHandlers, YEAR, function (date) {
-      var newYear = date.getUTCFullYear() + n;
-      var newMonth = date.getUTCMonth();
-      var newDate = date.getUTCDate();
+      var newYear = date.getFullYear() + n;
+      var newMonth = date.getMonth();
+      var newDate = date.getDate();
 
-      if (newDate > new Date(date.setUTCFullYear(newYear, newMonth + 1, 0)).getUTCDate()) {
-        return new Date(date.setUTCFullYear(newYear, newMonth + 1, 0));
+      if (newDate > new Date(date.setFullYear(newYear, newMonth + 1, 0)).getDate()) {
+        return new Date(date.setFullYear(newYear, newMonth + 1, 0));
       }
 
-      return new Date(date.setUTCFullYear(newYear, newMonth, newDate));
+      return new Date(date.setFullYear(newYear, newMonth, newDate));
     }), _incrementHandlers);
     return incrementHandlers[increment](date);
   }
 
   var add = curry(function (increment, n, input) {
-    var _input;
-
     if (input instanceof Function) {
       return wrap(add(increment, n), input);
     }
 
-    input = (_input = input) !== null && _input !== void 0 ? _input : new Date();
+    input = input ? new Date(input) : new Date();
     validateDate(input);
     return _add(increment, n, input);
   });
   var subtract = curry(function (increment, n, input) {
-    var _input2;
-
     if (input instanceof Function) {
       return wrap(subtract(increment, n), input);
     }
 
-    input = (_input2 = input) !== null && _input2 !== void 0 ? _input2 : new Date();
+    input = input ? new Date(input) : new Date();
     validateDate(input);
     return _add(increment, n * -1, input);
   });
   var addFor = curry(function (group, input) {
-    var _input3;
-
     if (input instanceof Function) {
       return wrap(addFor(group), input);
     }
 
-    input = (_input3 = input) !== null && _input3 !== void 0 ? _input3 : new Date();
+    input = input ? new Date(input) : new Date();
     validateDate(input);
     return entries(group).reduce(function (acc, _ref) {
       var _ref2 = _slicedToArray(_ref, 2),
@@ -650,13 +644,11 @@
     }, input);
   });
   var subtractFor = curry(function (group, input) {
-    var _input4;
-
     if (input instanceof Function) {
       return wrap(subtractFor(group), input);
     }
 
-    input = (_input4 = input) !== null && _input4 !== void 0 ? _input4 : new Date();
+    input = input ? new Date(input) : new Date();
     validateDate(input);
     return entries(group).reduce(function (acc, _ref3) {
       var _ref4 = _slicedToArray(_ref3, 2),
@@ -704,24 +696,20 @@
   }
 
   var startOfUTC = curry(function (increment, input) {
-    var _input;
-
     if (input instanceof Function) {
       return wrap(startOfUTC(increment), input);
     }
 
-    input = (_input = input) !== null && _input !== void 0 ? _input : new Date();
+    input = input ? new Date(input) : new Date();
     validateDate(input);
     return _startOf(increment, input, 'UTC');
   });
   var startOf = curry(function (increment, input) {
-    var _input2;
-
     if (input instanceof Function) {
       return wrap(startOf(increment), input);
     }
 
-    input = (_input2 = input) !== null && _input2 !== void 0 ? _input2 : new Date();
+    input = input ? new Date(input) : new Date();
     validateDate(input);
     return _startOf(increment, input, '');
   });
@@ -788,24 +776,20 @@
   }
 
   var endOfUTC = curry(function (increment, input) {
-    var _input;
-
     if (input instanceof Function) {
       return wrap(endOfUTC(increment), input);
     }
 
-    input = (_input = input) !== null && _input !== void 0 ? _input : new Date();
+    input = input ? new Date(input) : new Date();
     validateDate(input);
     return _endOf(increment, new Date(input), 'UTC');
   });
   var endOf = curry(function (increment, input) {
-    var _input2;
-
     if (input instanceof Function) {
       return wrap(endOf(increment), input);
     }
 
-    input = (_input2 = input) !== null && _input2 !== void 0 ? _input2 : new Date();
+    input = input ? new Date(input) : new Date();
     validateDate(input);
     return _endOf(increment, new Date(input), '');
   });
@@ -868,26 +852,20 @@
   }
 
   var setUTC = curry(function (increment, value, input) {
-    var _input;
-
     if (input instanceof Function) return wrap(setUTC(increment, value), input);
-    input = (_input = input) !== null && _input !== void 0 ? _input : new Date();
+    input = input ? new Date(input) : new Date();
     validateDate(input);
     return _set(increment, value, input, 'UTC');
   });
   var set = curry(function (increment, value, input) {
-    var _input2;
-
     if (input instanceof Function) return wrap(set(increment, value), input);
-    input = (_input2 = input) !== null && _input2 !== void 0 ? _input2 : new Date();
+    input = input ? new Date(input) : new Date();
     validateDate(input);
     return _set(increment, value, input);
   });
   var setFor = curry(function (group, input) {
-    var _input3;
-
     if (input instanceof Function) return wrap(setFor(group), input);
-    input = (_input3 = input) !== null && _input3 !== void 0 ? _input3 : new Date();
+    input = input ? new Date(input) : new Date();
     validateDate(input);
     return entries(group).reduce(function (acc, _ref) {
       var _ref2 = _slicedToArray(_ref, 2),
@@ -898,10 +876,8 @@
     }, input);
   });
   var setUTCFor = curry(function (group, input) {
-    var _input4;
-
     if (input instanceof Function) return wrap(setUTCFor(group), input);
-    input = (_input4 = input) !== null && _input4 !== void 0 ? _input4 : new Date();
+    input = input ? new Date(input) : new Date();
     validateDate(input);
     return entries(group).reduce(function (acc, _ref3) {
       var _ref4 = _slicedToArray(_ref3, 2),

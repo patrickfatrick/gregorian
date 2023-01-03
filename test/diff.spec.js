@@ -8,11 +8,11 @@ test.beforeEach((t) => {
 });
 
 test('errors out if invalid date1 passed in', (t) => {
-  t.throws(() => diff('y')('1988-04-11T00:00:00.000Z')(new Date()), { instanceOf: TypeError });
+  t.throws(() => diff('y')('beep')(new Date()), { instanceOf: TypeError });
 });
 
 test('errors out if invalid date2 passed in', (t) => {
-  t.throws(() => diff('y')(new Date())('1988-04-11T00:00:00.000Z'), { instanceOf: TypeError });
+  t.throws(() => diff('y')(new Date())('beep'), { instanceOf: TypeError });
 });
 
 test('errors out if invalid increment passed in', (t) => {

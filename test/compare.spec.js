@@ -8,7 +8,7 @@ test.beforeEach((t) => {
 });
 
 test('errors out if invalid date1 passed in', (t) => {
-  t.throws(() => compare('1988-04-11T00:00:00.000Z')(new Date()), { instanceOf: TypeError });
+  t.throws(() => compare('beep')(new Date()), { instanceOf: TypeError });
 });
 
 test('errors out if invalid date2 passed in', (t) => {

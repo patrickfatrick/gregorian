@@ -7,7 +7,7 @@ test.beforeEach((t) => {
 });
 
 test('errors out if invalid date passed in', (t) => {
-  t.throws(() => setUTCFor({ y: 1989 })('1988-04-11T00:00:00.000Z'), { instanceOf: TypeError });
+  t.throws(() => setUTCFor({ y: 1989 })('beep'), { instanceOf: TypeError });
 });
 
 test('errors out if invalid increment passed in', (t) => {

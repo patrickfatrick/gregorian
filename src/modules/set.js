@@ -82,7 +82,7 @@ function _set(increment, value, date, UTC = '') {
 export const setUTC = curry((increment, value, input) => {
   if (input instanceof Function) return wrap(setUTC(increment, value), input);
 
-  input = input ?? new Date();
+  input = input ? new Date(input) : new Date();
   validateDate(input);
   return _set(increment, value, input, 'UTC');
 });
@@ -90,7 +90,7 @@ export const setUTC = curry((increment, value, input) => {
 export const set = curry((increment, value, input) => {
   if (input instanceof Function) return wrap(set(increment, value), input);
 
-  input = input ?? new Date();
+  input = input ? new Date(input) : new Date();
   validateDate(input);
   return _set(increment, value, input);
 });
@@ -98,7 +98,7 @@ export const set = curry((increment, value, input) => {
 export const setFor = curry((group, input) => {
   if (input instanceof Function) return wrap(setFor(group), input);
 
-  input = input ?? new Date();
+  input = input ? new Date(input) : new Date();
   validateDate(input);
   return entries(group).reduce((acc, [increment, value]) => _set(increment, value, input), input);
 });
@@ -106,7 +106,7 @@ export const setFor = curry((group, input) => {
 export const setUTCFor = curry((group, input) => {
   if (input instanceof Function) return wrap(setUTCFor(group), input);
 
-  input = input ?? new Date();
+  input = input ? new Date(input) : new Date();
   validateDate(input);
   return entries(group).reduce(
     (acc, [increment, value]) => _set(increment, value, input, 'UTC'),

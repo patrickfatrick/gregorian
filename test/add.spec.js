@@ -7,7 +7,7 @@ test.beforeEach((t) => {
 });
 
 test('errors out if invalid date passed in', (t) => {
-  t.throws(() => add('y')(1)('1988-04-11T00:00:00.000Z'), { instanceOf: TypeError });
+  t.throws(() => add('y')(1)('beep'), { instanceOf: TypeError });
 });
 
 test('errors out if invalid increment passed in', (t) => {
@@ -77,6 +77,13 @@ test('can be run with varying arguments', (t) => {
 
 test('can handle leap years', (t) => {
   t.is(add('y')(5)(t.context.date).toISOString(), '1993-04-11T00:00:00.000Z');
+});
+
+test('can handle daylight savings', (t) => {
+  t.is(
+    add('d')(1)(new Date(2022, 10, 6, 0, 0, 0)).toISOString(),
+    new Date(2022, 10, 7, 0, 0, 0).toISOString(),
+  );
 });
 
 test('can handle months of varying lengths', (t) => {

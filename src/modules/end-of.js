@@ -88,7 +88,7 @@ export const endOfUTC = curry((increment, input) => {
     return wrap(endOfUTC(increment), input);
   }
 
-  input = input ?? new Date();
+  input = input ? new Date(input) : new Date();
   validateDate(input);
   return _endOf(increment, new Date(input), 'UTC');
 });
@@ -98,7 +98,7 @@ export const endOf = curry((increment, input) => {
     return wrap(endOf(increment), input);
   }
 
-  input = input ?? new Date();
+  input = input ? new Date(input) : new Date();
   validateDate(input);
   return _endOf(increment, new Date(input), '');
 });

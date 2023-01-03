@@ -7,7 +7,7 @@ test.beforeEach((t) => {
 });
 
 test('errors out if invalid date passed in', (t) => {
-  t.throws(() => getFor(['y'])('1988-04-11T00:00:00.000Z'), { instanceOf: TypeError });
+  t.throws(() => getFor(['y'])('beep'), { instanceOf: TypeError });
 });
 
 test('errors out if invalid increment passed in', (t) => {
