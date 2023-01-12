@@ -928,6 +928,14 @@ function _get(increment, date) {
   return incrementHandlers[increment](date);
 }
 
+var get = curry(function (increment, date) {
+  var _date;
+
+  date = (_date = date) !== null && _date !== void 0 ? _date : new Date();
+  validateDate(date);
+  return _get(increment, date);
+});
+
 var getUTC = curry(function (increment, date) {
   var _date;
 
@@ -935,49 +943,8 @@ var getUTC = curry(function (increment, date) {
   validateDate(date);
   return _get(increment, date, 'UTC');
 });
-var get = curry(function (increment, date) {
-  var _date2;
 
-  date = (_date2 = date) !== null && _date2 !== void 0 ? _date2 : new Date();
-  validateDate(date);
-  return _get(increment, date);
-});
-var getUTCFor = curry(function (increments, date) {
-  var _date3;
-
-  date = (_date3 = date) !== null && _date3 !== void 0 ? _date3 : new Date();
-  validateDate(date);
-  return Object.entries(increments).reduce(function (obj, _ref) {
-    var _ref2 = _slicedToArray(_ref, 2),
-        increment = _ref2[0],
-        v = _ref2[1];
-
-    return _objectSpread2(_objectSpread2({}, obj), v && _defineProperty({}, increment, _get(increment, date, 'UTC')));
-  }, {});
-});
 var getFor = curry(function (increments, date) {
-  var _date4;
-
-  date = (_date4 = date) !== null && _date4 !== void 0 ? _date4 : new Date();
-  validateDate(date);
-  return Object.entries(increments).reduce(function (obj, _ref4) {
-    var _ref5 = _slicedToArray(_ref4, 2),
-        increment = _ref5[0],
-        v = _ref5[1];
-
-    return _objectSpread2(_objectSpread2({}, obj), v && _defineProperty({}, increment, _get(increment, date)));
-  }, {});
-});
-
-var getUTC$1 = curry(function (increment, date) {
-  var _date;
-
-  date = (_date = date) !== null && _date !== void 0 ? _date : new Date();
-  validateDate(date);
-  return _get(increment, date, 'UTC');
-});
-
-var getFor$1 = curry(function (increments, date) {
   var _date;
 
   date = (_date = date) !== null && _date !== void 0 ? _date : new Date();
@@ -991,7 +958,7 @@ var getFor$1 = curry(function (increments, date) {
   }, {});
 });
 
-var getUTCFor$1 = curry(function (increments, date) {
+var getUTCFor = curry(function (increments, date) {
   var _date;
 
   date = (_date = date) !== null && _date !== void 0 ? _date : new Date();
@@ -1071,4 +1038,4 @@ var compare = curry(function (input1, input2) {
   return 1;
 });
 
-export { add, addFor, compare, diff, endOf, endOfUTC, get, getFor$1 as getFor, getUTC$1 as getUTC, getUTCFor$1 as getUTCFor, isDate, isLeapYear$1 as isLeapYear, isLeapYearUTC, parse, parseUTC, reform, reformWithLocale, reformWithOverrides, set, setFor, setUTC, setUTCFor, startOf, startOfUTC, subtract, subtractFor };
+export { add, addFor, compare, diff, endOf, endOfUTC, get, getFor, getUTC, getUTCFor, isDate, isLeapYear$1 as isLeapYear, isLeapYearUTC, parse, parseUTC, reform, reformWithLocale, reformWithOverrides, set, setFor, setUTC, setUTCFor, startOf, startOfUTC, subtract, subtractFor };
