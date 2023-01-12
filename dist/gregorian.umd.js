@@ -467,10 +467,11 @@
     validateDate(date);
     return isLeapYear(date);
   }
-  function isLeapYearUTC(date) {
-    var _date2;
 
-    date = (_date2 = date) !== null && _date2 !== void 0 ? _date2 : new Date();
+  function isLeapYearUTC(date) {
+    var _date;
+
+    date = (_date = date) !== null && _date !== void 0 ? _date : new Date();
     validateDate(date);
     return isLeapYear(date, 'UTC');
   }
@@ -518,6 +519,7 @@
     var l = s % 1 * 1000;
     return new Date(Date.UTC(y, m - 1, d, rawTime.includes('-') || offset > 0 ? h + z : h + z * -1, t, s, l));
   }
+
   /**
    * Parses either an ambiguous ISO partial (2019-08-16 / 2019-08-16T22:55:00)
    * or a complete ISO string (2019-08-16T22:55:00Z) to a date
@@ -529,35 +531,35 @@
   function parseUTC(input) {
     if (isDate(input)) return input;
 
-    var _$Symbol$split5 = /T| /[Symbol.split](input),
-        _$Symbol$split6 = _slicedToArray(_$Symbol$split5, 2),
-        date = _$Symbol$split6[0],
-        _$Symbol$split6$ = _$Symbol$split6[1],
-        rawTime = _$Symbol$split6$ === void 0 ? '00:00:00' : _$Symbol$split6$;
+    var _$Symbol$split = /T| /[Symbol.split](input),
+        _$Symbol$split2 = _slicedToArray(_$Symbol$split, 2),
+        date = _$Symbol$split2[0],
+        _$Symbol$split2$ = _$Symbol$split2[1],
+        rawTime = _$Symbol$split2$ === void 0 ? '00:00:00' : _$Symbol$split2$;
 
-    var _$Symbol$split7 = /Z|\+|-/[Symbol.split](rawTime),
-        _$Symbol$split8 = _slicedToArray(_$Symbol$split7, 2),
-        time = _$Symbol$split8[0],
-        _$Symbol$split8$ = _$Symbol$split8[1],
-        offset = _$Symbol$split8$ === void 0 ? '0' : _$Symbol$split8$;
+    var _$Symbol$split3 = /Z|\+|-/[Symbol.split](rawTime),
+        _$Symbol$split4 = _slicedToArray(_$Symbol$split3, 2),
+        time = _$Symbol$split4[0],
+        _$Symbol$split4$ = _$Symbol$split4[1],
+        offset = _$Symbol$split4$ === void 0 ? '0' : _$Symbol$split4$;
 
     var z = Number.parseFloat((/\d{1,2}/[Symbol.match](offset) || ['0'])[0], 10);
 
-    var _$Symbol$split$map5 = /-/[Symbol.split](date).map(function (str) {
+    var _$Symbol$split$map = /-/[Symbol.split](date).map(function (str) {
       return Number.parseFloat(str, 10);
     }),
-        _$Symbol$split$map6 = _slicedToArray(_$Symbol$split$map5, 3),
-        y = _$Symbol$split$map6[0],
-        m = _$Symbol$split$map6[1],
-        d = _$Symbol$split$map6[2];
+        _$Symbol$split$map2 = _slicedToArray(_$Symbol$split$map, 3),
+        y = _$Symbol$split$map2[0],
+        m = _$Symbol$split$map2[1],
+        d = _$Symbol$split$map2[2];
 
-    var _$Symbol$split$map7 = /:/[Symbol.split](time).map(function (str) {
+    var _$Symbol$split$map3 = /:/[Symbol.split](time).map(function (str) {
       return Number.parseFloat(str, 10);
     }),
-        _$Symbol$split$map8 = _slicedToArray(_$Symbol$split$map7, 3),
-        h = _$Symbol$split$map8[0],
-        t = _$Symbol$split$map8[1],
-        s = _$Symbol$split$map8[2];
+        _$Symbol$split$map4 = _slicedToArray(_$Symbol$split$map3, 3),
+        h = _$Symbol$split$map4[0],
+        t = _$Symbol$split$map4[1],
+        s = _$Symbol$split$map4[2];
 
     var l = s % 1 * 1000;
     return new Date(Date.UTC(y, m - 1, d, rawTime.includes('-') || offset > 0 ? h + z : h + z * -1, t, s, l));
@@ -619,15 +621,7 @@
     validateDate(input);
     return _add(increment, n, input);
   });
-  var subtract = curry(function (increment, n, input) {
-    if (input instanceof Function) {
-      return wrap(subtract(increment, n), input);
-    }
 
-    input = input ? new Date(input) : new Date();
-    validateDate(input);
-    return _add(increment, n * -1, input);
-  });
   var addFor = curry(function (group, input) {
     if (input instanceof Function) {
       return wrap(addFor(group), input);
@@ -641,21 +635,6 @@
           value = _ref2[1];
 
       return _add(increment, value, acc);
-    }, input);
-  });
-  var subtractFor = curry(function (group, input) {
-    if (input instanceof Function) {
-      return wrap(subtractFor(group), input);
-    }
-
-    input = input ? new Date(input) : new Date();
-    validateDate(input);
-    return entries(group).reduce(function (acc, _ref3) {
-      var _ref4 = _slicedToArray(_ref3, 2),
-          increment = _ref4[0],
-          value = _ref4[1];
-
-      return _add(increment, value * -1, acc);
     }, input);
   });
 
@@ -695,15 +674,6 @@
     return incrementHandlers[increment](date);
   }
 
-  var startOfUTC = curry(function (increment, input) {
-    if (input instanceof Function) {
-      return wrap(startOfUTC(increment), input);
-    }
-
-    input = input ? new Date(input) : new Date();
-    validateDate(input);
-    return _startOf(increment, input, 'UTC');
-  });
   var startOf = curry(function (increment, input) {
     if (input instanceof Function) {
       return wrap(startOf(increment), input);
@@ -712,6 +682,16 @@
     input = input ? new Date(input) : new Date();
     validateDate(input);
     return _startOf(increment, input, '');
+  });
+
+  var startOfUTC = curry(function (increment, input) {
+    if (input instanceof Function) {
+      return wrap(startOfUTC(increment), input);
+    }
+
+    input = input ? new Date(input) : new Date();
+    validateDate(input);
+    return _startOf(increment, input, 'UTC');
   });
 
   /**
@@ -775,15 +755,6 @@
     return incrementHandlers[increment](date);
   }
 
-  var endOfUTC = curry(function (increment, input) {
-    if (input instanceof Function) {
-      return wrap(endOfUTC(increment), input);
-    }
-
-    input = input ? new Date(input) : new Date();
-    validateDate(input);
-    return _endOf(increment, new Date(input), 'UTC');
-  });
   var endOf = curry(function (increment, input) {
     if (input instanceof Function) {
       return wrap(endOf(increment), input);
@@ -792,6 +763,16 @@
     input = input ? new Date(input) : new Date();
     validateDate(input);
     return _endOf(increment, new Date(input), '');
+  });
+
+  var endOfUTC = curry(function (increment, input) {
+    if (input instanceof Function) {
+      return wrap(endOfUTC(increment), input);
+    }
+
+    input = input ? new Date(input) : new Date();
+    validateDate(input);
+    return _endOf(increment, new Date(input), 'UTC');
   });
 
   /**
@@ -851,18 +832,20 @@
     return incrementHandlers[increment](date);
   }
 
-  var setUTC = curry(function (increment, value, input) {
-    if (input instanceof Function) return wrap(setUTC(increment, value), input);
-    input = input ? new Date(input) : new Date();
-    validateDate(input);
-    return _set(increment, value, input, 'UTC');
-  });
   var set = curry(function (increment, value, input) {
     if (input instanceof Function) return wrap(set(increment, value), input);
     input = input ? new Date(input) : new Date();
     validateDate(input);
     return _set(increment, value, input);
   });
+
+  var setUTC = curry(function (increment, value, input) {
+    if (input instanceof Function) return wrap(setUTC(increment, value), input);
+    input = input ? new Date(input) : new Date();
+    validateDate(input);
+    return _set(increment, value, input, 'UTC');
+  });
+
   var setFor = curry(function (group, input) {
     if (input instanceof Function) return wrap(setFor(group), input);
     input = input ? new Date(input) : new Date();
@@ -875,16 +858,43 @@
       return _set(increment, value, input);
     }, input);
   });
+
   var setUTCFor = curry(function (group, input) {
     if (input instanceof Function) return wrap(setUTCFor(group), input);
     input = input ? new Date(input) : new Date();
     validateDate(input);
-    return entries(group).reduce(function (acc, _ref3) {
-      var _ref4 = _slicedToArray(_ref3, 2),
-          increment = _ref4[0],
-          value = _ref4[1];
+    return entries(group).reduce(function (acc, _ref) {
+      var _ref2 = _slicedToArray(_ref, 2),
+          increment = _ref2[0],
+          value = _ref2[1];
 
       return _set(increment, value, input, 'UTC');
+    }, input);
+  });
+
+  var subtract = curry(function (increment, n, input) {
+    if (input instanceof Function) {
+      return wrap(subtract(increment, n), input);
+    }
+
+    input = input ? new Date(input) : new Date();
+    validateDate(input);
+    return _add(increment, n * -1, input);
+  });
+
+  var subtractFor = curry(function (group, input) {
+    if (input instanceof Function) {
+      return wrap(subtractFor(group), input);
+    }
+
+    input = input ? new Date(input) : new Date();
+    validateDate(input);
+    return entries(group).reduce(function (acc, _ref) {
+      var _ref2 = _slicedToArray(_ref, 2),
+          increment = _ref2[0],
+          value = _ref2[1];
+
+      return _add(increment, value * -1, acc);
     }, input);
   });
 
@@ -965,6 +975,42 @@
     }, {});
   });
 
+  var getUTC$1 = curry(function (increment, date) {
+    var _date;
+
+    date = (_date = date) !== null && _date !== void 0 ? _date : new Date();
+    validateDate(date);
+    return _get(increment, date, 'UTC');
+  });
+
+  var getFor$1 = curry(function (increments, date) {
+    var _date;
+
+    date = (_date = date) !== null && _date !== void 0 ? _date : new Date();
+    validateDate(date);
+    return Object.entries(increments).reduce(function (obj, _ref) {
+      var _ref2 = _slicedToArray(_ref, 2),
+          increment = _ref2[0],
+          v = _ref2[1];
+
+      return _objectSpread2(_objectSpread2({}, obj), v && _defineProperty({}, increment, _get(increment, date)));
+    }, {});
+  });
+
+  var getUTCFor$1 = curry(function (increments, date) {
+    var _date;
+
+    date = (_date = date) !== null && _date !== void 0 ? _date : new Date();
+    validateDate(date);
+    return Object.entries(increments).reduce(function (obj, _ref) {
+      var _ref2 = _slicedToArray(_ref, 2),
+          increment = _ref2[0],
+          v = _ref2[1];
+
+      return _objectSpread2(_objectSpread2({}, obj), v && _defineProperty({}, increment, _get(increment, date, 'UTC')));
+    }, {});
+  });
+
   /**
    * Adds or subtracts specified increments to or from a date object
    * @param   {String}  increment   an increment to add
@@ -1038,9 +1084,9 @@
   exports.endOf = endOf;
   exports.endOfUTC = endOfUTC;
   exports.get = get;
-  exports.getFor = getFor;
-  exports.getUTC = getUTC;
-  exports.getUTCFor = getUTCFor;
+  exports.getFor = getFor$1;
+  exports.getUTC = getUTC$1;
+  exports.getUTCFor = getUTCFor$1;
   exports.isDate = isDate;
   exports.isLeapYear = isLeapYear$1;
   exports.isLeapYearUTC = isLeapYearUTC;
